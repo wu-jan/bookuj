@@ -1,26 +1,107 @@
 @import "tailwindcss";
+@import "react-day-picker/style.css";
+
+@theme {
+  --font-serif: var(--font-playfair), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #09090b;
+  --color-primary: #18181b;
+  --color-accent: #10b981;
+  --color-bg: #fafafa;
+
+  /* react-day-picker custom variables integration */
+  --rdp-accent-color: var(--color-accent);
+  --rdp-accent-background-color: color-mix(in srgb, var(--color-accent) 18%, transparent);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* React DayPicker High Contrast & Clean Aesthetics */
+.rdp-root {
+  color: #18181b !important;
+}
+
+.rdp-month_caption {
+  color: #09090b !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+}
+
+.rdp-weekday {
+  color: #71717a !important;
+  font-weight: 600 !important;
+  font-size: 0.75rem !important;
+  text-transform: uppercase !important;
+}
+
+.rdp-day {
+  color: #18181b !important;
+}
+
+.rdp-day_button {
+  color: #18181b !important;
+  font-weight: 600 !important;
+  font-size: 0.875rem !important;
+  transition: all 0.15s ease-in-out !important;
+}
+
+.rdp-day_button:hover:not(:disabled) {
+  background-color: #f4f4f5 !important;
+  color: #09090b !important;
+}
+
+.rdp-disabled .rdp-day_button {
+  color: #d4d4d8 !important;
+  text-decoration: line-through !important;
+  cursor: not-allowed !important;
+}
+
+.rdp-outside .rdp-day_button {
+  color: #e4e4e7 !important;
+}
+
+.rdp-today:not(.rdp-selected) .rdp-day_button {
+  border: 1.5px solid var(--color-accent) !important;
+  color: var(--color-accent) !important;
+  font-weight: 700 !important;
+}
+
+.rdp-range_start .rdp-day_button,
+.rdp-range_end .rdp-day_button {
+  background-color: var(--color-accent) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+.rdp-range_middle .rdp-day_button {
+  color: #09090b !important;
+  font-weight: 600 !important;
+}
+
+.rdp-button_next,
+.rdp-button_previous {
+  color: #18181b !important;
+  border-radius: 9999px !important;
+  transition: background-color 0.15s ease !important;
+}
+
+.rdp-button_next:hover,
+.rdp-button_previous:hover {
+  background-color: #f4f4f5 !important;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #09090b;
+    --foreground: #f4f4f5;
   }
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
+
+

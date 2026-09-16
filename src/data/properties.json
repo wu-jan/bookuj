@@ -1,0 +1,415 @@
+[
+  {
+    "id": "prop-1",
+    "slug": "nordic-glass-sanctuary",
+    "title": "Nordic Glass Sanctuary",
+    "location": "Lofoten Islands, Norway",
+    "description": "Perched above the Arctic fjord, this architectural glass sanctuary offers front-row panoramic views of the Northern Lights and midnight sun. Features an outdoor heated cedar soaking tub and private sauna.",
+    "pricePerNight": 420,
+    "currency": "USD",
+    "images": [
+      "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "amenities": [
+      "Panoramic Sauna",
+      "Private Hot Tub",
+      "High-Speed WiFi",
+      "Fire Pit & Outdoor Lounge",
+      "Mountain & Forest Views",
+      "Fully Equipped Chef Kitchen"
+    ],
+    "occupiedDates": [
+      "2026-09-18",
+      "2026-09-19",
+      "2026-09-20",
+      "2026-09-24",
+      "2026-09-25",
+      "2026-10-02",
+      "2026-10-03"
+    ],
+    "hostInfo": {
+      "name": "Astrid Lindholm",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
+      "phone": "+47 912 34 567"
+    },
+    "theme": {
+      "primaryColor": "#0F5257",
+      "accentColor": "#10B981",
+      "backgroundColor": "#F8FAFC",
+      "fontStyle": "sans"
+    }
+  },
+  {
+    "id": "prop-2",
+    "slug": "alpine-summit-chalet",
+    "title": "Alpine Summit Chalet",
+    "location": "Zermatt, Switzerland",
+    "description": "An authentic high-alpine timber chalet directly facing the majestic Matterhorn. Hand-hewn larch beams, an open stone hearth, wine cellar, and ski-in / ski-out convenience.",
+    "pricePerNight": 580,
+    "currency": "USD",
+    "images": [
+      "https://images.unsplash.com/photo-1502784444187-359ac186c5bb?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "amenities": [
+      "Mountain & Forest Views",
+      "Panoramic Sauna",
+      "Fire Pit & Outdoor Lounge",
+      "High-Speed WiFi",
+      "Dedicated Workspace",
+      "Complimentary Artisanal Breakfast"
+    ],
+    "occupiedDates": [
+      "2026-09-17",
+      "2026-09-18",
+      "2026-09-21",
+      "2026-09-22",
+      "2026-09-28",
+      "2026-09-29"
+    ],
+    "hostInfo": {
+      "name": "Christian Bumann",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80",
+      "phone": "+41 27 966 12 34"
+    },
+    "theme": {
+      "primaryColor": "#2C1810",
+      "accentColor": "#D4AF37",
+      "backgroundColor": "#FAF8F5",
+      "fontStyle": "serif"
+    }
+  },
+  {
+    "id": "prop-3",
+    "slug": "whispering-pines-retreat",
+    "title": "Whispering Pines Retreat",
+    "location": "Aspen, Colorado",
+    "description": "Secluded luxury deep within Colorado's aspen groves. Floor-to-ceiling glass pavilions, geothermal radiant heating, infinity plunge pool, and dedicated mountain bike trails.",
+    "pricePerNight": 490,
+    "currency": "USD",
+    "images": [
+      "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "amenities": [
+      "Private Hot Tub",
+      "High-Speed WiFi",
+      "EV Charging Station",
+      "Fire Pit & Outdoor Lounge",
+      "Pet Friendly",
+      "Fully Equipped Chef Kitchen"
+    ],
+    "occupiedDates": [
+      "2026-09-19",
+      "2026-09-20",
+      "2026-09-26",
+      "2026-09-27",
+      "2026-10-05"
+    ],
+    "hostInfo": {
+      "name": "Sarah Miller",
+      "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80",
+      "phone": "+1 (970) 555-0192"
+    },
+    "theme": {
+      "primaryColor": "#1B3B2B",
+      "accentColor": "#E28743",
+      "backgroundColor": "#F4F7F5",
+      "fontStyle": "sans"
+    }
+  },
+  {
+    "id": "prop-4",
+    "slug": "highland-haven-lodge",
+    "title": "Highland Haven Lodge",
+    "location": "Isle of Skye, Scotland",
+    "description": "Dramatic cliffside sanctuary overlooking the tempestuous Atlantic Ocean. Handcrafted stone masonry, custom sheepskin lounges, and private sea-kayak launch point.",
+    "pricePerNight": 360,
+    "currency": "USD",
+    "images": [
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1512915922686-57c11dde9b6b?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "amenities": [
+      "Fire Pit & Outdoor Lounge",
+      "Mountain & Forest Views",
+      "High-Speed WiFi",
+      "Pet Friendly",
+      "Complimentary Artisanal Breakfast",
+      "Panoramic Sauna"
+    ],
+    "occupiedDates": [
+      "2026-09-16",
+      "2026-09-17",
+      "2026-09-23",
+      "2026-09-24",
+      "2026-09-25"
+    ],
+    "hostInfo": {
+      "name": "Callum MacLeod",
+      "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80",
+      "phone": "+44 1478 610022"
+    },
+    "theme": {
+      "primaryColor": "#1E293B",
+      "accentColor": "#38BDF8",
+      "backgroundColor": "#F8FAFC",
+      "fontStyle": "serif"
+    }
+  },
+  {
+    "id": "prop-5",
+    "slug": "dolomite-edge-cabin",
+    "title": "Dolomite Edge Cabin",
+    "location": "Val Gardena, Italy",
+    "description": "Architectural marvel cantilevered over alpine meadows. Modern Italian interior design paired with raw stone textures, private Finnish sauna, and curated local South Tyrolean wine cellar.",
+    "pricePerNight": 510,
+    "currency": "USD",
+    "images": [
+      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "amenities": [
+      "Panoramic Sauna",
+      "Mountain & Forest Views",
+      "Private Hot Tub",
+      "EV Charging Station",
+      "High-Speed WiFi",
+      "Dedicated Workspace"
+    ],
+    "occupiedDates": [
+      "2026-09-20",
+      "2026-09-21",
+      "2026-09-22",
+      "2026-09-30",
+      "2026-10-01"
+    ],
+    "hostInfo": {
+      "name": "Matteo Rossini",
+      "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&q=80",
+      "phone": "+39 0471 796123"
+    },
+    "theme": {
+      "primaryColor": "#3E2723",
+      "accentColor": "#F59E0B",
+      "backgroundColor": "#FAF9F6",
+      "fontStyle": "serif"
+    }
+  },
+  {
+    "id": "prop-6",
+    "slug": "emerald-forest-treehouse",
+    "title": "Emerald Forest Treehouse",
+    "location": "Olympic Peninsula, Washington",
+    "description": "Suspended thirty feet in ancient Douglas firs, this bespoke treehouse combines whimsical architecture with modern luxury. Features a spiral cedar staircase and suspension bridge.",
+    "pricePerNight": 340,
+    "currency": "USD",
+    "images": [
+      "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "amenities": [
+      "Fire Pit & Outdoor Lounge",
+      "Private Hot Tub",
+      "High-Speed WiFi",
+      "Pet Friendly",
+      "Mountain & Forest Views",
+      "Fully Equipped Chef Kitchen"
+    ],
+    "occupiedDates": [
+      "2026-09-18",
+      "2026-09-19",
+      "2026-09-25",
+      "2026-09-26",
+      "2026-09-27"
+    ],
+    "hostInfo": {
+      "name": "Elena Vance",
+      "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80",
+      "phone": "+1 (360) 555-8910"
+    },
+    "theme": {
+      "primaryColor": "#143D28",
+      "accentColor": "#10B981",
+      "backgroundColor": "#F4F8F5",
+      "fontStyle": "sans"
+    }
+  },
+  {
+    "id": "prop-7",
+    "slug": "azure-cove-villa",
+    "title": "Azure Cove Villa",
+    "location": "Amalfi Coast, Italy",
+    "description": "Sun-drenched Mediterranean villa cascading down terraced lemon orchards to the Tyrrhenian Sea. Private boat dock, saltwater infinity pool, and open-air summer kitchen.",
+    "pricePerNight": 650,
+    "currency": "USD",
+    "images": [
+      "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1515238152791-8216bfdf89a7?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "amenities": [
+      "Private Hot Tub",
+      "Complimentary Artisanal Breakfast",
+      "High-Speed WiFi",
+      "Fully Equipped Chef Kitchen",
+      "Dedicated Workspace",
+      "EV Charging Station"
+    ],
+    "occupiedDates": [
+      "2026-09-17",
+      "2026-09-18",
+      "2026-09-24",
+      "2026-09-25",
+      "2026-09-26"
+    ],
+    "hostInfo": {
+      "name": "Gianluca Ferrara",
+      "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=300&q=80",
+      "phone": "+39 089 872 314"
+    },
+    "theme": {
+      "primaryColor": "#0C4A6E",
+      "accentColor": "#F59E0B",
+      "backgroundColor": "#F0F9FF",
+      "fontStyle": "serif"
+    }
+  },
+  {
+    "id": "prop-8",
+    "slug": "tatry-peaks-sanctuary",
+    "title": "Tatry Peaks Sanctuary",
+    "location": "Zakopane Highlands, Poland",
+    "description": "Highlander architectural masterpiece built from massive seasoned spruce logs and regional granite. Panoramic views of Mount Giewont, private spa zone, and outdoor hot bath.",
+    "pricePerNight": 290,
+    "currency": "USD",
+    "images": [
+      "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "amenities": [
+      "Panoramic Sauna",
+      "Private Hot Tub",
+      "Mountain & Forest Views",
+      "Fire Pit & Outdoor Lounge",
+      "High-Speed WiFi",
+      "Pet Friendly"
+    ],
+    "occupiedDates": [
+      "2026-09-18",
+      "2026-09-19",
+      "2026-09-20",
+      "2026-09-27",
+      "2026-09-28"
+    ],
+    "hostInfo": {
+      "name": "Stanislaw Bachleda",
+      "avatar": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=300&q=80",
+      "phone": "+48 18 201 54 32"
+    },
+    "theme": {
+      "primaryColor": "#292524",
+      "accentColor": "#EA580C",
+      "backgroundColor": "#FAF8F5",
+      "fontStyle": "serif"
+    }
+  },
+  {
+    "id": "prop-9",
+    "slug": "serengeti-acacia-tents",
+    "title": "Serengeti Acacia Tents",
+    "location": "Serengeti National Park, Tanzania",
+    "description": "Ultra-luxury safari camp on the migration corridor. Handcrafted canvas pavilions featuring copper bathtubs, private sunset viewing decks, and starry-sky sleeping decks.",
+    "pricePerNight": 720,
+    "currency": "USD",
+    "images": [
+      "https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "amenities": [
+      "Complimentary Artisanal Breakfast",
+      "Fire Pit & Outdoor Lounge",
+      "Dedicated Workspace",
+      "High-Speed WiFi",
+      "EV Charging Station",
+      "Mountain & Forest Views"
+    ],
+    "occupiedDates": [
+      "2026-09-22",
+      "2026-09-23",
+      "2026-09-24",
+      "2026-10-02",
+      "2026-10-03"
+    ],
+    "hostInfo": {
+      "name": "Khamisi Mollel",
+      "avatar": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=300&q=80",
+      "phone": "+255 784 123 456"
+    },
+    "theme": {
+      "primaryColor": "#451A03",
+      "accentColor": "#D97706",
+      "backgroundColor": "#FEFCE8",
+      "fontStyle": "sans"
+    }
+  },
+  {
+    "id": "prop-10",
+    "slug": "kyoto-zen-machiya",
+    "title": "Kyoto Zen Machiya",
+    "location": "Higashiyama, Kyoto, Japan",
+    "description": "Restored 120-year-old traditional townhouse with private rock garden and hinoki wood soaking onsen. Minimalist Japanese aesthetics paired with modern acoustic soundproofing.",
+    "pricePerNight": 440,
+    "currency": "USD",
+    "images": [
+      "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1528164344705-475426879c0d?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "amenities": [
+      "Private Hot Tub",
+      "High-Speed WiFi",
+      "Dedicated Workspace",
+      "Complimentary Artisanal Breakfast",
+      "Fully Equipped Chef Kitchen",
+      "Panoramic Sauna"
+    ],
+    "occupiedDates": [
+      "2026-09-17",
+      "2026-09-18",
+      "2026-09-19",
+      "2026-09-29",
+      "2026-09-30"
+    ],
+    "hostInfo": {
+      "name": "Kenji Takahashi",
+      "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80",
+      "phone": "+81 75 561 2345"
+    },
+    "theme": {
+      "primaryColor": "#18181B",
+      "accentColor": "#DC2626",
+      "backgroundColor": "#FAFAFA",
+      "fontStyle": "sans"
+    }
+  }
+]
