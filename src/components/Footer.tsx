@@ -6,13 +6,14 @@ import { ShieldCheck, Mail, Phone, Heart } from 'lucide-react';
 interface FooterProps {
   title: string;
   hostInfo: HostInfo;
+  isMobileView?: boolean;
 }
 
-export function Footer({ title, hostInfo }: FooterProps) {
+export function Footer({ title, hostInfo, isMobileView = false }: FooterProps) {
   return (
-    <footer className="w-full border-t border-black/5 bg-white/50 backdrop-blur-xs mt-20">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3 items-center">
+    <footer className="w-full border-t border-black/5 bg-white/50 backdrop-blur-xs mt-12 sm:mt-20">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:py-12 sm:px-6 lg:px-8">
+        <div className={`grid grid-cols-1 gap-6 sm:gap-8 ${isMobileView ? '' : 'md:grid-cols-3'} items-center`}>
           {/* Host identity */}
           <div className="flex items-center gap-4">
             <Image

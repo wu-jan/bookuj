@@ -16,17 +16,35 @@
   /* react-day-picker custom variables integration */
   --rdp-accent-color: var(--color-accent);
   --rdp-accent-background-color: color-mix(in srgb, var(--color-accent) 18%, transparent);
+  --rdp-day-height: 40px;
+  --rdp-day-width: 40px;
+  --rdp-day_button-height: 38px;
+  --rdp-day_button-width: 38px;
 }
 
 /* React DayPicker High Contrast & Clean Aesthetics */
 .rdp-root {
   color: #18181b !important;
+  max-width: 100% !important;
+}
+
+.rdp-months {
+  max-width: 100% !important;
+  justify-content: center !important;
+}
+
+.rdp-month {
+  max-width: 100% !important;
+}
+
+.rdp-month_grid {
+  width: 100% !important;
 }
 
 .rdp-month_caption {
   color: #09090b !important;
   font-weight: 700 !important;
-  font-size: 1rem !important;
+  font-size: 0.95rem !important;
 }
 
 .rdp-weekday {
@@ -34,17 +52,33 @@
   font-weight: 600 !important;
   font-size: 0.75rem !important;
   text-transform: uppercase !important;
+  padding: 0.25rem 0 !important;
 }
 
 .rdp-day {
   color: #18181b !important;
+  text-align: center !important;
 }
 
 .rdp-day_button {
   color: #18181b !important;
   font-weight: 600 !important;
-  font-size: 0.875rem !important;
+  font-size: 0.8125rem !important;
   transition: all 0.15s ease-in-out !important;
+  margin: 0 auto !important;
+}
+
+/* Fluid DayPicker scaling on mobile / narrow containers */
+@media (max-width: 640px) {
+  .rdp-root {
+    --rdp-day-height: 36px !important;
+    --rdp-day-width: 36px !important;
+    --rdp-day_button-height: 34px !important;
+    --rdp-day_button-width: 34px !important;
+  }
+  .rdp-day_button {
+    font-size: 0.75rem !important;
+  }
 }
 
 .rdp-day_button:hover:not(:disabled) {
@@ -92,16 +126,27 @@
   background-color: #f4f4f5 !important;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #09090b;
-    --foreground: #f4f4f5;
+/* Ken Burns subtle zoom effect for hero */
+@keyframes kenBurns {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 
+.animate-ken-burns {
+  animation: kenBurns 24s ease-in-out infinite alternate;
+}
+
 body {
-  background-color: var(--background);
+  background-color: var(--color-bg, #fafafa);
   color: var(--foreground);
 }
+
 
 

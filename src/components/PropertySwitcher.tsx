@@ -3,24 +3,33 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Property } from '@/types/property';
-import { SlidersHorizontal, ChevronUp, ChevronDown, Check, Sparkles } from 'lucide-react';
+import { SlidersHorizontal, ChevronUp, ChevronDown, Check, Sparkles, Smartphone, Monitor } from 'lucide-react';
 
 interface PropertySwitcherProps {
   properties: Property[];
   currentSlug: string;
+  isMobileSimulated?: boolean;
+  onToggleMobileSimulated?: () => void;
 }
 
-export function PropertySwitcher({ properties, currentSlug }: PropertySwitcherProps) {
+export function PropertySwitcher({
+  properties,
+  currentSlug,
+  isMobileSimulated = false,
+  onToggleMobileSimulated,
+}: PropertySwitcherProps) {
   const [isOpen, setIsOpen] = useState(false);
+
 
   const currentProperty = properties.find((p) => p.slug === currentSlug) || properties[0];
 
   return (
-    <div className="fixed bottom-20 lg:bottom-6 right-6 z-50">
+    <div className="fixed bottom-28 sm:bottom-20 lg:bottom-6 right-4 sm:right-6 z-40">
       {/* Expanded Menu */}
+
       {isOpen && (
         <div className="mb-3 w-80 max-h-96 overflow-y-auto rounded-3xl border border-black/10 bg-white/95 p-3 shadow-2xl backdrop-blur-xl ring-1 ring-black/5 animate-in fade-in slide-in-from-bottom-2 duration-200">
-          <div className="px-3 py-2 border-b border-zinc-100 flex items-center justify-between">
+          <div className="px-3 py-2.5 border-b border-zinc-100 flex items-center justify-between">
             <div className="flex items-center gap-2 text-xs font-semibold text-zinc-900">
               <Sparkles className="h-3.5 w-3.5 text-amber-500" />
               <span>Concierge Preview Mode</span>
@@ -29,6 +38,35 @@ export function PropertySwitcher({ properties, currentSlug }: PropertySwitcherPr
               10 Profiles
             </span>
           </div>
+
+          {/* Device Viewport Simulation Toggle */}
+          {onToggleMobileSimulated && (
+            <div className="p-2 border-b border-zinc-100">
+              <button
+                type="button"
+                onClick={onToggleMobileSimulated}
+                className={`w-full flex items-center justify-between p-2 rounded-2xl text-xs font-medium transition-all cursor-pointer ${
+                  isMobileSimulated
+                    ? 'bg-emerald-50 text-emerald-900 border border-emerald-200'
+                    : 'bg-zinc-50 text-zinc-700 hover:bg-zinc-100 border border-zinc-200/60'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  {isMobileSimulated ? (
+                    <Smartphone className="h-4 w-4 text-emerald-600" />
+                  ) : (
+                    <Monitor className="h-4 w-4 text-zinc-500" />
+                  )}
+                  <span>Device View:</span>
+                  <strong className={isMobileSimulated ? 'text-emerald-700' : 'text-zinc-900'}>
+                    {isMobileSimulated ? 'Mobile Device Frame' : 'Full Desktop'}
+                  </strong>
+                </div>
+                <span className="text-[10px] font-bold underline">Toggle</span>
+              </button>
+            </div>
+          )}
+
 
           <div className="mt-2 space-y-1">
             {properties.map((property) => {

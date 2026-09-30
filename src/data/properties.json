@@ -40,6 +40,10 @@
       "accentColor": "#10B981",
       "backgroundColor": "#F8FAFC",
       "fontStyle": "sans"
+    },
+    "coordinates": {
+      "lat": 68.165,
+      "lng": 13.754
     }
   },
   {
@@ -82,6 +86,10 @@
       "accentColor": "#D4AF37",
       "backgroundColor": "#FAF8F5",
       "fontStyle": "serif"
+    },
+    "coordinates": {
+      "lat": 45.976,
+      "lng": 7.749
     }
   },
   {
@@ -123,6 +131,10 @@
       "accentColor": "#E28743",
       "backgroundColor": "#F4F7F5",
       "fontStyle": "sans"
+    },
+    "coordinates": {
+      "lat": 39.191,
+      "lng": -106.817
     }
   },
   {
@@ -164,6 +176,10 @@
       "accentColor": "#38BDF8",
       "backgroundColor": "#F8FAFC",
       "fontStyle": "serif"
+    },
+    "coordinates": {
+      "lat": 57.535,
+      "lng": -6.226
     }
   },
   {
@@ -205,6 +221,10 @@
       "accentColor": "#F59E0B",
       "backgroundColor": "#FAF9F6",
       "fontStyle": "serif"
+    },
+    "coordinates": {
+      "lat": 46.556,
+      "lng": 11.727
     }
   },
   {
@@ -246,6 +266,10 @@
       "accentColor": "#10B981",
       "backgroundColor": "#F4F8F5",
       "fontStyle": "sans"
+    },
+    "coordinates": {
+      "lat": 47.802,
+      "lng": -123.604
     }
   },
   {
@@ -287,6 +311,10 @@
       "accentColor": "#F59E0B",
       "backgroundColor": "#F0F9FF",
       "fontStyle": "serif"
+    },
+    "coordinates": {
+      "lat": 40.634,
+      "lng": 14.602
     }
   },
   {
@@ -328,6 +356,10 @@
       "accentColor": "#EA580C",
       "backgroundColor": "#FAF8F5",
       "fontStyle": "serif"
+    },
+    "coordinates": {
+      "lat": 49.299,
+      "lng": 19.949
     }
   },
   {
@@ -369,6 +401,10 @@
       "accentColor": "#D97706",
       "backgroundColor": "#FEFCE8",
       "fontStyle": "sans"
+    },
+    "coordinates": {
+      "lat": -2.333,
+      "lng": 34.833
     }
   },
   {
@@ -410,6 +446,10 @@
       "accentColor": "#DC2626",
       "backgroundColor": "#FAFAFA",
       "fontStyle": "sans"
+    },
+    "coordinates": {
+      "lat": 35.003,
+      "lng": 135.777
     }
   }
 ]

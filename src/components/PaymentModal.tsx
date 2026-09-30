@@ -1,21 +1,23 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useId } from 'react';
 import { DateRange } from 'react-day-picker';
 import { format, differenceInCalendarDays } from 'date-fns';
 import {
   X,
-  CreditCard,
-  Smartphone,
   Building2,
+  Smartphone,
+  Banknote,
   ShieldCheck,
   CheckCircle2,
   Loader2,
-  Lock,
   Sparkles,
-  CalendarCheck,
+  Info,
+  Copy,
+  Check,
 } from 'lucide-react';
-import { PropertyTheme } from '@/types/property';
+import { PropertyTheme, HostInfo } from '@/types/property';
+import { formatCurrency } from '@/lib/utils';
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -25,9 +27,11 @@ interface PaymentModalProps {
   currency: string;
   selectedRange: DateRange | undefined;
   theme: PropertyTheme;
+  hostInfo?: HostInfo;
 }
 
 type ModalState = 'summary_and_payment' | 'processing' | 'confirmed';
+type PaymentMethod = 'iban' | 'p2p' | 'arrival';
 
 export function PaymentModal({
   isOpen,
@@ -37,11 +41,23 @@ export function PaymentModal({
   currency,
   selectedRange,
   theme,
+  hostInfo,
 }: PaymentModalProps) {
   const [modalState, setModalState] = useState<ModalState>('summary_and_payment');
-  const [paymentMethod, setPaymentMethod] = useState<'card' | 'wallet' | 'wire'>('card');
-  const [guestName, setGuestName] = useState('Alexander Wright');
-  const [guestEmail, setGuestEmail] = useState('alex.wright@example.com');
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('iban');
+  const [guestName, setGuestName] = useState('');
+  const [guestEmail, setGuestEmail] = useState('');
+  const [guestNotes, setGuestNotes] = useState('');
+  const [copiedField, setCopiedField] = useState<string | null>(null);
+  const [bookingRef, setBookingRef] = useState<string>('');
+
+  // Reset modal when reopened or closed
+  useEffect(() => {
+    if (isOpen) {
+      setModalState('summary_and_payment');
+      setBookingRef(`DIR-${Math.floor(100000 + Math.random() * 900000)}`);
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -51,15 +67,23 @@ export function PaymentModal({
       : 1;
 
   const grandTotal = nights * pricePerNight;
+  const advanceDeposit = Math.round(grandTotal * 0.1); // 10% advance deposit
+  const remainingDue = grandTotal - advanceDeposit;
+
+  const handleCopy = (text: string, fieldKey: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedField(fieldKey);
+    setTimeout(() => setCopiedField(null), 2000);
+  };
 
   const handleSimulatePayment = (e: React.FormEvent) => {
     e.preventDefault();
     setModalState('processing');
 
-    // Simulate payment transaction with 1.5s delay
+    // Simulate direct reservation registration
     setTimeout(() => {
       setModalState('confirmed');
-    }, 1500);
+    }, 1200);
   };
 
   const handleResetAndClose = () => {
@@ -67,15 +91,21 @@ export function PaymentModal({
     onClose();
   };
 
+  // Mock host payment coordinates based on host info
+  const hostFirstName = hostInfo?.name?.split(' ')[0] || 'Host';
+  const mockIban = 'NO93 8601 1117 9422';
+  const mockBic = 'DNBNO22';
+  const mockP2pHandle = `@${hostFirstName.toLowerCase()}-direct`;
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg rounded-3xl bg-white p-6 sm:p-8 shadow-2xl border border-zinc-100 overflow-hidden">
+      <div className="relative w-full max-w-lg rounded-3xl bg-white p-6 sm:p-8 shadow-2xl border border-zinc-100 overflow-hidden max-h-[90vh] overflow-y-auto">
         {/* Close Button */}
         {modalState !== 'processing' && (
           <button
             type="button"
             onClick={handleResetAndClose}
-            className="absolute top-5 right-5 rounded-full p-2 text-zinc-400 hover:text-zinc-600 hover:bg-zinc-100 transition-colors"
+            className="absolute top-5 right-5 rounded-full p-2 text-zinc-400 hover:text-zinc-600 hover:bg-zinc-100 transition-colors cursor-pointer"
           >
             <X className="h-5 w-5" />
           </button>
@@ -86,20 +116,20 @@ export function PaymentModal({
           <div>
             <div className="flex items-center gap-2 text-xs font-semibold text-emerald-700 bg-emerald-50 rounded-full px-3 py-1 w-fit mb-3">
               <ShieldCheck className="h-4 w-4" />
-              <span>Direct Booking Guarantee</span>
+              <span>Direct Host Reservation • 0% Platform Fee</span>
             </div>
 
             <h2 className="text-2xl font-bold tracking-tight text-zinc-900">
-              Confirm Direct Reservation
+              Direct Reservation Request
             </h2>
             <p className="text-xs text-zinc-500 mt-1">
-              Securing stay at <strong className="text-zinc-800">{propertyTitle}</strong>
+              Booking directly with <strong className="text-zinc-800">{hostInfo?.name || 'Host'}</strong> for <strong className="text-zinc-800">{propertyTitle}</strong>
             </p>
 
             {/* Reservation summary card */}
-            <div className="mt-5 rounded-2xl border border-zinc-200 bg-zinc-50/70 p-4 text-xs space-y-3">
+            <div className="mt-4 rounded-2xl border border-zinc-200 bg-zinc-50/80 p-4 text-xs space-y-2.5">
               <div className="flex justify-between items-center text-zinc-700">
-                <span className="font-semibold text-zinc-500 uppercase tracking-wider text-[10px]">RESERVATION DATES</span>
+                <span className="font-semibold text-zinc-500 uppercase tracking-wider text-[10px]">DATES</span>
                 <span className="font-medium text-zinc-900">
                   {selectedRange?.from && selectedRange?.to
                     ? `${format(selectedRange.from, 'MMM d, yyyy')} – ${format(selectedRange.to, 'MMM d, yyyy')} (${nights}n)`
@@ -107,99 +137,133 @@ export function PaymentModal({
                 </span>
               </div>
               <div className="flex justify-between items-center text-zinc-700">
-                <span>Direct Rate (${pricePerNight} × {nights} {nights === 1 ? 'night' : 'nights'})</span>
-                <span className="font-medium text-zinc-900">${grandTotal}</span>
+                <span>Direct Nightly Rate</span>
+                <span className="font-medium text-zinc-900">{formatCurrency(pricePerNight, currency)} / night</span>
               </div>
-              <div className="flex justify-between items-center text-emerald-700 text-[11px] font-medium pt-1">
-                <span>Direct Booking Transparency</span>
-                <span className="bg-emerald-100/80 px-2 py-0.5 rounded-full font-bold">No Hidden Fees</span>
+              <div className="flex justify-between items-center text-emerald-700 text-[11px] font-medium">
+                <span>Cleaning & Service Fees</span>
+                <span className="bg-emerald-100/80 px-2 py-0.5 rounded-full font-bold">Included (0 extra)</span>
               </div>
-              <div className="pt-2.5 border-t border-zinc-200 flex justify-between items-baseline text-sm font-bold text-zinc-900">
-                <span>Total Amount Due</span>
-                <span className="text-xl font-bold">${grandTotal} <span className="text-xs font-normal text-zinc-500">{currency}</span></span>
+              <div className="pt-2 border-t border-zinc-200 flex justify-between items-baseline text-sm font-bold text-zinc-900">
+                <span>Total Stay Cost</span>
+                <span className="text-xl font-bold text-zinc-900">{formatCurrency(grandTotal, currency)}</span>
+              </div>
+
+              {/* 10% Advance Deposit Notice */}
+              <div className="rounded-xl bg-amber-50/80 border border-amber-200/70 p-2.5 text-[11px] text-amber-900 flex items-start gap-2">
+                <Info className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
+                <div>
+                  <strong>10% Advance Deposit required: {formatCurrency(advanceDeposit, currency)}</strong>
+                  <p className="text-[10px] text-amber-700 mt-0.5">
+                    Secures your dates directly with {hostFirstName}. Remaining {formatCurrency(remainingDue, currency)} settled upon arrival.
+                  </p>
+                </div>
               </div>
             </div>
 
-            <form onSubmit={handleSimulatePayment} className="mt-6 space-y-4">
+            <form onSubmit={handleSimulatePayment} className="mt-5 space-y-4">
               {/* Guest Information */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-[11px] font-semibold uppercase tracking-wider text-zinc-500 mb-1">
-                    Full Name
+                    Your Full Name *
                   </label>
                   <input
                     type="text"
                     required
+                    placeholder="e.g. Maya Lin"
                     value={guestName}
                     onChange={(e) => setGuestName(e.target.value)}
-                    className="w-full rounded-xl border border-zinc-200 px-3 py-2 text-xs font-medium text-zinc-800 focus:border-zinc-800 focus:outline-none"
+                    className="w-full rounded-xl border border-zinc-200 px-3 py-2 text-xs font-medium text-zinc-800 placeholder:text-zinc-400 focus:border-zinc-800 focus:outline-none"
                   />
                 </div>
                 <div>
                   <label className="block text-[11px] font-semibold uppercase tracking-wider text-zinc-500 mb-1">
-                    Email Address
+                    Email Address *
                   </label>
                   <input
                     type="email"
                     required
+                    placeholder="e.g. maya@example.com"
                     value={guestEmail}
                     onChange={(e) => setGuestEmail(e.target.value)}
-                    className="w-full rounded-xl border border-zinc-200 px-3 py-2 text-xs font-medium text-zinc-800 focus:border-zinc-800 focus:outline-none"
+                    className="w-full rounded-xl border border-zinc-200 px-3 py-2 text-xs font-medium text-zinc-800 placeholder:text-zinc-400 focus:border-zinc-800 focus:outline-none"
                   />
                 </div>
               </div>
 
-              {/* Payment Method Selector */}
+              <div>
+                <label className="block text-[11px] font-semibold uppercase tracking-wider text-zinc-500 mb-1">
+                  Note to Host (Optional)
+                </label>
+                <input
+                  type="text"
+                  placeholder="Estimated arrival time or special inquiries..."
+                  value={guestNotes}
+                  onChange={(e) => setGuestNotes(e.target.value)}
+                  className="w-full rounded-xl border border-zinc-200 px-3 py-2 text-xs font-medium text-zinc-800 placeholder:text-zinc-400 focus:border-zinc-800 focus:outline-none"
+                />
+              </div>
+
+              {/* Direct Payment Method Selector */}
               <div>
                 <label className="block text-[11px] font-semibold uppercase tracking-wider text-zinc-500 mb-2">
-                  Select Payment Method
+                  Preferred Direct Payment Method
                 </label>
                 <div className="grid grid-cols-3 gap-2">
                   <button
                     type="button"
-                    onClick={() => setPaymentMethod('card')}
-                    className={`flex flex-col items-center justify-center p-3 rounded-2xl border text-center transition-all ${
-                      paymentMethod === 'card'
-                        ? 'border-zinc-900 bg-zinc-900 text-white shadow-xs'
-                        : 'border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300'
-                    }`}
-                  >
-                    <CreditCard className="h-5 w-5 mb-1" />
-                    <span className="text-[11px] font-semibold">Credit Card</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod('wallet')}
-                    className={`flex flex-col items-center justify-center p-3 rounded-2xl border text-center transition-all ${
-                      paymentMethod === 'wallet'
-                        ? 'border-zinc-900 bg-zinc-900 text-white shadow-xs'
-                        : 'border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300'
-                    }`}
-                  >
-                    <Smartphone className="h-5 w-5 mb-1" />
-                    <span className="text-[11px] font-semibold">Digital Pay</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod('wire')}
-                    className={`flex flex-col items-center justify-center p-3 rounded-2xl border text-center transition-all ${
-                      paymentMethod === 'wire'
+                    onClick={() => setPaymentMethod('iban')}
+                    className={`flex flex-col items-center justify-center p-3 rounded-2xl border text-center transition-all cursor-pointer ${
+                      paymentMethod === 'iban'
                         ? 'border-zinc-900 bg-zinc-900 text-white shadow-xs'
                         : 'border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300'
                     }`}
                   >
                     <Building2 className="h-5 w-5 mb-1" />
-                    <span className="text-[11px] font-semibold">Instant Wire</span>
+                    <span className="text-[11px] font-semibold">Bank Wire / IBAN</span>
+                    <span className="text-[9px] opacity-70">Direct SEPA</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('p2p')}
+                    className={`flex flex-col items-center justify-center p-3 rounded-2xl border text-center transition-all cursor-pointer ${
+                      paymentMethod === 'p2p'
+                        ? 'border-zinc-900 bg-zinc-900 text-white shadow-xs'
+                        : 'border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300'
+                    }`}
+                  >
+                    <Smartphone className="h-5 w-5 mb-1" />
+                    <span className="text-[11px] font-semibold">Revolut / PayPal</span>
+                    <span className="text-[9px] opacity-70">Instant P2P</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('arrival')}
+                    className={`flex flex-col items-center justify-center p-3 rounded-2xl border text-center transition-all cursor-pointer ${
+                      paymentMethod === 'arrival'
+                        ? 'border-zinc-900 bg-zinc-900 text-white shadow-xs'
+                        : 'border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300'
+                    }`}
+                  >
+                    <Banknote className="h-5 w-5 mb-1" />
+                    <span className="text-[11px] font-semibold">On Arrival</span>
+                    <span className="text-[9px] opacity-70">Card / Cash</span>
                   </button>
                 </div>
               </div>
 
-              {/* Mock Payment Details Display */}
-              <div className="rounded-xl bg-zinc-50 border border-zinc-100 p-3 text-xs text-zinc-600 flex items-center gap-2">
-                <Lock className="h-4 w-4 text-emerald-600 shrink-0" />
-                <span>256-bit encrypted direct settlement. 100% money-back guarantee.</span>
+              {/* Direct Contactless Handoff Info Box */}
+              <div className="rounded-xl bg-zinc-50 border border-zinc-200 p-3 text-xs text-zinc-600 space-y-1">
+                <div className="flex items-center gap-1.5 font-semibold text-zinc-800">
+                  <ShieldCheck className="h-4 w-4 text-emerald-600" />
+                  <span>Contactless Host Handoff</span>
+                </div>
+                <p className="text-[11px] leading-relaxed text-zinc-500">
+                  We connect you directly to the property owner. No third-party payment middleman extracts commissions from your stay.
+                </p>
               </div>
 
               {/* Submit CTA */}
@@ -210,7 +274,7 @@ export function PaymentModal({
                   backgroundColor: theme.accentColor || 'var(--color-accent, #10B981)',
                 }}
               >
-                Pay ${grandTotal} & Complete Reservation
+                Request Reservation ({formatCurrency(advanceDeposit, currency)} Deposit)
               </button>
             </form>
           </div>
@@ -224,61 +288,129 @@ export function PaymentModal({
                 className="h-14 w-14 animate-spin"
                 style={{ color: theme.accentColor || 'var(--color-accent, #10B981)' }}
               />
-              <Lock className="h-6 w-6 text-zinc-400 absolute" />
             </div>
             <h3 className="mt-6 text-xl font-bold text-zinc-900">
-              Processing Reservation...
+              Notifying {hostFirstName}...
             </h3>
             <p className="mt-2 text-xs text-zinc-500 max-w-xs">
-              Securing dates with the host and verifying direct authorization token.
+              Directly registering your dates and preparing host transfer coordinates.
             </p>
           </div>
         )}
 
-        {/* STATE C: Reservation Confirmed */}
+        {/* STATE C: Reservation Confirmed & Host Handoff */}
         {modalState === 'confirmed' && (
-          <div className="py-4 text-center">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100">
-              <CheckCircle2 className="h-10 w-10 text-emerald-600" />
+          <div className="py-2 text-center">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100">
+              <CheckCircle2 className="h-8 w-8 text-emerald-600" />
             </div>
 
             <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800">
               <Sparkles className="h-3.5 w-3.5 text-emerald-600" />
-              <span>Payment Confirmed</span>
+              <span>Direct Reservation Requested</span>
             </div>
 
-            <h3 className="mt-3 text-2xl font-bold tracking-tight text-zinc-900">
-              Reservation Confirmed!
+            <h3 className="mt-2 text-xl font-bold tracking-tight text-zinc-900">
+              You&apos;re Booked Directly!
             </h3>
-            <p className="mt-2 text-xs text-zinc-600 max-w-sm mx-auto">
-              Your stay at <strong className="text-zinc-900">{propertyTitle}</strong> is booked directly. A confirmation email has been dispatched to <strong>{guestEmail}</strong>.
+            <p className="mt-1.5 text-xs text-zinc-600 max-w-sm mx-auto">
+              Your dates at <strong className="text-zinc-900">{propertyTitle}</strong> have been requested. A confirmation copy has been sent to <strong>{guestEmail || 'your email'}</strong>.
             </p>
 
-            <div className="mt-6 rounded-2xl bg-zinc-50 border border-zinc-200 p-4 text-left text-xs space-y-2">
+            <div className="mt-5 rounded-2xl bg-zinc-50 border border-zinc-200 p-4 text-left text-xs space-y-2">
               <div className="flex justify-between items-center">
                 <span className="text-zinc-500">Booking Reference:</span>
-                <span className="font-mono font-bold text-zinc-900">#DIR-{Math.floor(100000 + Math.random() * 900000)}</span>
+                <span className="font-mono font-bold text-zinc-900">{bookingRef}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-zinc-500">Dates:</span>
-                <span className="font-medium text-zinc-800">
-                  {selectedRange?.from && selectedRange?.to
-                    ? `${format(selectedRange.from, 'MMM d, yyyy')} – ${format(selectedRange.to, 'MMM d, yyyy')}`
-                    : 'Confirmed dates'}
+                <span className="text-zinc-500">Total Stay:</span>
+                <span className="font-bold text-zinc-900">{formatCurrency(grandTotal, currency)} ({nights}n)</span>
+              </div>
+              <div className="flex justify-between items-center text-amber-800 bg-amber-100/60 p-2 rounded-lg font-medium">
+                <span>10% Advance Deposit Due:</span>
+                <span className="font-bold">{formatCurrency(advanceDeposit, currency)}</span>
+              </div>
+            </div>
+
+            {/* Host Payment Coordinates Handoff */}
+            <div className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50/40 p-4 text-left text-xs space-y-2">
+              <div className="flex items-center justify-between border-b border-emerald-100 pb-2">
+                <span className="font-bold text-emerald-950">Host Transfer Instructions</span>
+                <span className="text-[10px] font-medium text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
+                  Direct Handoff
                 </span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-zinc-500">Amount Paid:</span>
-                <span className="font-bold text-emerald-700">${grandTotal} {currency}</span>
-              </div>
+
+              {paymentMethod === 'iban' && (
+                <div className="space-y-1.5 pt-1 text-[11px]">
+                  <div className="flex justify-between items-center">
+                    <span className="text-zinc-500">Beneficiary:</span>
+                    <span className="font-semibold text-zinc-800">{hostInfo?.name || 'Host'}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-zinc-500">IBAN:</span>
+                    <button
+                      type="button"
+                      onClick={() => handleCopy(mockIban, 'iban')}
+                      className="font-mono font-bold text-zinc-900 flex items-center gap-1 hover:text-emerald-700 cursor-pointer"
+                    >
+                      <span>{mockIban}</span>
+                      {copiedField === 'iban' ? <Check className="h-3 w-3 text-emerald-600" /> : <Copy className="h-3 w-3 text-zinc-400" />}
+                    </button>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-zinc-500">BIC / SWIFT:</span>
+                    <span className="font-mono font-semibold text-zinc-800">{mockBic}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-zinc-500">Payment Reference:</span>
+                    <span className="font-mono font-bold text-emerald-800">{bookingRef}</span>
+                  </div>
+                </div>
+              )}
+
+              {paymentMethod === 'p2p' && (
+                <div className="space-y-1.5 pt-1 text-[11px]">
+                  <div className="flex justify-between items-center">
+                    <span className="text-zinc-500">Revolut / Wise / PayPal:</span>
+                    <button
+                      type="button"
+                      onClick={() => handleCopy(mockP2pHandle, 'p2p')}
+                      className="font-mono font-bold text-zinc-900 flex items-center gap-1 hover:text-emerald-700 cursor-pointer"
+                    >
+                      <span>{mockP2pHandle}</span>
+                      {copiedField === 'p2p' ? <Check className="h-3 w-3 text-emerald-600" /> : <Copy className="h-3 w-3 text-zinc-400" />}
+                    </button>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-zinc-500">Transfer Note:</span>
+                    <span className="font-mono font-bold text-emerald-800">{bookingRef}</span>
+                  </div>
+                </div>
+              )}
+
+              {paymentMethod === 'arrival' && (
+                <p className="text-[11px] text-zinc-600 pt-1 leading-relaxed">
+                  {hostFirstName} has been notified of your direct booking request. You will pay the advance deposit or full balance via card/cash upon arrival.
+                </p>
+              )}
+
+              {hostInfo?.phone && (
+                <div className="pt-2 border-t border-emerald-100 flex justify-between items-center text-[11px]">
+                  <span className="text-zinc-500">Host Direct Contact:</span>
+                  <a href={`tel:${hostInfo.phone}`} className="font-semibold text-emerald-800 hover:underline">
+                    {hostInfo.phone}
+                  </a>
+                </div>
+              )}
             </div>
 
             <button
               type="button"
               onClick={handleResetAndClose}
-              className="mt-6 w-full rounded-2xl bg-zinc-900 py-3.5 text-sm font-semibold text-white shadow-md hover:bg-zinc-800 transition-colors"
+              className="mt-5 w-full rounded-2xl bg-zinc-900 py-3 text-sm font-semibold text-white shadow-md hover:bg-zinc-800 transition-colors cursor-pointer"
             >
-              Done & Return to Showcase
+              Done & Return to Property
             </button>
           </div>
         )}
@@ -286,3 +418,4 @@ export function PaymentModal({
     </div>
   );
 }
+

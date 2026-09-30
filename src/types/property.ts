@@ -25,4 +25,9 @@ export interface Property {
   occupiedDates: string[]; // ISO date strings (YYYY-MM-DD)
   hostInfo: HostInfo;
   theme: PropertyTheme;
+  coordinates?: {
+    lat: number;
+    lng: number;
+  };
 }
+
