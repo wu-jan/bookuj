@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { getPropertyBySlug, getAllProperties, getAllSlugs } from '@/lib/properties';
-import { PropertyShowcaseTemplate } from '@/components/PropertyShowcaseTemplate';
+import { getPropertyBySlug, getAllProperties, getAllSlugs } from '@/lib/propertyData';
+import { PropertyPage } from '@/components/PropertyPage';
 
 interface DemoSlugPageProps {
   params: Promise<{ slug: string }>;
@@ -39,7 +39,7 @@ export default async function DemoSlugPage({ params }: DemoSlugPageProps) {
   const allProperties = getAllProperties();
 
   return (
-    <PropertyShowcaseTemplate
+    <PropertyPage
       property={property}
       allProperties={allProperties}
     />

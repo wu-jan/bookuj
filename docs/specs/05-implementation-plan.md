@@ -4,7 +4,7 @@
 This plan breaks down the Concierge MVP (Stage 1) implementation into 3 manageable batches[cite: 1, 2]. 
 
 ### Non-Negotiable Requirements:
-1. **100% English:** All UI strings, mock data (`properties.json`), code comments, TypeScript types, and documentation must be strictly in English.
+1. **100% English:** All UI strings, mock data (`sample-properties.json`), code comments, TypeScript types, and documentation must be strictly in English.
 2. **White-Label Design Engine:** Each property page must dynamically apply its custom CSS theme (primary, accent, background colors, and font styles)[cite: 2].
 3. **Zero Platform Branding:** Property pages must display only the host's property branding to feel like a bespoke direct booking website[cite: 2, 3].
 4. **Strict Verification:** Run `npm run build` after completing every sub-step to guarantee a zero-error compilation state.
@@ -14,16 +14,16 @@ This plan breaks down the Concierge MVP (Stage 1) implementation into 3 manageab
 ## BATCH 1: Core Foundation, Theme Engine & Base Layouts
 
 - [x] **Step 1.1: TypeScript Type Definitions**
-  - Create `src/types/property.ts` defining `HostInfo`, `PropertyTheme` (primaryColor, accentColor, backgroundColor, fontStyle, logoUrl), and `Property` interfaces[cite: 2].
+  - Create `src/types/property.ts` defining `HostInfo`, `PropertyTheme` (primaryColor, accentColor, backgroundColor, fontStyle, logoUrl), `SupportedCurrency`, and `Property` interfaces[cite: 2].
   - *Verification:* Run `npm run build`.
 
 - [x] **Step 1.2: English Mock Database**
-  - Create `src/data/properties.json` containing detailed, realistic data for 10 distinct properties (e.g., "Alpine Glass Chalet", "Pine Forest Haven")[cite: 1, 2].
+  - Create `src/data/sample-properties.json` containing detailed, realistic data for 10 distinct properties (e.g., "Alpine Glass Chalet", "Pine Forest Haven")[cite: 1, 2].
   - Include English descriptions, locations, amenities, Unsplash image URLs, `occupiedDates` ISO strings, host details, and distinct `theme` configurations[cite: 1, 2].
   - *Verification:* Run `npm run build`.
 
 - [x] **Step 1.3: Data Access Layer**
-  - Create `src/lib/properties.ts` with helper functions: `getAllProperties()`, `getPropertyBySlug(slug: string)`, and `getAllSlugs()`[cite: 1, 2].
+  - Create `src/lib/propertyData.ts` with helper functions: `getAllProperties()`, `getPropertyBySlug(slug: string)`, and `getAllSlugs()`[cite: 1, 2].
   - *Verification:* Run `npm run build`.
 
 - [x] **Step 1.4: Dynamic White-Label Theme Container & Typography**
@@ -33,7 +33,7 @@ This plan breaks down the Concierge MVP (Stage 1) implementation into 3 manageab
 
 - [x] **Step 1.5: Base Layout & Hero Gallery**
   - Build `src/components/Header.tsx` (displays property logo or title, zero platform branding) and `src/components/Footer.tsx`[cite: 2].
-  - Build `src/components/HeroGallery.tsx` featuring a responsive image layout (grid on desktop, swipeable/carousel view on mobile)[cite: 2].
+  - Build `src/components/PropertyGallery.tsx` and `src/components/PropertyHero.tsx` featuring responsive image layout and Ken Burns motion[cite: 2].
   - Build `src/components/AmenitiesList.tsx` rendering Lucide icons for each amenity[cite: 2].
   - *Verification:* Run `npm run build`.
 
@@ -46,29 +46,29 @@ This plan breaks down the Concierge MVP (Stage 1) implementation into 3 manageab
   - Highlight and disable all dates specified in the property's `occupiedDates` array[cite: 1, 2].
   - Implement date range selection (check-in / check-out) and calculate total nights[cite: 2].
 
-- [x] **Step 2.2: Dynamic Price Calculator**
-  - Build `src/components/BookingCard.tsx` (sticky sidebar on desktop, fixed bottom bar on mobile) displaying rate per night, total calculated price, and fee breakdown[cite: 2].
+- [x] **Step 2.2: Dynamic Price Calculator & Booking Suite**
+  - Build `src/components/BookingSuite.tsx` and `src/components/MobileBottomCTA.tsx` displaying rate per night, total calculated price, and direct reservation perks[cite: 2].
 
 - [x] **Step 2.3: Checkout Payment Modal (Mock)**
   - Build `src/components/PaymentModal.tsx` triggered by the "Book Direct" button[cite: 2].
-  - **State A:** Booking summary & payment method selector (Credit/Debit Card, Instant Bank Transfer, Apple Pay / Digital Wallet)[cite: 2].
-  - **State B:** Loading / processing spinner simulation (1.5 seconds)[cite: 2].
-  - **State C:** Confirmation screen ("Reservation Confirmed! The host has been notified.")[cite: 2].
+  - **State A:** Booking summary & direct payment method selector (Direct Bank Transfer / IBAN, Instant P2P / Revolut, Pay on Arrival)[cite: 2].
+  - **State B:** Loading / processing spinner simulation (1.2 seconds)[cite: 2].
+  - **State C:** Confirmation screen ("Direct Booking Requested! The host has been notified.")[cite: 2].
   - *Verification:* Run `npm run build`.
 
 ---
 
 ## BATCH 3: Page Integration, Showcase Landing & QA
 
-- [x] **Step 3.1: Dynamic Route `/demo/[slug]` & Template Engine**
-  - Assemble all components inside `src/app/demo/[slug]/page.tsx` rendering the single universal template.
-  - Handle Next.js 16 async `params` (`await params`).
+- [x] **Step 3.1: Dynamic Route `/demo/[slug]` & PropertyPage Orchestration**
+  - Assemble all extracted components inside `src/components/PropertyPage.tsx` and render via `src/app/demo/[slug]/page.tsx`.
+  - Handle Next.js async `params` (`await params`).
   - Wrap the layout inside `ThemeProvider` to inject CSS variables and dynamic font family.
   - Integrate `notFound()` for invalid slugs.
 
 - [x] **Step 3.2: Root Route (`/`) & Discrete Dev Switcher**
-  - Make `src/app/page.tsx` render the default template (e.g., first demo property or redirect to `/demo/[first-slug]`).
-  - Add a lightweight, floating dev-only property switcher bar (collapsible pill in corner) so testers can effortlessly preview how the exact same template engine adapts to all 10 property configurations without polluting the host's direct booking page.
+  - Make `src/app/page.tsx` render the default `PropertyPage` using the featured showcase property.
+  - Add `src/components/DemoPropertySwitcher.tsx` (collapsible floating pill in corner with mobile device frame toggle) so testers can effortlessly preview how the template engine adapts to all 10 property configurations without polluting the host's direct booking page.
 
 - [x] **Step 3.3: Final Build & Responsive QA**
   - Run full `npm run build` and ensure zero TypeScript, ESLint, or CSS errors.

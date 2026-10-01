@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useId } from 'react';
+import React, { useState } from 'react';
 import { DateRange } from 'react-day-picker';
 import { format, differenceInCalendarDays } from 'date-fns';
 import {
@@ -33,8 +33,12 @@ interface PaymentModalProps {
 type ModalState = 'summary_and_payment' | 'processing' | 'confirmed';
 type PaymentMethod = 'iban' | 'p2p' | 'arrival';
 
-export function PaymentModal({
-  isOpen,
+export function PaymentModal(props: PaymentModalProps) {
+  if (!props.isOpen) return null;
+  return <PaymentModalContent {...props} />;
+}
+
+function PaymentModalContent({
   onClose,
   propertyTitle,
   pricePerNight,
@@ -49,17 +53,7 @@ export function PaymentModal({
   const [guestEmail, setGuestEmail] = useState('');
   const [guestNotes, setGuestNotes] = useState('');
   const [copiedField, setCopiedField] = useState<string | null>(null);
-  const [bookingRef, setBookingRef] = useState<string>('');
-
-  // Reset modal when reopened or closed
-  useEffect(() => {
-    if (isOpen) {
-      setModalState('summary_and_payment');
-      setBookingRef(`DIR-${Math.floor(100000 + Math.random() * 900000)}`);
-    }
-  }, [isOpen]);
-
-  if (!isOpen) return null;
+  const [bookingRef] = useState<string>(() => `DIR-${Math.floor(100000 + Math.random() * 900000)}`);
 
   const nights =
     selectedRange?.from && selectedRange?.to

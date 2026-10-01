@@ -5,19 +5,19 @@ import Link from 'next/link';
 import { Property } from '@/types/property';
 import { SlidersHorizontal, ChevronUp, ChevronDown, Check, Sparkles, Smartphone, Monitor } from 'lucide-react';
 
-interface PropertySwitcherProps {
+interface DemoPropertySwitcherProps {
   properties: Property[];
   currentSlug: string;
   isMobileSimulated?: boolean;
   onToggleMobileSimulated?: () => void;
 }
 
-export function PropertySwitcher({
+export function DemoPropertySwitcher({
   properties,
   currentSlug,
   isMobileSimulated = false,
   onToggleMobileSimulated,
-}: PropertySwitcherProps) {
+}: DemoPropertySwitcherProps) {
   const [isOpen, setIsOpen] = useState(false);
 
 

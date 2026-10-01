@@ -12,6 +12,8 @@ export interface PropertyTheme {
   logoUrl?: string;        // Optional custom logo / insignia
 }
 
+export type SupportedCurrency = 'USD' | 'EUR' | 'GBP' | 'PLN';
+
 export interface Property {
   id: string;
   slug: string;
@@ -19,7 +21,7 @@ export interface Property {
   location: string;
   description: string;
   pricePerNight: number;
-  currency: 'USD' | 'EUR' | 'GBP' | 'PLN';
+  currency: SupportedCurrency;
   images: string[];
   amenities: string[];
   occupiedDates: string[]; // ISO date strings (YYYY-MM-DD)

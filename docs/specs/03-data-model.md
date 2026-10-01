@@ -16,6 +16,8 @@ export interface PropertyTheme {
   logoUrl?: string;        // Custom property insignia/logo (falls back to stylized property title)
 }
 
+export type SupportedCurrency = 'USD' | 'EUR' | 'GBP' | 'PLN';
+
 export interface Property {
   id: string;
   slug: string;
@@ -23,17 +25,21 @@ export interface Property {
   location: string;
   description: string;
   pricePerNight: number;
-  currency: 'USD' | 'EUR' | 'GBP' | 'PLN';
+  currency: SupportedCurrency;
   images: string[];
   amenities: string[];
   occupiedDates: string[]; // ISO date strings (YYYY-MM-DD)
   hostInfo: HostInfo;
   theme: PropertyTheme;
+  coordinates?: {
+    lat: number;
+    lng: number;
+  };
 }
 ```
 
 ## 2. English Localization & Content Standards
-All property profiles in `src/data/properties.json` must be strictly provided in English:
+All property profiles in `src/data/sample-properties.json` must be strictly provided in English:
 - **Titles:** Evocative and refined names (e.g., "Nordic Glass Sanctuary", "Alpine Vista Chalet", "Whispering Pines Retreat").
 - **Locations:** International and picturesque destinations (e.g., "Aspen, Colorado", "Lofoten, Norway", "Zermatt, Switzerland", "Zakopane Highlands, Poland").
 - **Descriptions:** Compelling, high-converting direct booking sales copy focusing on privacy, scenic vistas, and bespoke stays.

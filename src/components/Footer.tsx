@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { HostInfo } from '@/types/property';
-import { ShieldCheck, Mail, Phone, Heart } from 'lucide-react';
+import { ShieldCheck, Phone, Heart } from 'lucide-react';
 
 interface FooterProps {
   title: string;

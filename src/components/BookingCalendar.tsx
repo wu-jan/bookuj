@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { DayPicker, DateRange } from 'react-day-picker';
 import { parseISO, isSameDay, format, differenceInCalendarDays } from 'date-fns';
-import { Calendar as CalendarIcon, Info, X, Check, ArrowRight, Sparkles } from 'lucide-react';
+import { Calendar as CalendarIcon, X, Check, Sparkles } from 'lucide-react';
 
 interface BookingCalendarProps {
   occupiedDates: string[]; // ISO date strings (YYYY-MM-DD)
@@ -134,8 +134,8 @@ export function BookingCalendar({
           </button>
 
           <div className="mt-3 flex items-center gap-1.5 text-[11px] text-zinc-400">
-            <Info className="h-3 w-3 text-zinc-400 shrink-0" />
-            <span>2 nights minimum recommended • Instant lock</span>
+            <Sparkles className="h-3 w-3 text-zinc-400 shrink-0" />
+            <span>Instant booking confirmation</span>
           </div>
         </div>
       )}
@@ -206,11 +206,6 @@ export function BookingCalendar({
                 <span className="h-3 w-3 rounded-full bg-zinc-200 line-through" />
                 <span>Occupied</span>
               </div>
-            </div>
-
-            <div className="flex items-center gap-1 text-zinc-400">
-              <Info className="h-3.5 w-3.5" />
-              <span>Direct booking: 2 nights minimum recommended</span>
             </div>
           </div>
         </div>

@@ -5,7 +5,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export type SupportedCurrency = 'USD' | 'EUR' | 'GBP' | 'PLN';
+import type { SupportedCurrency } from '@/types/property';
+export type { SupportedCurrency };
 
 export function formatCurrency(amount: number, currency: string = 'USD'): string {
   const symbolMap: Record<string, string> = {

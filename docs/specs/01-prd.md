@@ -12,5 +12,5 @@ Create a premier demonstration direct booking showcase interface based on mock d
 
 ## 3. Scope Boundaries (Out of Scope)
 - NO user authentication or host accounts required for MVP.
-- NO database integration (all state and mock listings reside in `src/data/properties.json`).
+- NO database integration (all state and mock listings reside in `src/data/sample-properties.json`).
 - NO production payment gateways (interactive high-fidelity mock simulation only).

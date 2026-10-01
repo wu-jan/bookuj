@@ -1,4 +1,4 @@
-import propertiesData from '@/data/properties.json';
+import propertiesData from '@/data/sample-properties.json';
 import { Property } from '@/types/property';
 
 const properties: Property[] = propertiesData as Property[];

@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bookuj — Bespoke Direct Booking Showcase
 
-## Getting Started
+Bookuj is a high-conversion, white-label direct booking showcase platform for boutique vacation rentals and luxury hospitality hosts. It eliminates platform middleman fees (0% commissions) while preserving a premium guest reservation experience.
 
-First, run the development server:
+## ✨ Key Features
+
+- **Cinematic Property Showcase**: Hero imagery with dynamic presentation, authentic gallery with fullscreen lightbox, and rich host storytelling.
+- **Dynamic White-Label Theming**: Custom brand colors, background hues, typography, and logos powered by CSS variable injection (`ThemeProvider`).
+- **Direct Reservation Engine**: Airbnb-grade interactive date range calendar (`react-day-picker`) with real-time stay cost breakdown and transparent deposit calculation.
+- **Simulation Checkout Modal**: Direct host communication and mock multi-state payment flow (IBAN, instant wire, pay on arrival).
+- **Mobile Device Simulation**: Built-in iPhone 15 Pro frame preview with viewport toggling for responsive testing.
+- **Demo Concierge Switcher**: Floating preview controller to switch instantly between 10 curated luxury profiles.
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18.17+ or later
+- npm or pnpm
+
+### Installation & Development
 
 ```bash
+# Install dependencies
+npm install
+
+# Start local development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the default showcase property.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Production Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run start
+```
 
-## Learn More
+## 🗺️ Route Architecture
 
-To learn more about Next.js, take a look at the following resources:
+- `/` — Primary featured showcase property.
+- `/demo/[slug]` — Static showcase route for any property profile (e.g. `/demo/nordic-glass-sanctuary`, `/demo/alpine-summit-chalet`).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Adding or Editing Properties
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Mock properties and profiles are stored in:
+```
+src/data/sample-properties.json
+```
 
-## Deploy on Vercel
+Each property profile adheres strictly to the `Property` interface defined in `src/types/property.ts`, including:
+- Unique `slug`, `title`, `location`, and `description`
+- `pricePerNight` and `currency` (`USD` | `EUR` | `GBP` | `PLN`)
+- `images` (Unsplash CDN or local assets)
+- `amenities` and `occupiedDates` (ISO strings: `YYYY-MM-DD`)
+- `hostInfo` (name, avatar, phone)
+- `theme` (`primaryColor`, `accentColor`, `backgroundColor`, `fontStyle`)
+- Optional `coordinates` (`lat`, `lng`) for interactive maps
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📱 Developer Tools: Demo Property Switcher
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+A floating preview pill (`DemoPropertySwitcher`) appears on screen during development:
+- **Switch Profiles**: Jump immediately across all 10 mock property profiles.
+- **Device Viewport Toggle**: Switch between Desktop Layout and an interactive Mobile Device Frame (iPhone 15 Pro simulation).
+
+## 📂 Documentation
+
+Full documentation lives in the `docs/` directory, organized by topic and reading order:
+
+### Specifications (`docs/specs/`)
+- [01-prd.md](docs/specs/01-prd.md) — Product requirements document & MVP scope.
+- [02-architecture.md](docs/specs/02-architecture.md) — Technical architecture & system design.
+- [03-data-model.md](docs/specs/03-data-model.md) — Data contracts, types & localization standards.
+- [04-ui-ux-spec.md](docs/specs/04-ui-ux-spec.md) — UI/UX design specifications & theme engine.
+- [05-implementation-plan.md](docs/specs/05-implementation-plan.md) — Phased implementation roadmap.
+
+### Strategic Roadmap (`docs/roadmap/`)
+- [future-roadmap.md](docs/roadmap/future-roadmap.md) — 5 strategic post-MVP expansion ideas (AI hero cinemagraph, contactless payment handoff, attribute tagging, map enhancements, brand naming).

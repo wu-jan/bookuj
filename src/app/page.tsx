@@ -1,5 +1,5 @@
-import { getAllProperties } from '@/lib/properties';
-import { PropertyShowcaseTemplate } from '@/components/PropertyShowcaseTemplate';
+import { getAllProperties } from '@/lib/propertyData';
+import { PropertyPage } from '@/components/PropertyPage';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -12,7 +12,7 @@ export default function HomePage() {
   const defaultProperty = allProperties[0];
 
   return (
-    <PropertyShowcaseTemplate
+    <PropertyPage
       property={defaultProperty}
       allProperties={allProperties}
     />
