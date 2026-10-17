@@ -451,5 +451,265 @@
       "lat": 35.003,
       "lng": 135.777
     }
+  },
+  {
+    "id": "prop-11",
+    "slug": "zakopane-gorna-chata",
+    "title": "Zakopane Górska Chata",
+    "location": "Zakopane, Podhale, Poland",
+    "description": "Traditional highland wooden chalet built with hand-hewn spruce timber, featuring a panoramic cedar sauna, stone fireplace, and unobstructed vistas of the High Tatras. An authentic Podhale retreat combining regional folk carpentry with contemporary alpine comfort.",
+    "pricePerNight": 480,
+    "currency": "PLN",
+    "images": [
+      "https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1600&q=80"
+    ],
+    "amenities": [
+      "Panoramic Sauna",
+      "Wood Fireplace",
+      "Mountain & Forest Views",
+      "High-Speed WiFi",
+      "Ski Storage & Boot Warmer",
+      "Complimentary Highland Tea & Firewood"
+    ],
+    "occupiedDates": [
+      "2026-10-15",
+      "2026-10-16",
+      "2026-10-17",
+      "2026-10-24",
+      "2026-10-25"
+    ],
+    "hostInfo": {
+      "name": "Stanisław Gąsienica",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80",
+      "phone": "+48 601 234 567",
+      "blikPhone": "+48 601 234 567",
+      "iban": "PL24 1020 2892 0000 7102 0184 9201",
+      "whatsappNumber": "+48601234567"
+    },
+    "theme": {
+      "primaryColor": "#2C1A0E",
+      "accentColor": "#E8A045",
+      "backgroundColor": "#FAF6F0",
+      "fontStyle": "serif"
+    },
+    "coordinates": {
+      "lat": 49.299,
+      "lng": 19.949
+    },
+    "depositPercent": 25,
+    "minimumStay": 2,
+    "cancellationPolicy": "Free cancellation up to 7 days before check-in. 50% deposit retained within 7 days.",
+    "tagline": "Authentic highland hospitality, minutes from the slopes."
+  },
+  {
+    "id": "prop-12",
+    "slug": "mazury-domek-nad-jeziorem",
+    "title": "Mazury Domek nad Jeziorem",
+    "location": "Mikołajki, Mazury, Poland",
+    "description": "Secluded lakeside wooden sanctuary nestled within old-growth pine woods, featuring a private wooden pier, touring kayaks, and sunset views over the tranquil lake waters. Designed for slow mornings, wild swimming, and serene nature escapes.",
+    "pricePerNight": 320,
+    "currency": "PLN",
+    "images": [
+      "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=80"
+    ],
+    "amenities": [
+      "Private Dock & Pier",
+      "Touring Kayaks Included",
+      "Lakeside Fire Pit",
+      "High-Speed Starlink WiFi",
+      "Outdoor Finnish Sauna",
+      "Pet Friendly"
+    ],
+    "occupiedDates": [
+      "2026-10-18",
+      "2026-10-19",
+      "2026-10-20",
+      "2026-10-27",
+      "2026-10-28"
+    ],
+    "hostInfo": {
+      "name": "Agnieszka Kowalska",
+      "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80",
+      "phone": "+48 502 345 678",
+      "blikPhone": "+48 502 345 678",
+      "iban": "PL68 1050 1445 1000 0023 5891 4322",
+      "whatsappNumber": "+48502345678"
+    },
+    "theme": {
+      "primaryColor": "#1A3A5C",
+      "accentColor": "#4EACC9",
+      "backgroundColor": "#F0F7FC",
+      "fontStyle": "sans"
+    },
+    "coordinates": {
+      "lat": 53.795,
+      "lng": 21.574
+    },
+    "depositPercent": 20,
+    "minimumStay": 3,
+    "cancellationPolicy": "Free cancellation up to 14 days before check-in. Non-refundable within 14 days.",
+    "tagline": "Wake up to lake silence. Every morning."
+  },
+  {
+    "id": "prop-13",
+    "slug": "trojmiejski-apartament",
+    "title": "Trójmiejski Apartament z Widokiem",
+    "location": "Sopot, Trójmiasto, Poland",
+    "description": "Light-filled coastal apartment situated just a two-minute stroll from Sopot's sandy shores and historic wooden pier. Features an expansive sun terrace overlooking the Baltic horizon, designer Scandinavian interiors, and quiet seaside breezes.",
+    "pricePerNight": 390,
+    "currency": "PLN",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1600&q=80"
+    ],
+    "amenities": [
+      "Panoramic Sea View Balcony",
+      "2-Minute Walk to Beach",
+      "Reserved Underground Parking",
+      "High-Speed Fiber WiFi",
+      "Espresso Bar & Wine Cooler",
+      "Dedicated Workspace"
+    ],
+    "occupiedDates": [
+      "2026-10-14",
+      "2026-10-15",
+      "2026-10-21",
+      "2026-10-22",
+      "2026-10-23"
+    ],
+    "hostInfo": {
+      "name": "Marek Wiśniewski",
+      "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80",
+      "phone": "+48 58 620 91 82",
+      "blikPhone": "+48 692 817 263",
+      "iban": "PL91 1240 1268 1111 0010 9821 7364",
+      "whatsappNumber": "+48692817263"
+    },
+    "theme": {
+      "primaryColor": "#0D4F7C",
+      "accentColor": "#F4A534",
+      "backgroundColor": "#F5FBFF",
+      "fontStyle": "sans"
+    },
+    "coordinates": {
+      "lat": 54.441,
+      "lng": 18.56
+    },
+    "depositPercent": 30,
+    "minimumStay": 2,
+    "cancellationPolicy": "50% refund for cancellations more than 5 days before arrival.",
+    "tagline": "Sea air, city pulse — the best of both worlds."
+  },
+  {
+    "id": "prop-14",
+    "slug": "bieszczadzka-ostoja",
+    "title": "Bieszczadzka Ostoja",
+    "location": "Ustrzyki Dolne, Bieszczady, Poland",
+    "description": "Off-grid eco-cabin hidden deep within the wild beech forests of Bieszczady. Solar-powered, wood-heated, and purposefully screen-free with zero television for an authentic digital detox immersed in forest sounds and dark starry night skies.",
+    "pricePerNight": 260,
+    "currency": "PLN",
+    "images": [
+      "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1600&q=80"
+    ],
+    "amenities": [
+      "Stone Cast Woodstove",
+      "Solar & Spring Water Off-Grid System",
+      "Outdoor Cedar Soaking Tub",
+      "Starry Sky Stargazing Deck",
+      "Pet Friendly",
+      "Fire Pit & Hammock Grove"
+    ],
+    "occupiedDates": [
+      "2026-10-12",
+      "2026-10-13",
+      "2026-10-19",
+      "2026-10-20",
+      "2026-10-26"
+    ],
+    "hostInfo": {
+      "name": "Tomasz Bieszczadzki",
+      "avatar": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=300&q=80",
+      "phone": "+48 13 461 88 20",
+      "blikPhone": "+48 730 456 789",
+      "iban": "PL45 8642 1142 2002 0031 9284 0001",
+      "whatsappNumber": "+48730456789"
+    },
+    "theme": {
+      "primaryColor": "#1E3B20",
+      "accentColor": "#7CB87E",
+      "backgroundColor": "#F4F8F0",
+      "fontStyle": "sans"
+    },
+    "coordinates": {
+      "lat": 49.432,
+      "lng": 22.598
+    },
+    "depositPercent": 20,
+    "minimumStay": 3,
+    "cancellationPolicy": "Full refund up to 10 days before. No refund within 10 days.",
+    "tagline": "Disconnect to reconnect. Deep forest, zero noise."
+  },
+  {
+    "id": "prop-15",
+    "slug": "krakow-kazimierz-loft",
+    "title": "Kraków Kazimierz Loft",
+    "location": "Kazimierz, Kraków, Poland",
+    "description": "Architect-designed industrial loft housed in a restored 19th-century townhouse in Kraków's historic Jewish quarter. Soaring ceilings, exposed red brick masonry, vintage brass accents, and custom curated Polish contemporary artwork.",
+    "pricePerNight": 350,
+    "currency": "PLN",
+    "images": [
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1600&q=80"
+    ],
+    "amenities": [
+      "Exposed Historic Brickwork",
+      "High-Speed Fiber WiFi",
+      "Designer Chef Kitchenette",
+      "Acoustic Double Glazing",
+      "5-Min Walk to Wawel Castle",
+      "Espresso Machine & Specialty Coffee"
+    ],
+    "occupiedDates": [
+      "2026-10-16",
+      "2026-10-17",
+      "2026-10-23",
+      "2026-10-24",
+      "2026-10-25"
+    ],
+    "hostInfo": {
+      "name": "Zofia Nowak",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
+      "phone": "+48 12 422 19 80",
+      "blikPhone": "+48 518 901 234",
+      "iban": "PL12 1090 1665 0000 0001 4289 9012",
+      "whatsappNumber": "+48518901234"
+    },
+    "theme": {
+      "primaryColor": "#1C1C1E",
+      "accentColor": "#C9A84C",
+      "backgroundColor": "#FAF9F7",
+      "fontStyle": "serif"
+    },
+    "coordinates": {
+      "lat": 50.05,
+      "lng": 19.944
+    },
+    "depositPercent": 30,
+    "minimumStay": 2,
+    "cancellationPolicy": "Free cancellation up to 48 hours before check-in.",
+    "tagline": "History under your feet. Art in every corner."
   }
 ]

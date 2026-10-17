@@ -61,6 +61,7 @@ export function PropertyPage({
             title={property.title}
             theme={property.theme}
             hostPhone={property.hostInfo.phone}
+            hostWhatsapp={property.hostInfo.whatsappNumber}
             hostName={property.hostInfo.name}
             hostAvatar={property.hostInfo.avatar}
             pricePerNight={property.pricePerNight}
@@ -167,6 +168,8 @@ export function PropertyPage({
           selectedRange={selectedRange}
           theme={property.theme}
           hostInfo={property.hostInfo}
+          depositPercent={property.depositPercent}
+          cancellationPolicy={property.cancellationPolicy}
         />
 
         {/* Demo Property Switcher Floating Pill */}

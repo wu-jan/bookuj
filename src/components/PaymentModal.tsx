@@ -28,10 +28,12 @@ interface PaymentModalProps {
   selectedRange: DateRange | undefined;
   theme: PropertyTheme;
   hostInfo?: HostInfo;
+  depositPercent?: number;
+  cancellationPolicy?: string;
 }
 
 type ModalState = 'summary_and_payment' | 'processing' | 'confirmed';
-type PaymentMethod = 'iban' | 'p2p' | 'arrival';
+type PaymentMethod = 'blik' | 'iban' | 'p2p' | 'arrival';
 
 export function PaymentModal(props: PaymentModalProps) {
   if (!props.isOpen) return null;
@@ -46,9 +48,14 @@ function PaymentModalContent({
   selectedRange,
   theme,
   hostInfo,
+  depositPercent,
+  cancellationPolicy,
 }: PaymentModalProps) {
   const [modalState, setModalState] = useState<ModalState>('summary_and_payment');
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('iban');
+  // Default to BLIK if host has BLIK phone number, otherwise IBAN
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(() =>
+    hostInfo?.blikPhone ? 'blik' : 'iban'
+  );
   const [guestName, setGuestName] = useState('');
   const [guestEmail, setGuestEmail] = useState('');
   const [guestNotes, setGuestNotes] = useState('');
@@ -61,7 +68,8 @@ function PaymentModalContent({
       : 1;
 
   const grandTotal = nights * pricePerNight;
-  const advanceDeposit = Math.round(grandTotal * 0.1); // 10% advance deposit
+  const hasDeposit = typeof depositPercent === 'number' && depositPercent > 0;
+  const advanceDeposit = hasDeposit ? Math.round(grandTotal * (depositPercent / 100)) : 0;
   const remainingDue = grandTotal - advanceDeposit;
 
   const handleCopy = (text: string, fieldKey: string) => {
@@ -85,11 +93,12 @@ function PaymentModalContent({
     onClose();
   };
 
-  // Mock host payment coordinates based on host info
+  // Host payment coordinates
   const hostFirstName = hostInfo?.name?.split(' ')[0] || 'Host';
-  const mockIban = 'NO93 8601 1117 9422';
+  const effectiveIban = hostInfo?.iban || 'NO93 8601 1117 9422';
   const mockBic = 'DNBNO22';
   const mockP2pHandle = `@${hostFirstName.toLowerCase()}-direct`;
+  const hasBlik = Boolean(hostInfo?.blikPhone);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
@@ -143,15 +152,30 @@ function PaymentModalContent({
                 <span className="text-xl font-bold text-zinc-900">{formatCurrency(grandTotal, currency)}</span>
               </div>
 
-              {/* 10% Advance Deposit Notice */}
-              <div className="rounded-xl bg-amber-50/80 border border-amber-200/70 p-2.5 text-[11px] text-amber-900 flex items-start gap-2">
-                <Info className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
-                <div>
-                  <strong>10% Advance Deposit required: {formatCurrency(advanceDeposit, currency)}</strong>
-                  <p className="text-[10px] text-amber-700 mt-0.5">
-                    Secures your dates directly with {hostFirstName}. Remaining {formatCurrency(remainingDue, currency)} settled upon arrival.
-                  </p>
+              {/* Advance Deposit Notice (Rendered only if depositPercent is provided) */}
+              {hasDeposit && (
+                <div className="rounded-xl bg-amber-50/80 border border-amber-200/70 p-2.5 text-[11px] text-amber-900 flex items-start gap-2">
+                  <Info className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
+                  <div>
+                    <strong>Deposit required: {depositPercent}% ({formatCurrency(advanceDeposit, currency)})</strong>
+                    <p className="text-[10px] text-amber-700 mt-0.5">
+                      Secures your dates directly with {hostFirstName}. Remaining {formatCurrency(remainingDue, currency)} settled upon arrival.
+                    </p>
+                  </div>
                 </div>
+              )}
+
+              {/* Cancellation Policy note */}
+              {cancellationPolicy && (
+                <div className="text-[11px] text-zinc-500 pt-1 border-t border-zinc-200/60 leading-relaxed">
+                  <span className="font-semibold text-zinc-700">Cancellation Policy: </span>
+                  {cancellationPolicy}
+                </div>
+              )}
+
+              {/* Soft-hold reassurance copy */}
+              <div className="text-[10px] text-zinc-400 italic pt-0.5">
+                Selected dates are held for 2 hours pending deposit confirmation.
               </div>
             </div>
 
@@ -204,7 +228,26 @@ function PaymentModalContent({
                 <label className="block text-[11px] font-semibold uppercase tracking-wider text-zinc-500 mb-2">
                   Preferred Direct Payment Method
                 </label>
-                <div className="grid grid-cols-3 gap-2">
+                <div className={`grid ${hasBlik ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-3'} gap-2`}>
+                  {/* BLIK option (Poland / blikPhone only) */}
+                  {hasBlik && (
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMethod('blik')}
+                      className={`flex flex-col items-center justify-center p-3 rounded-2xl border text-center transition-all cursor-pointer ${
+                        paymentMethod === 'blik'
+                          ? 'border-zinc-900 bg-zinc-900 text-white shadow-xs'
+                          : 'border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300'
+                      }`}
+                    >
+                      <Smartphone className="h-5 w-5 mb-1 text-rose-500" />
+                      <span className="text-[11px] font-semibold">BLIK P2P</span>
+                      <span className="text-[9px] opacity-75 truncate max-w-full">
+                        {hostInfo?.blikPhone}
+                      </span>
+                    </button>
+                  )}
+
                   <button
                     type="button"
                     onClick={() => setPaymentMethod('iban')}
@@ -216,7 +259,9 @@ function PaymentModalContent({
                   >
                     <Building2 className="h-5 w-5 mb-1" />
                     <span className="text-[11px] font-semibold">Bank Wire / IBAN</span>
-                    <span className="text-[9px] opacity-70">Direct SEPA</span>
+                    <span className="text-[9px] opacity-70">
+                      {hostInfo?.iban ? 'Host IBAN' : 'Direct SEPA'}
+                    </span>
                   </button>
 
                   <button
@@ -268,7 +313,9 @@ function PaymentModalContent({
                   backgroundColor: theme.accentColor || 'var(--color-accent, #10B981)',
                 }}
               >
-                Request Reservation ({formatCurrency(advanceDeposit, currency)} Deposit)
+                {hasDeposit
+                  ? `Request Reservation (${formatCurrency(advanceDeposit, currency)} Deposit)`
+                  : 'Request Reservation'}
               </button>
             </form>
           </div>
@@ -320,10 +367,12 @@ function PaymentModalContent({
                 <span className="text-zinc-500">Total Stay:</span>
                 <span className="font-bold text-zinc-900">{formatCurrency(grandTotal, currency)} ({nights}n)</span>
               </div>
-              <div className="flex justify-between items-center text-amber-800 bg-amber-100/60 p-2 rounded-lg font-medium">
-                <span>10% Advance Deposit Due:</span>
-                <span className="font-bold">{formatCurrency(advanceDeposit, currency)}</span>
-              </div>
+              {hasDeposit && (
+                <div className="flex justify-between items-center text-amber-800 bg-amber-100/60 p-2 rounded-lg font-medium">
+                  <span>{depositPercent}% Advance Deposit Due:</span>
+                  <span className="font-bold">{formatCurrency(advanceDeposit, currency)}</span>
+                </div>
+              )}
             </div>
 
             {/* Host Payment Coordinates Handoff */}
@@ -335,6 +384,31 @@ function PaymentModalContent({
                 </span>
               </div>
 
+              {/* BLIK Instructions */}
+              {paymentMethod === 'blik' && hostInfo?.blikPhone && (
+                <div className="space-y-1.5 pt-1 text-[11px]">
+                  <div className="flex justify-between items-center">
+                    <span className="text-zinc-500">Beneficiary:</span>
+                    <span className="font-semibold text-zinc-800">{hostInfo?.name || 'Host'}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-zinc-500">BLIK Transfer Phone:</span>
+                    <button
+                      type="button"
+                      onClick={() => handleCopy(hostInfo.blikPhone!, 'blik')}
+                      className="font-mono font-bold text-zinc-900 flex items-center gap-1 hover:text-emerald-700 cursor-pointer"
+                    >
+                      <span>{hostInfo.blikPhone}</span>
+                      {copiedField === 'blik' ? <Check className="h-3 w-3 text-emerald-600" /> : <Copy className="h-3 w-3 text-zinc-400" />}
+                    </button>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-zinc-500">Transfer Note:</span>
+                    <span className="font-mono font-bold text-emerald-800">{bookingRef}</span>
+                  </div>
+                </div>
+              )}
+
               {paymentMethod === 'iban' && (
                 <div className="space-y-1.5 pt-1 text-[11px]">
                   <div className="flex justify-between items-center">
@@ -345,10 +419,10 @@ function PaymentModalContent({
                     <span className="text-zinc-500">IBAN:</span>
                     <button
                       type="button"
-                      onClick={() => handleCopy(mockIban, 'iban')}
+                      onClick={() => handleCopy(effectiveIban, 'iban')}
                       className="font-mono font-bold text-zinc-900 flex items-center gap-1 hover:text-emerald-700 cursor-pointer"
                     >
-                      <span>{mockIban}</span>
+                      <span>{effectiveIban}</span>
                       {copiedField === 'iban' ? <Check className="h-3 w-3 text-emerald-600" /> : <Copy className="h-3 w-3 text-zinc-400" />}
                     </button>
                   </div>

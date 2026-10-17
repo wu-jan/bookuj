@@ -2,6 +2,9 @@ export interface HostInfo {
   name: string;
   avatar: string;
   phone: string;
+  blikPhone?: string;
+  iban?: string;
+  whatsappNumber?: string;
 }
 
 export interface PropertyTheme {
@@ -31,5 +34,9 @@ export interface Property {
     lat: number;
     lng: number;
   };
+  minimumStay?: number;
+  depositPercent?: number;
+  cancellationPolicy?: string;
+  tagline?: string;
 }
 

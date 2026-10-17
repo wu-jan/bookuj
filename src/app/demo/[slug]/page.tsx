@@ -1,7 +1,5 @@
-import { notFound } from 'next/navigation';
-import type { Metadata } from 'next';
-import { getPropertyBySlug, getAllProperties, getAllSlugs } from '@/lib/propertyData';
-import { PropertyPage } from '@/components/PropertyPage';
+import { redirect } from 'next/navigation';
+import { getAllSlugs } from '@/lib/propertyData';
 
 interface DemoSlugPageProps {
   params: Promise<{ slug: string }>;
@@ -12,36 +10,8 @@ export async function generateStaticParams() {
   return slugs.map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({ params }: DemoSlugPageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const property = getPropertyBySlug(slug);
-
-  if (!property) {
-    return {
-      title: 'Property Not Found',
-    };
-  }
-
-  return {
-    title: `${property.title} - Direct Booking Showcase`,
-    description: property.description,
-  };
-}
-
 export default async function DemoSlugPage({ params }: DemoSlugPageProps) {
   const { slug } = await params;
-  const property = getPropertyBySlug(slug);
-
-  if (!property) {
-    notFound();
-  }
-
-  const allProperties = getAllProperties();
-
-  return (
-    <PropertyPage
-      property={property}
-      allProperties={allProperties}
-    />
-  );
+  redirect(`/${slug}`);
 }
+

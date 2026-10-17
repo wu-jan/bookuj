@@ -20,6 +20,8 @@ export function DemoPropertySwitcher({
 }: DemoPropertySwitcherProps) {
   const [isOpen, setIsOpen] = useState(false);
 
+  // Hidden in all real host deployments. Only shown when explicitly enabled.
+  if (process.env.NEXT_PUBLIC_SHOW_DEMO_SWITCHER !== 'true') return null;
 
   const currentProperty = properties.find((p) => p.slug === currentSlug) || properties[0];
 
@@ -35,7 +37,7 @@ export function DemoPropertySwitcher({
               <span>Concierge Preview Mode</span>
             </div>
             <span className="text-[10px] font-mono uppercase bg-zinc-100 text-zinc-600 px-2 py-0.5 rounded-full">
-              10 Profiles
+              {properties.length} Profiles
             </span>
           </div>
 
@@ -53,7 +55,7 @@ export function DemoPropertySwitcher({
               >
                 <div className="flex items-center gap-2">
                   {isMobileSimulated ? (
-                    <Smartphone className="h-4 w-4 text-emerald-600" />
+                     <Smartphone className="h-4 w-4 text-emerald-600" />
                   ) : (
                     <Monitor className="h-4 w-4 text-zinc-500" />
                   )}
@@ -74,7 +76,7 @@ export function DemoPropertySwitcher({
               return (
                 <Link
                   key={property.slug}
-                  href={`/demo/${property.slug}`}
+                  href={`/${property.slug}`}
                   onClick={() => setIsOpen(false)}
                   className={`flex items-center justify-between gap-2 p-2.5 rounded-2xl text-xs transition-all ${
                     isSelected
