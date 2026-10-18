@@ -502,7 +502,58 @@
     "depositPercent": 25,
     "minimumStay": 2,
     "cancellationPolicy": "Free cancellation up to 7 days before check-in. 50% deposit retained within 7 days.",
-    "tagline": "Authentic highland hospitality, minutes from the slopes."
+    "tagline": "Authentic highland hospitality, minutes from the slopes.",
+    "defaultLocale": "pl",
+    "faq": [
+      {
+        "question": "Jakie są godziny zameldowania i wymeldowania?",
+        "answer": "Zameldowanie odbywa się od godziny 15:00, a wymeldowanie do 11:00. Jeśli potrzebujesz wcześniejszego przyjazdu, napisz do mnie na WhatsApp – jeśli chata będzie wolna, z przyjemnością Cię ugoszczę wcześniej."
+      },
+      {
+        "question": "Czy sauna fińska jest dostępna bez dodatkowych opłat?",
+        "answer": "Tak, prywatna sauna fińska jest w pełni wliczona w cenę pobytu. Drewno do sauny oraz olejki eteryczne są przygotowane w chaciaku."
+      },
+      {
+        "question": "Gdzie można zaparkować samochód zimą?",
+        "answer": "Do dyspozycji gości jest utwardzony, prywatny parking na 3 samochody na posesji, regularnie odśnieżany. W szczycie zimy zalecamy opony zimowe, a w przypadku intensywnych opadów – łańcuchy."
+      },
+      {
+        "question": "Czy akceptujecie zwierzęta domowe?",
+        "answer": "Tak! Kochamy czworonogi. Prosimy jedynie o wcześniejsze poinformowanie i zabranie legowiska dla pupila."
+      }
+    ],
+    "translations": {
+      "pl": {
+        "title": "Zakopane Górska Chata",
+        "tagline": "Autentyczna góralska gościnność, minuty od szlaków i stoków.",
+        "location": "Zakopane, Podhale, Polska",
+        "description": "Tradycyjna drewniana chata z ręcznie ciosanych bali świerkowych, z prywatną sauną panoramiczną, kominkiem z kamienia rzecznego i widokiem na panoramę Tatr Wysokich. Połączenie autentycznej podhalańskiej sztuki ciesielskiej z nowoczesnym komfortem.",
+        "amenities": [
+          "Panoramiczna sauna",
+          "Kominek na drewno",
+          "Widok na Tatry i las",
+          "Szybkie Wi-Fi",
+          "Narciarnia z suszarką do butów",
+          "Drewno do kominka i regionalne herbaty w cenie"
+        ],
+        "cancellationPolicy": "Bezpłatne odwołanie do 7 dni przed przyjazdem. W ciągu 7 dni zatrzymywany jest zadatek."
+      },
+      "en": {
+        "title": "Zakopane Highland Chalet",
+        "tagline": "Authentic highland hospitality, minutes from the slopes.",
+        "location": "Zakopane, Podhale, Poland",
+        "description": "Traditional highland wooden chalet built with hand-hewn spruce timber, featuring a panoramic cedar sauna, stone fireplace, and unobstructed vistas of the High Tatras. An authentic Podhale retreat combining regional folk carpentry with contemporary alpine comfort.",
+        "amenities": [
+          "Panoramic Sauna",
+          "Wood Fireplace",
+          "Mountain & Forest Views",
+          "High-Speed WiFi",
+          "Ski Storage & Boot Warmer",
+          "Complimentary Highland Tea & Firewood"
+        ],
+        "cancellationPolicy": "Free cancellation up to 7 days before check-in. 50% deposit retained within 7 days."
+      }
+    }
   },
   {
     "id": "prop-12",
@@ -554,7 +605,58 @@
     "depositPercent": 20,
     "minimumStay": 3,
     "cancellationPolicy": "Free cancellation up to 14 days before check-in. Non-refundable within 14 days.",
-    "tagline": "Wake up to lake silence. Every morning."
+    "tagline": "Wake up to lake silence. Every morning.",
+    "defaultLocale": "pl",
+    "faq": [
+      {
+        "question": "Czy kajaki i sprzęt wodny są w cenie?",
+        "answer": "Tak! 2 kajaki turystyczne oraz kamizelki asekuracyjne dla dorosłych i dzieci czekają na prywatnym pomoście bez dodatkowych opłat."
+      },
+      {
+        "question": "Jak działa internet (do pracy zdalnej)?",
+        "answer": "Mamy zainstalowany Starlink – prędkości oscylują wokół 150-220 Mbps z niskim pingiem, idealne do wideokonferencji i pracy zdalnej w ciszy."
+      },
+      {
+        "question": "Czy drewno na ognisko jest przygotowane?",
+        "answer": "Tak, wiązki suchego drewna brzozowego i rozpałka znajdują się w drewutni przy palenisku."
+      },
+      {
+        "question": "Jaka jest minimalna długość pobytu?",
+        "answer": "W trosce o spokój i czystość przyjmujemy rezerwacje na minimum 3 noce."
+      }
+    ],
+    "translations": {
+      "pl": {
+        "title": "Mazury Domek nad Jeziorem",
+        "tagline": "Poranki z widokiem na taflę jeziora. Cisza mazurskich lasów.",
+        "location": "Mikołajki, Mazury, Polska",
+        "description": "Klimatyczny drewniany domek ukryty wśród wiekowych sosen mazurskich, z bezpośrednim prywatnym pomostem, kajakami i zachodami słońca nad cichym jeziorem. Stworzony z myślą o powolnych porankach, kąpielach i ucieczce od zgiełku.",
+        "amenities": [
+          "Prywatny pomost i zejście do wody",
+          "Kajaki turystyczne w cenie",
+          "Palenisko na ognisko nad brzegiem",
+          "Starlink Wi-Fi",
+          "Sauna fińska",
+          "Zwierzęta mile widziane"
+        ],
+        "cancellationPolicy": "Bezpłatne odwołanie do 14 dni przed przyjazdem."
+      },
+      "en": {
+        "title": "Mazury Lakeside Haven",
+        "tagline": "Wake up to lake silence. Every morning.",
+        "location": "Mikołajki, Mazury, Poland",
+        "description": "Secluded lakeside wooden sanctuary nestled within old-growth pine woods, featuring a private wooden pier, touring kayaks, and sunset views over the tranquil lake waters. Designed for slow mornings, wild swimming, and serene nature escapes.",
+        "amenities": [
+          "Private Dock & Pier",
+          "Touring Kayaks Included",
+          "Lakeside Fire Pit",
+          "High-Speed Starlink WiFi",
+          "Outdoor Finnish Sauna",
+          "Pet Friendly"
+        ],
+        "cancellationPolicy": "Free cancellation up to 14 days before check-in. Non-refundable within 14 days."
+      }
+    }
   },
   {
     "id": "prop-13",
@@ -606,7 +708,54 @@
     "depositPercent": 30,
     "minimumStay": 2,
     "cancellationPolicy": "50% refund for cancellations more than 5 days before arrival.",
-    "tagline": "Sea air, city pulse — the best of both worlds."
+    "tagline": "Sea air, city pulse — the best of both worlds.",
+    "defaultLocale": "pl",
+    "faq": [
+      {
+        "question": "Czy miejsce w hali garażowej jest w cenie?",
+        "answer": "Tak, dedykowane miejsce w podziemnej hali garażowej z bramą na pilota jest wliczone w rezerwację bezpośrednią."
+      },
+      {
+        "question": "Jak daleko jest do plaży i Molo w Sopocie?",
+        "answer": "Do wejścia na plażę jest dokładnie 180 metrów (2 minuty spacerem). Do Molo oraz Monciaka dojdziesz w około 8 minut."
+      },
+      {
+        "question": "Czy zameldowanie jest bezkontaktowe?",
+        "answer": "Tak, apartament posiada zamek kodowy SmartLock. Kod do drzwi otrzymasz w wiadomości SMS/WhatsApp w dniu przyjazdu."
+      }
+    ],
+    "translations": {
+      "pl": {
+        "title": "Trójmiejski Apartament z Widokiem",
+        "tagline": "Bryza Bałtyku i puls Sopotu — dwa kroki od Molo.",
+        "location": "Sopot, Trójmiasto, Polska",
+        "description": "Jasny, przestronny apartament położony 2 minuty spacerem od piaszczystej plaży i sopockiego Molo. Słoneczny taras z widokiem na linię Bałtyku, skandynawskie wykończenie i pełna wygoda w sercu kurortu.",
+        "amenities": [
+          "Widok na morze",
+          "2 minuty spacerem do plaży",
+          "Garaż podziemny w cenie",
+          "Szybki internet światłowodowy",
+          "Ekspres ciśnieniowy",
+          "Wygodne biurko do pracy"
+        ],
+        "cancellationPolicy": "50% zwrotu przy odwołaniu powyżej 5 dni przed przyjazdem."
+      },
+      "en": {
+        "title": "Baltic Horizon Seaside Apartment",
+        "tagline": "Sea air, city pulse — the best of both worlds.",
+        "location": "Sopot, Trójmiasto, Poland",
+        "description": "Light-filled coastal apartment situated just a two-minute stroll from Sopot's sandy shores and historic wooden pier. Features an expansive sun terrace overlooking the Baltic horizon, designer Scandinavian interiors, and quiet seaside breezes.",
+        "amenities": [
+          "Panoramic Sea View Balcony",
+          "2-Minute Walk to Beach",
+          "Reserved Underground Parking",
+          "High-Speed Fiber WiFi",
+          "Espresso Bar & Wine Cooler",
+          "Dedicated Workspace"
+        ],
+        "cancellationPolicy": "50% refund for cancellations more than 5 days before arrival."
+      }
+    }
   },
   {
     "id": "prop-14",
@@ -658,7 +807,54 @@
     "depositPercent": 20,
     "minimumStay": 3,
     "cancellationPolicy": "Full refund up to 10 days before. No refund within 10 days.",
-    "tagline": "Disconnect to reconnect. Deep forest, zero noise."
+    "tagline": "Disconnect to reconnect. Deep forest, zero noise.",
+    "defaultLocale": "pl",
+    "faq": [
+      {
+        "question": "Na czym polega pobyt off-grid?",
+        "answer": "Chata czerpie energię z instalacji solarnej i krystalicznej wody ze źródła. Nie ma telewizora ani hałasu cywilizacji. Jest ciepła woda, nastrojowe oświetlenie i piec żeliwny opalany drewnem."
+      },
+      {
+        "question": "Czy jest zasięg telefonu komórkowego?",
+        "answer": "Zasięg GSM na tarasie jest umiarkowany (1-2 kreski LTE), wewnątrz celowo słabszy, aby ułatwić prawdziwy odpoczynek od powiadomień."
+      },
+      {
+        "question": "Jak przygotować banię / balię kąpielową?",
+        "answer": "Balia z piecem na drewno jest przygotowana z czystą wodą źródlaną. Rozpalenie pieca zajmuje około 2 godzin i daje niezapomniane wrażenia pod bieszczadzkim rozgwieżdżonym niebem."
+      }
+    ],
+    "translations": {
+      "pl": {
+        "title": "Bieszczadzka Ostoja",
+        "tagline": "Ucieczka od powiadomień. Dziki las bukowy i rozgwieżdżone niebo.",
+        "location": "Ustrzyki Dolne, Bieszczady, Polska",
+        "description": "Ekologiczna chata off-grid ukryta w sercu bieszczadzkiej puszczy. Zasilana energią słoneczną, ogrzewana piecem żeliwnym na drewno i całkowicie wolna od ekranów oraz telewizora dla prawdziwego cyfrowego detoksu.",
+        "amenities": [
+          "Żeliwny piec na drewno",
+          "Woda źródlana i energia słoneczna",
+          "Balia kąpielowa na drewno",
+          "Taras widokowy do obserwacji gwiazd",
+          "Zwierzęta mile widziane",
+          "Palenisko na ognisko i hamaki"
+        ],
+        "cancellationPolicy": "Pełny zwrot do 10 dni przed przyjazdem."
+      },
+      "en": {
+        "title": "Bieszczady Forest Sanctuary",
+        "tagline": "Disconnect to reconnect. Deep forest, zero noise.",
+        "location": "Ustrzyki Dolne, Bieszczady, Poland",
+        "description": "Off-grid eco-cabin hidden deep within the wild beech forests of Bieszczady. Solar-powered, wood-heated, and purposefully screen-free with zero television for an authentic digital detox immersed in forest sounds and dark starry night skies.",
+        "amenities": [
+          "Stone Cast Woodstove",
+          "Solar & Spring Water Off-Grid System",
+          "Outdoor Cedar Soaking Tub",
+          "Starry Sky Stargazing Deck",
+          "Pet Friendly",
+          "Fire Pit & Hammock Grove"
+        ],
+        "cancellationPolicy": "Full refund up to 10 days before. No refund within 10 days."
+      }
+    }
   },
   {
     "id": "prop-15",
@@ -710,6 +906,53 @@
     "depositPercent": 30,
     "minimumStay": 2,
     "cancellationPolicy": "Free cancellation up to 48 hours before check-in.",
-    "tagline": "History under your feet. Art in every corner."
+    "tagline": "History under your feet. Art in every corner.",
+    "defaultLocale": "pl",
+    "faq": [
+      {
+        "question": "Czy w kamienicy jest cicho pomimo tętniącego Kazimierza?",
+        "answer": "Tak, okna wychodzą na wewnętrzny, zielony dziedziniec kamienicy i posiadają potrójne pakiety dźwiękoszczelne, co gwarantuje pełen spokój w nocy."
+      },
+      {
+        "question": "W jaki sposób zorganizowane jest zameldowanie?",
+        "answer": "Wejście do kamienicy oraz apartamentu odbywa się za pomocą zamka szyfrowego. Kod otrzymasz w dniu zameldowania, co umożliwia przyjazd o dowolnej porze po 15:00."
+      },
+      {
+        "question": "Czy kawa i herbata są na miejscu?",
+        "answer": "Tak, w aneksie kuchennym czeka ekspres ciśnieniowy ze świeżo palonymi ziarnami z krakowskiej palarni speciality oraz wybór organicznych herbat."
+      }
+    ],
+    "translations": {
+      "pl": {
+        "title": "Kraków Kazimierz Loft",
+        "tagline": "Historia pod stopami. Sztuka w każdym zakątku Kazimierza.",
+        "location": "Kazimierz, Kraków, Polska",
+        "description": "Autorski loft w zrewitalizowanej XIX-wiecznej kamienicy na krakowskim Kazimierzu. Wysokie sufity, oryginalna czerwona cegła, mosiężne detale i wyselekcjonowane dzieła współczesnej polskiej sztuki.",
+        "amenities": [
+          "Oryginalna zabytkowa cegła",
+          "Szybki internet światłowodowy",
+          "Kuchnia z pełnym wyposażeniem",
+          "Dźwiękoszczelne okna",
+          "5 minut spacerem na Wawel",
+          "Ekspres ciśnieniowy i kawa speciality"
+        ],
+        "cancellationPolicy": "Bezpłatne odwołanie do 48 godzin przed przyjazdem."
+      },
+      "en": {
+        "title": "Kraków Kazimierz Heritage Loft",
+        "tagline": "History under your feet. Art in every corner.",
+        "location": "Kazimierz, Kraków, Poland",
+        "description": "Architect-designed industrial loft housed in a restored 19th-century townhouse in Kraków's historic Jewish quarter. Soaring ceilings, exposed red brick masonry, vintage brass accents, and custom curated Polish contemporary artwork.",
+        "amenities": [
+          "Exposed Historic Brickwork",
+          "High-Speed Fiber WiFi",
+          "Designer Chef Kitchenette",
+          "Acoustic Double Glazing",
+          "5-Min Walk to Wawel Castle",
+          "Espresso Machine & Specialty Coffee"
+        ],
+        "cancellationPolicy": "Free cancellation up to 48 hours before check-in."
+      }
+    }
   }
 ]

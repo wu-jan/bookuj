@@ -2,12 +2,14 @@ import React from 'react';
 import Image from 'next/image';
 import { ShieldCheck } from 'lucide-react';
 import { Property } from '@/types/property';
+import { TranslationDictionary } from '@/lib/translations';
 
 interface HostWelcomeCardProps {
   property: Property;
+  t: TranslationDictionary;
 }
 
-export function HostWelcomeCard({ property }: HostWelcomeCardProps) {
+export function HostWelcomeCard({ property, t }: HostWelcomeCardProps) {
   return (
     <div className="rounded-3xl border border-zinc-200/80 bg-white p-5 sm:p-8 shadow-xs flex flex-col justify-between">
       <div>
@@ -23,28 +25,28 @@ export function HostWelcomeCard({ property }: HostWelcomeCardProps) {
             </div>
             <div>
               <h2 className="text-base font-bold text-zinc-900">
-                Hosted by {property.hostInfo.name}
+                {t.hostedBy} {property.hostInfo.name}
               </h2>
               <p className="text-[11px] text-zinc-500 mt-0.5">
-                Direct Communication • Personal Concierge
+                {t.directCommunication}
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-800 shrink-0">
             <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />
-            <span>Verified Host</span>
+            <span>{t.verifiedHost}</span>
           </div>
         </div>
 
         <p className="text-xs sm:text-sm leading-relaxed text-zinc-600 italic border-l-2 border-emerald-500/50 pl-3">
-          &ldquo;Welcome to {property.title}. When you book directly through this site, you are communicating directly with me. No hidden fees, no opaque algorithms, and zero middleman markups.&rdquo;
+          {t.welcomeQuote(property.title)}
         </p>
       </div>
 
       {/* About the property summary */}
       <div className="mt-5 pt-4 sm:mt-6 sm:pt-5 border-t border-zinc-100">
-        <h3 className="text-xs font-bold text-zinc-900 uppercase tracking-wider mb-2">About this stay</h3>
+        <h3 className="text-xs font-bold text-zinc-900 uppercase tracking-wider mb-2">{t.aboutThisStay}</h3>
         <p className="text-xs text-zinc-600 leading-relaxed line-clamp-4">
           {property.description}
         </p>

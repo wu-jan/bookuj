@@ -6,6 +6,7 @@ import { format, differenceInCalendarDays } from 'date-fns';
 import { Property } from '@/types/property';
 import { BookingCalendar } from '@/components/BookingCalendar';
 import { formatCurrency } from '@/lib/utils';
+import { TranslationDictionary } from '@/lib/translations';
 
 interface BookingSuiteProps {
   property: Property;
@@ -13,6 +14,7 @@ interface BookingSuiteProps {
   onSelectRange: (range: DateRange | undefined) => void;
   isMobileView: boolean;
   onOpenModal: () => void;
+  t: TranslationDictionary;
 }
 
 export function BookingSuite({
@@ -21,6 +23,7 @@ export function BookingSuite({
   onSelectRange,
   isMobileView,
   onOpenModal,
+  t,
 }: BookingSuiteProps) {
   const totalNights =
     selectedRange?.from && selectedRange?.to
@@ -35,14 +38,14 @@ export function BookingSuite({
         <div>
           {!isMobileView && (
             <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 block mb-1">
-              Direct Reservation
+              {t.directReservation}
             </span>
           )}
           <h3 className="text-xl sm:text-2xl font-bold text-zinc-900">
-            Select Dates & Reserve Directly
+            {t.selectDatesTitle}
           </h3>
           <p className="text-xs text-zinc-500 mt-1">
-            Transparent direct rates • Zero platform fee • Contactless host handoff
+            {t.selectDatesSubtitle}
           </p>
         </div>
 
@@ -51,7 +54,7 @@ export function BookingSuite({
             <span className="text-xl sm:text-2xl font-bold text-zinc-900">
               {formatCurrency(property.pricePerNight, property.currency)}
             </span>
-            <span className="text-xs text-zinc-500">/ night (All-Inclusive)</span>
+            <span className="text-xs text-zinc-500">{t.perNight} {t.allInclusive}</span>
           </div>
         )}
       </div>
@@ -64,30 +67,38 @@ export function BookingSuite({
             onSelectRange={onSelectRange}
             accentColor={property.theme.accentColor}
             isMobileView={isMobileView}
+            minimumStay={property.minimumStay || 1}
+            t={t}
           />
         </div>
 
         {/* Summary Box beside calendar */}
         <div className={`${isMobileView ? 'w-full' : 'lg:col-span-4'} rounded-2xl bg-zinc-50 border border-zinc-200 p-5 sm:p-6 flex flex-col justify-between`}>
           <div>
-            <h4 className="font-bold text-sm text-zinc-900">Stay Summary</h4>
-            <p className="text-xs text-zinc-500 mt-0.5">Direct rate with zero hidden costs</p>
+            <h4 className="font-bold text-sm text-zinc-900">{t.staySummary}</h4>
+            <p className="text-xs text-zinc-500 mt-0.5">{t.staySummarySubtitle}</p>
 
             {selectedRange?.from && selectedRange?.to ? (
               <div className="mt-4 sm:mt-5 space-y-3 text-xs">
                 <div className="rounded-xl bg-white p-3 border border-zinc-200">
-                  <span className="text-[10px] uppercase font-bold text-zinc-400 block">Dates</span>
+                  <span className="text-[10px] uppercase font-bold text-zinc-400 block">{t.dates}</span>
                   <p className="font-bold text-zinc-900 mt-0.5">
                     {format(selectedRange.from, 'MMM d')} – {format(selectedRange.to, 'MMM d, yyyy')}
                   </p>
                   <p className="text-emerald-700 font-semibold mt-0.5">
-                    {totalNights} {totalNights === 1 ? 'night' : 'nights'} stay
+                    {t.nightCount(totalNights)}
                   </p>
                 </div>
 
+                {property.minimumStay && totalNights < property.minimumStay && (
+                  <div className="rounded-xl bg-amber-50 p-2.5 border border-amber-200 text-xs text-amber-900 font-medium">
+                    ⚠️ {t.minStayAlert(property.minimumStay, totalNights)}
+                  </div>
+                )}
+
                 <div className="flex justify-between text-zinc-600 pt-2">
                   <span>
-                    Direct Rate ({formatCurrency(property.pricePerNight, property.currency)} × {totalNights}n)
+                    {t.directRate} ({formatCurrency(property.pricePerNight, property.currency)} × {totalNights}n)
                   </span>
                   <span className="font-semibold text-zinc-900">
                     {formatCurrency(totalStayPrice, property.currency)}
@@ -95,49 +106,65 @@ export function BookingSuite({
                 </div>
 
                 <div className="flex justify-between text-emerald-700">
-                  <span>Cleaning & Linens</span>
-                  <span className="font-bold">Included ($0)</span>
+                  <span>{t.cleaningAndLinens}</span>
+                  <span className="font-bold">{t.includedFree}</span>
                 </div>
 
                 <div className="pt-3 border-t border-zinc-200 flex justify-between items-baseline text-sm font-bold text-zinc-900">
-                  <span>Total Stay Cost</span>
+                  <span>{t.totalStayCost}</span>
                   <span className="text-xl sm:text-2xl font-bold">
                     {formatCurrency(totalStayPrice, property.currency)}
                   </span>
                 </div>
 
                 <div className="rounded-xl bg-amber-50 p-2.5 border border-amber-200/60 text-[11px] text-amber-900">
-                  <strong>10% Advance Deposit: {formatCurrency(Math.round(totalStayPrice * 0.1), property.currency)}</strong>
+                  <strong>{t.advanceDeposit(property.depositPercent || 10, formatCurrency(Math.round(totalStayPrice * ((property.depositPercent || 10) / 100)), property.currency))}</strong>
                   <p className="text-[10px] text-amber-700 mt-0.5">
-                    Balance settled directly upon arrival.
+                    {t.depositBalanceNote}
                   </p>
                 </div>
               </div>
             ) : (
               <div className="mt-5 rounded-xl bg-white p-4 border border-dashed border-zinc-200 text-center text-xs text-zinc-500">
-                Select your check-in and check-out dates on the calendar to unlock direct reservation.
+                {t.selectDatesPrompt}
+                {property.minimumStay && property.minimumStay > 1 && (
+                  <div className="mt-2 text-[11px] text-zinc-400">
+                    ({t.minStayNotice(property.minimumStay)})
+                  </div>
+                )}
               </div>
             )}
           </div>
 
-          <button
-            type="button"
-            disabled={!selectedRange?.from || !selectedRange?.to}
-            onClick={onOpenModal}
-            className={`mt-6 w-full rounded-2xl py-3.5 text-sm font-bold text-white shadow-md transition-all ${
-              selectedRange?.from && selectedRange?.to
-                ? 'hover:brightness-105 active:scale-[0.98] cursor-pointer shadow-emerald-500/20'
-                : 'opacity-50 cursor-not-allowed bg-zinc-400'
-            }`}
-            style={{
-              backgroundColor:
-                selectedRange?.from && selectedRange?.to
-                  ? property.theme.accentColor || 'var(--color-accent, #10B981)'
-                  : undefined,
-            }}
-          >
-            {selectedRange?.from && selectedRange?.to ? 'Request Direct Reservation' : 'Select Dates to Book'}
-          </button>
+          {(() => {
+            const hasDates = Boolean(selectedRange?.from && selectedRange?.to);
+            const isMinStayMet = !property.minimumStay || totalNights >= property.minimumStay;
+            const canBook = hasDates && isMinStayMet;
+
+            return (
+              <button
+                type="button"
+                disabled={!canBook}
+                onClick={onOpenModal}
+                className={`mt-6 w-full rounded-2xl py-3.5 text-sm font-bold text-white shadow-md transition-all ${
+                  canBook
+                    ? 'hover:brightness-105 active:scale-[0.98] cursor-pointer shadow-emerald-500/20'
+                    : 'opacity-50 cursor-not-allowed bg-zinc-400'
+                }`}
+                style={{
+                  backgroundColor: canBook
+                    ? property.theme.accentColor || 'var(--color-accent, #10B981)'
+                    : undefined,
+                }}
+              >
+                {!hasDates
+                  ? t.selectDatesToBook
+                  : !isMinStayMet
+                  ? t.minStayButtonLabel(property.minimumStay || 1)
+                  : t.requestDirectReservation}
+              </button>
+            );
+          })()}
         </div>
       </div>
     </div>

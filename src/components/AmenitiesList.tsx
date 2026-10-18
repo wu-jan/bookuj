@@ -15,27 +15,42 @@ import {
 
 interface AmenitiesListProps {
   amenities: string[];
+  locale?: 'pl' | 'en';
 }
 
-// Icon dictionary matching standardized English amenity strings
+// Icon dictionary matching standardized English and Polish amenity strings
 const AMENITY_ICON_MAP: Record<string, React.ReactNode> = {
   'High-Speed WiFi': <Wifi className="h-5 w-5 text-emerald-600" />,
+  'Szybkie Wi-Fi': <Wifi className="h-5 w-5 text-emerald-600" />,
+  'Szybki internet światłowodowy': <Wifi className="h-5 w-5 text-emerald-600" />,
+  'Starlink Wi-Fi': <Wifi className="h-5 w-5 text-emerald-600" />,
   'Panoramic Sauna': <Sparkles className="h-5 w-5 text-amber-500" />,
+  'Sauna fińska': <Sparkles className="h-5 w-5 text-amber-500" />,
+  'Panoramiczna sauna': <Sparkles className="h-5 w-5 text-amber-500" />,
   'Private Hot Tub': <Waves className="h-5 w-5 text-sky-500" />,
+  'Balia kąpielowa na drewno': <Waves className="h-5 w-5 text-sky-500" />,
   'Fire Pit & Outdoor Lounge': <Flame className="h-5 w-5 text-orange-500" />,
+  'Palenisko na ognisko': <Flame className="h-5 w-5 text-orange-500" />,
+  'Kominek na drewno': <Flame className="h-5 w-5 text-orange-500" />,
   'Mountain & Forest Views': <Trees className="h-5 w-5 text-emerald-700" />,
+  'Widok na Tatry i las': <Trees className="h-5 w-5 text-emerald-700" />,
+  'Widok na morze': <Waves className="h-5 w-5 text-sky-500" />,
   'Fully Equipped Chef Kitchen': <Utensils className="h-5 w-5 text-amber-600" />,
+  'Kuchnia z pełnym wyposażeniem': <Utensils className="h-5 w-5 text-amber-600" />,
   'EV Charging Station': <Zap className="h-5 w-5 text-emerald-500" />,
   'Dedicated Workspace': <Laptop className="h-5 w-5 text-indigo-500" />,
+  'Wygodne biurko do pracy': <Laptop className="h-5 w-5 text-indigo-500" />,
   'Complimentary Artisanal Breakfast': <Coffee className="h-5 w-5 text-amber-700" />,
+  'Ekspres ciśnieniowy': <Coffee className="h-5 w-5 text-amber-700" />,
   'Pet Friendly': <Heart className="h-5 w-5 text-rose-500" />,
+  'Zwierzęta mile widziane': <Heart className="h-5 w-5 text-rose-500" />,
 };
 
-export function AmenitiesList({ amenities }: AmenitiesListProps) {
+export function AmenitiesList({ amenities, locale = 'en' }: AmenitiesListProps) {
   return (
     <div className="w-full">
       <h3 className="text-xl font-bold tracking-tight text-zinc-900 mb-6">
-        What this place offers
+        {locale === 'pl' ? 'Co oferuje to miejsce' : 'What this place offers'}
       </h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {amenities.map((item) => {

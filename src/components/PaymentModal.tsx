@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { PropertyTheme, HostInfo } from '@/types/property';
 import { formatCurrency } from '@/lib/utils';
+import { TranslationDictionary, Locale } from '@/lib/translations';
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -30,6 +31,8 @@ interface PaymentModalProps {
   hostInfo?: HostInfo;
   depositPercent?: number;
   cancellationPolicy?: string;
+  t: TranslationDictionary;
+  locale?: Locale;
 }
 
 type ModalState = 'summary_and_payment' | 'processing' | 'confirmed';
@@ -50,6 +53,8 @@ function PaymentModalContent({
   hostInfo,
   depositPercent,
   cancellationPolicy,
+  t,
+  locale = 'en',
 }: PaymentModalProps) {
   const [modalState, setModalState] = useState<ModalState>('summary_and_payment');
   // Default to BLIK if host has BLIK phone number, otherwise IBAN
@@ -119,36 +124,38 @@ function PaymentModalContent({
           <div>
             <div className="flex items-center gap-2 text-xs font-semibold text-emerald-700 bg-emerald-50 rounded-full px-3 py-1 w-fit mb-3">
               <ShieldCheck className="h-4 w-4" />
-              <span>Direct Host Reservation • 0% Platform Fee</span>
+              <span>{t.directGuestPortal}</span>
             </div>
 
             <h2 className="text-2xl font-bold tracking-tight text-zinc-900">
-              Direct Reservation Request
+              {t.directReservationRequest}
             </h2>
             <p className="text-xs text-zinc-500 mt-1">
-              Booking directly with <strong className="text-zinc-800">{hostInfo?.name || 'Host'}</strong> for <strong className="text-zinc-800">{propertyTitle}</strong>
+              {locale === 'pl'
+                ? `Rezerwacja bezpośrednia u gospodarza ${hostInfo?.name || ''} dla ${propertyTitle}`
+                : `Booking directly with ${hostInfo?.name || 'Host'} for ${propertyTitle}`}
             </p>
 
             {/* Reservation summary card */}
             <div className="mt-4 rounded-2xl border border-zinc-200 bg-zinc-50/80 p-4 text-xs space-y-2.5">
               <div className="flex justify-between items-center text-zinc-700">
-                <span className="font-semibold text-zinc-500 uppercase tracking-wider text-[10px]">DATES</span>
+                <span className="font-semibold text-zinc-500 uppercase tracking-wider text-[10px]">{t.dates}</span>
                 <span className="font-medium text-zinc-900">
                   {selectedRange?.from && selectedRange?.to
-                    ? `${format(selectedRange.from, 'MMM d, yyyy')} – ${format(selectedRange.to, 'MMM d, yyyy')} (${nights}n)`
+                    ? `${format(selectedRange.from, 'MMM d, yyyy')} – ${format(selectedRange.to, 'MMM d, yyyy')} (${t.nightCount(nights)})`
                     : 'Flexible stay'}
                 </span>
               </div>
               <div className="flex justify-between items-center text-zinc-700">
-                <span>Direct Nightly Rate</span>
-                <span className="font-medium text-zinc-900">{formatCurrency(pricePerNight, currency)} / night</span>
+                <span>{t.directRate}</span>
+                <span className="font-medium text-zinc-900">{formatCurrency(pricePerNight, currency)} {t.perNight}</span>
               </div>
               <div className="flex justify-between items-center text-emerald-700 text-[11px] font-medium">
-                <span>Cleaning & Service Fees</span>
-                <span className="bg-emerald-100/80 px-2 py-0.5 rounded-full font-bold">Included (0 extra)</span>
+                <span>{t.cleaningAndLinens}</span>
+                <span className="bg-emerald-100/80 px-2 py-0.5 rounded-full font-bold">{t.includedFree}</span>
               </div>
               <div className="pt-2 border-t border-zinc-200 flex justify-between items-baseline text-sm font-bold text-zinc-900">
-                <span>Total Stay Cost</span>
+                <span>{t.totalStayCost}</span>
                 <span className="text-xl font-bold text-zinc-900">{formatCurrency(grandTotal, currency)}</span>
               </div>
 
@@ -157,9 +164,9 @@ function PaymentModalContent({
                 <div className="rounded-xl bg-amber-50/80 border border-amber-200/70 p-2.5 text-[11px] text-amber-900 flex items-start gap-2">
                   <Info className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
                   <div>
-                    <strong>Deposit required: {depositPercent}% ({formatCurrency(advanceDeposit, currency)})</strong>
+                    <strong>{t.advanceDeposit(depositPercent, formatCurrency(advanceDeposit, currency))}</strong>
                     <p className="text-[10px] text-amber-700 mt-0.5">
-                      Secures your dates directly with {hostFirstName}. Remaining {formatCurrency(remainingDue, currency)} settled upon arrival.
+                      {t.depositBalanceNote}
                     </p>
                   </div>
                 </div>
@@ -168,14 +175,16 @@ function PaymentModalContent({
               {/* Cancellation Policy note */}
               {cancellationPolicy && (
                 <div className="text-[11px] text-zinc-500 pt-1 border-t border-zinc-200/60 leading-relaxed">
-                  <span className="font-semibold text-zinc-700">Cancellation Policy: </span>
+                  <span className="font-semibold text-zinc-700">{locale === 'pl' ? 'Zasady odwołania: ' : 'Cancellation Policy: '}</span>
                   {cancellationPolicy}
                 </div>
               )}
 
               {/* Soft-hold reassurance copy */}
               <div className="text-[10px] text-zinc-400 italic pt-0.5">
-                Selected dates are held for 2 hours pending deposit confirmation.
+                {locale === 'pl'
+                  ? 'Wybrane daty są wstępnie blokowane na 2 godziny do czasu potwierdzenia zadatku.'
+                  : 'Selected dates are held for 2 hours pending deposit confirmation.'}
               </div>
             </div>
 
@@ -184,12 +193,12 @@ function PaymentModalContent({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-[11px] font-semibold uppercase tracking-wider text-zinc-500 mb-1">
-                    Your Full Name *
+                    {t.fullName} *
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Maya Lin"
+                    placeholder={locale === 'pl' ? 'np. Jan Kowalski' : 'e.g. Maya Lin'}
                     value={guestName}
                     onChange={(e) => setGuestName(e.target.value)}
                     className="w-full rounded-xl border border-zinc-200 px-3 py-2 text-xs font-medium text-zinc-800 placeholder:text-zinc-400 focus:border-zinc-800 focus:outline-none"
@@ -197,12 +206,12 @@ function PaymentModalContent({
                 </div>
                 <div>
                   <label className="block text-[11px] font-semibold uppercase tracking-wider text-zinc-500 mb-1">
-                    Email Address *
+                    {t.emailAddress} *
                   </label>
                   <input
                     type="email"
                     required
-                    placeholder="e.g. maya@example.com"
+                    placeholder={locale === 'pl' ? 'np. jan@example.pl' : 'e.g. maya@example.com'}
                     value={guestEmail}
                     onChange={(e) => setGuestEmail(e.target.value)}
                     className="w-full rounded-xl border border-zinc-200 px-3 py-2 text-xs font-medium text-zinc-800 placeholder:text-zinc-400 focus:border-zinc-800 focus:outline-none"
@@ -212,11 +221,11 @@ function PaymentModalContent({
 
               <div>
                 <label className="block text-[11px] font-semibold uppercase tracking-wider text-zinc-500 mb-1">
-                  Note to Host (Optional)
+                  {t.specialRequests}
                 </label>
                 <input
                   type="text"
-                  placeholder="Estimated arrival time or special inquiries..."
+                  placeholder={t.specialRequestsPlaceholder}
                   value={guestNotes}
                   onChange={(e) => setGuestNotes(e.target.value)}
                   className="w-full rounded-xl border border-zinc-200 px-3 py-2 text-xs font-medium text-zinc-800 placeholder:text-zinc-400 focus:border-zinc-800 focus:outline-none"
@@ -226,7 +235,7 @@ function PaymentModalContent({
               {/* Direct Payment Method Selector */}
               <div>
                 <label className="block text-[11px] font-semibold uppercase tracking-wider text-zinc-500 mb-2">
-                  Preferred Direct Payment Method
+                  {t.paymentMethodHeading}
                 </label>
                 <div className={`grid ${hasBlik ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-3'} gap-2`}>
                   {/* BLIK option (Poland / blikPhone only) */}
@@ -348,28 +357,28 @@ function PaymentModalContent({
 
             <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800">
               <Sparkles className="h-3.5 w-3.5 text-emerald-600" />
-              <span>Direct Reservation Requested</span>
+              <span>{t.directReservationRequest}</span>
             </div>
 
             <h3 className="mt-2 text-xl font-bold tracking-tight text-zinc-900">
-              You&apos;re Booked Directly!
+              {t.reservationConfirmedTitle}
             </h3>
             <p className="mt-1.5 text-xs text-zinc-600 max-w-sm mx-auto">
-              Your dates at <strong className="text-zinc-900">{propertyTitle}</strong> have been requested. A confirmation copy has been sent to <strong>{guestEmail || 'your email'}</strong>.
+              {t.reservationConfirmedSubtitle}
             </p>
 
             <div className="mt-5 rounded-2xl bg-zinc-50 border border-zinc-200 p-4 text-left text-xs space-y-2">
               <div className="flex justify-between items-center">
-                <span className="text-zinc-500">Booking Reference:</span>
+                <span className="text-zinc-500">{t.bookingRef}:</span>
                 <span className="font-mono font-bold text-zinc-900">{bookingRef}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-zinc-500">Total Stay:</span>
-                <span className="font-bold text-zinc-900">{formatCurrency(grandTotal, currency)} ({nights}n)</span>
+                <span className="text-zinc-500">{t.totalStayLabel}:</span>
+                <span className="font-bold text-zinc-900">{formatCurrency(grandTotal, currency)} ({t.nightCount(nights)})</span>
               </div>
               {hasDeposit && (
                 <div className="flex justify-between items-center text-amber-800 bg-amber-100/60 p-2 rounded-lg font-medium">
-                  <span>{depositPercent}% Advance Deposit Due:</span>
+                  <span>{depositPercent}% {t.depositDueNow}:</span>
                   <span className="font-bold">{formatCurrency(advanceDeposit, currency)}</span>
                 </div>
               )}
@@ -378,7 +387,7 @@ function PaymentModalContent({
             {/* Host Payment Coordinates Handoff */}
             <div className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50/40 p-4 text-left text-xs space-y-2">
               <div className="flex items-center justify-between border-b border-emerald-100 pb-2">
-                <span className="font-bold text-emerald-950">Host Transfer Instructions</span>
+                <span className="font-bold text-emerald-950">{t.howToPay}</span>
                 <span className="text-[10px] font-medium text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
                   Direct Handoff
                 </span>
@@ -388,11 +397,11 @@ function PaymentModalContent({
               {paymentMethod === 'blik' && hostInfo?.blikPhone && (
                 <div className="space-y-1.5 pt-1 text-[11px]">
                   <div className="flex justify-between items-center">
-                    <span className="text-zinc-500">Beneficiary:</span>
+                    <span className="text-zinc-500">{t.recipient}:</span>
                     <span className="font-semibold text-zinc-800">{hostInfo?.name || 'Host'}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-zinc-500">BLIK Transfer Phone:</span>
+                    <span className="text-zinc-500">BLIK:</span>
                     <button
                       type="button"
                       onClick={() => handleCopy(hostInfo.blikPhone!, 'blik')}
@@ -403,7 +412,7 @@ function PaymentModalContent({
                     </button>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-zinc-500">Transfer Note:</span>
+                    <span className="text-zinc-500">{t.transferTitle}:</span>
                     <span className="font-mono font-bold text-emerald-800">{bookingRef}</span>
                   </div>
                 </div>
@@ -412,11 +421,11 @@ function PaymentModalContent({
               {paymentMethod === 'iban' && (
                 <div className="space-y-1.5 pt-1 text-[11px]">
                   <div className="flex justify-between items-center">
-                    <span className="text-zinc-500">Beneficiary:</span>
+                    <span className="text-zinc-500">{t.recipient}:</span>
                     <span className="font-semibold text-zinc-800">{hostInfo?.name || 'Host'}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-zinc-500">IBAN:</span>
+                    <span className="text-zinc-500">{t.accountNumber}:</span>
                     <button
                       type="button"
                       onClick={() => handleCopy(effectiveIban, 'iban')}
@@ -431,7 +440,7 @@ function PaymentModalContent({
                     <span className="font-mono font-semibold text-zinc-800">{mockBic}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-zinc-500">Payment Reference:</span>
+                    <span className="text-zinc-500">{t.transferTitle}:</span>
                     <span className="font-mono font-bold text-emerald-800">{bookingRef}</span>
                   </div>
                 </div>
@@ -451,7 +460,7 @@ function PaymentModalContent({
                     </button>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-zinc-500">Transfer Note:</span>
+                    <span className="text-zinc-500">{t.transferTitle}:</span>
                     <span className="font-mono font-bold text-emerald-800">{bookingRef}</span>
                   </div>
                 </div>
@@ -459,13 +468,13 @@ function PaymentModalContent({
 
               {paymentMethod === 'arrival' && (
                 <p className="text-[11px] text-zinc-600 pt-1 leading-relaxed">
-                  {hostFirstName} has been notified of your direct booking request. You will pay the advance deposit or full balance via card/cash upon arrival.
+                  {t.arrivalInstructions}
                 </p>
               )}
 
               {hostInfo?.phone && (
                 <div className="pt-2 border-t border-emerald-100 flex justify-between items-center text-[11px]">
-                  <span className="text-zinc-500">Host Direct Contact:</span>
+                  <span className="text-zinc-500">{t.phoneNumber}:</span>
                   <a href={`tel:${hostInfo.phone}`} className="font-semibold text-emerald-800 hover:underline">
                     {hostInfo.phone}
                   </a>
@@ -478,7 +487,7 @@ function PaymentModalContent({
               onClick={handleResetAndClose}
               className="mt-5 w-full rounded-2xl bg-zinc-900 py-3 text-sm font-semibold text-white shadow-md hover:bg-zinc-800 transition-colors cursor-pointer"
             >
-              Done & Return to Property
+              {t.doneClose}
             </button>
           </div>
         )}

@@ -8,6 +8,8 @@ interface MobileBottomCTAProps {
   hasDateRange: boolean;
   onAction: () => void;
   isMobileView: boolean;
+  actionLabel?: string;
+  priceLabel?: string;
 }
 
 export function MobileBottomCTA({
@@ -17,6 +19,8 @@ export function MobileBottomCTA({
   hasDateRange,
   onAction,
   isMobileView,
+  actionLabel,
+  priceLabel = 'Direct Price',
 }: MobileBottomCTAProps) {
   return (
     <div
@@ -28,7 +32,7 @@ export function MobileBottomCTA({
     >
       <div>
         <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block">
-          Direct Price
+          {priceLabel}
         </span>
         <span className="text-base font-extrabold text-zinc-900">
           {formatCurrency(pricePerNight, currency)}{' '}
@@ -44,7 +48,7 @@ export function MobileBottomCTA({
           backgroundColor: accentColor || 'var(--color-accent, #10B981)',
         }}
       >
-        {hasDateRange ? 'Proceed to Book' : 'Select Dates'}
+        {actionLabel || (hasDateRange ? 'Proceed to Book' : 'Select Dates')}
       </button>
     </div>
   );

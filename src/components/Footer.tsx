@@ -7,9 +7,11 @@ interface FooterProps {
   title: string;
   hostInfo: HostInfo;
   isMobileView?: boolean;
+  locale?: 'pl' | 'en';
 }
 
-export function Footer({ title, hostInfo, isMobileView = false }: FooterProps) {
+export function Footer({ title, hostInfo, isMobileView = false, locale = 'en' }: FooterProps) {
+  const isPl = locale === 'pl';
   return (
     <footer className="w-full border-t border-black/5 bg-white/50 backdrop-blur-xs mt-12 sm:mt-20">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:py-12 sm:px-6 lg:px-8">
@@ -24,7 +26,9 @@ export function Footer({ title, hostInfo, isMobileView = false }: FooterProps) {
               className="h-12 w-12 rounded-full object-cover ring-2 ring-zinc-200"
             />
             <div>
-              <p className="text-xs font-medium uppercase tracking-wider text-zinc-500">Hosted with care by</p>
+              <p className="text-xs font-medium uppercase tracking-wider text-zinc-500">
+                {isPl ? 'Gospodarz obiektu' : 'Hosted with care by'}
+              </p>
               <p className="text-sm font-semibold text-zinc-900">{hostInfo.name}</p>
             </div>
           </div>
@@ -33,11 +37,11 @@ export function Footer({ title, hostInfo, isMobileView = false }: FooterProps) {
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-center gap-4 text-xs text-zinc-600">
             <div className="flex items-center gap-1.5">
               <ShieldCheck className="h-4 w-4 text-emerald-600" />
-              <span>0% Commission • Best Rate Online</span>
+              <span>{isPl ? '0% Prowizji • Gwarancja Najlepszej Ceny' : '0% Commission • Best Rate Online'}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <Heart className="h-4 w-4 text-rose-500" />
-              <span>Personalized Guest Experience</span>
+              <span>{isPl ? 'Osobista Gościnność' : 'Personalized Guest Experience'}</span>
             </div>
           </div>
 

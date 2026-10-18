@@ -3,9 +3,11 @@ import Image from 'next/image';
 import { Sparkles, Compass, MapPin } from 'lucide-react';
 import { Property } from '@/types/property';
 import { formatCurrency } from '@/lib/utils';
+import { TranslationDictionary } from '@/lib/translations';
 
 interface PropertyHeroProps {
   property: Property;
+  t: TranslationDictionary;
   isMobileView: boolean;
   onScrollToCalendar: () => void;
   onScrollToGallery: () => void;
@@ -14,6 +16,7 @@ interface PropertyHeroProps {
 
 export function PropertyHero({
   property,
+  t,
   isMobileView,
   onScrollToCalendar,
   onScrollToGallery,
@@ -51,10 +54,10 @@ export function PropertyHero({
         <div className="flex items-center gap-1.5 sm:gap-2 rounded-full bg-white/95 px-2.5 py-1.5 sm:px-4 sm:py-2 text-[10px] sm:text-xs font-medium text-zinc-900 backdrop-blur-md shadow-lg pointer-events-auto shrink-0">
           <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-emerald-600" />
           <span className={isMobileView ? 'hidden' : 'hidden sm:inline'}>
-            Direct Guest Portal • 0% Markup
+            {t.directGuestPortal}
           </span>
           <span className={isMobileView ? 'inline' : 'sm:hidden'}>
-            Direct Portal
+            {t.directPortal}
           </span>
         </div>
 
@@ -91,7 +94,7 @@ export function PropertyHero({
             <div className="text-left flex-1 min-w-0">
               {!isMobileView && (
                 <span className="hidden sm:block text-[10px] font-bold text-zinc-400 uppercase tracking-wider">
-                  Spaces & Interior
+                  {t.spacesAndInterior}
                 </span>
               )}
               <span
@@ -99,7 +102,7 @@ export function PropertyHero({
                   isMobileView ? 'text-xs' : 'text-xs sm:text-sm'
                 }`}
               >
-                Photos
+                {t.photos}
               </span>
             </div>
             <span
@@ -133,7 +136,7 @@ export function PropertyHero({
               <div className="text-left flex-1 min-w-0">
                 {!isMobileView && (
                   <span className="hidden sm:block text-[10px] font-bold text-zinc-400 uppercase tracking-wider">
-                    Surroundings
+                    {t.surroundings}
                   </span>
                 )}
                 <span
@@ -141,7 +144,7 @@ export function PropertyHero({
                     isMobileView ? 'text-xs' : 'text-xs sm:text-sm'
                   }`}
                 >
-                  Map
+                  {t.map}
                 </span>
               </div>
               <span
@@ -149,7 +152,7 @@ export function PropertyHero({
                   isMobileView ? 'text-[11px]' : 'text-xs hidden sm:flex items-center gap-1'
                 }`}
               >
-                Explore ↓
+                {t.explore}
               </span>
             </button>
           )}
@@ -178,6 +181,11 @@ export function PropertyHero({
           >
             {property.title}
           </h1>
+          {property.tagline && (
+            <p className="mt-1 sm:mt-2 text-sm sm:text-lg font-medium text-emerald-200/90 italic tracking-wide">
+              {property.tagline}
+            </p>
+          )}
           {!isMobileView && (
             <p className="mt-2 text-xs sm:text-base text-zinc-200 line-clamp-2 max-w-xl hidden sm:block">
               {property.description}
@@ -195,7 +203,7 @@ export function PropertyHero({
         >
           <div>
             <span className="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider text-left">
-              Direct Rate
+              {t.directRate}
             </span>
             <span
               className={`${
@@ -203,12 +211,12 @@ export function PropertyHero({
               } font-extrabold text-zinc-900 text-left block`}
             >
               {formatCurrency(property.pricePerNight, property.currency)}{' '}
-              <span className="text-xs font-normal text-zinc-500">/ night</span>
+              <span className="text-xs font-normal text-zinc-500">{t.perNight}</span>
             </span>
           </div>
           <div className="h-7 w-px bg-zinc-200" />
           <div className="flex items-center gap-1 text-emerald-700 font-bold shrink-0 text-xs sm:text-sm">
-            <span>Reserve Dates</span>
+            <span>{t.reserveDates}</span>
             <span className="font-bold">→</span>
           </div>
         </button>

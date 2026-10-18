@@ -17,6 +17,21 @@ export interface PropertyTheme {
 
 export type SupportedCurrency = 'USD' | 'EUR' | 'GBP' | 'PLN';
 
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+export interface PropertyLocalizedContent {
+  title?: string;
+  tagline?: string;
+  location?: string;
+  description?: string;
+  amenities?: string[];
+  cancellationPolicy?: string;
+  faq?: FAQItem[];
+}
+
 export interface Property {
   id: string;
   slug: string;
@@ -38,5 +53,11 @@ export interface Property {
   depositPercent?: number;
   cancellationPolicy?: string;
   tagline?: string;
+  faq?: FAQItem[];
+  defaultLocale?: 'pl' | 'en';
+  translations?: {
+    pl?: PropertyLocalizedContent;
+    en?: PropertyLocalizedContent;
+  };
 }
 

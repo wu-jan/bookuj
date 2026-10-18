@@ -15,8 +15,10 @@ import { MobileBottomCTA } from '@/components/MobileBottomCTA';
 import { MobileDeviceFrame } from '@/components/MobileDeviceFrame';
 import { PaymentModal } from '@/components/PaymentModal';
 import { PropertyMap } from '@/components/PropertyMap';
+import { PropertyFAQ } from '@/components/PropertyFAQ';
 import { Footer } from '@/components/Footer';
 import { DemoPropertySwitcher } from '@/components/DemoPropertySwitcher';
+import { dictionaries, getLocalizedProperty, Locale } from '@/lib/translations';
 
 interface PropertyPageProps {
   property: Property;
@@ -27,6 +29,11 @@ export function PropertyPage({
   property,
   allProperties,
 }: PropertyPageProps) {
+  // Infer initial locale: if property has defaultLocale or currency is PLN -> 'pl', otherwise 'en'
+  const initialLocale: Locale =
+    property.defaultLocale || (property.currency === 'PLN' ? 'pl' : 'en');
+  const [currentLocale, setCurrentLocale] = useState<Locale>(initialLocale);
+
   const [selectedRange, setSelectedRange] = useState<DateRange | undefined>(undefined);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
@@ -47,10 +54,21 @@ export function PropertyPage({
     mapRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const hostFirstName = property.hostInfo.name.split(' ')[0];
+  // Resolve localized text for current property
+  const activeProperty = getLocalizedProperty(property, currentLocale);
+  const t = dictionaries[currentLocale];
+  const hasTranslations = Boolean(
+    property.translations && (property.translations.pl || property.translations.en)
+  );
+
+  const toggleLocale = () => {
+    setCurrentLocale((prev) => (prev === 'pl' ? 'en' : 'pl'));
+  };
+
+  const hostFirstName = activeProperty.hostInfo.name.split(' ')[0];
 
   return (
-    <ThemeProvider theme={property.theme}>
+    <ThemeProvider theme={activeProperty.theme}>
       <MobileDeviceFrame
         isActive={isMobileView}
         onExit={() => setIsMobileView(false)}
@@ -58,14 +76,18 @@ export function PropertyPage({
         <div className={`transition-all duration-300 w-full ${isMobileView ? '' : 'flex flex-col pb-20 md:pb-0'}`}>
           {/* Top Direct Booking Header */}
           <Header
-            title={property.title}
-            theme={property.theme}
-            hostPhone={property.hostInfo.phone}
-            hostWhatsapp={property.hostInfo.whatsappNumber}
-            hostName={property.hostInfo.name}
-            hostAvatar={property.hostInfo.avatar}
-            pricePerNight={property.pricePerNight}
-            currency={property.currency}
+            title={activeProperty.title}
+            theme={activeProperty.theme}
+            t={t}
+            locale={currentLocale}
+            onToggleLocale={toggleLocale}
+            hasTranslations={hasTranslations}
+            hostPhone={activeProperty.hostInfo.phone}
+            hostWhatsapp={activeProperty.hostInfo.whatsappNumber}
+            hostName={activeProperty.hostInfo.name}
+            hostAvatar={activeProperty.hostInfo.avatar}
+            pricePerNight={activeProperty.pricePerNight}
+            currency={activeProperty.currency}
             onCheckAvailability={scrollToCalendar}
             isMobileView={isMobileView}
           />
@@ -78,7 +100,8 @@ export function PropertyPage({
           >
             {/* Cinematic Hero */}
             <PropertyHero
-              property={property}
+              property={activeProperty}
+              t={t}
               isMobileView={isMobileView}
               onScrollToCalendar={scrollToCalendar}
               onScrollToGallery={scrollToSpaces}
@@ -93,18 +116,19 @@ export function PropertyPage({
                   isMobileView ? '' : 'md:grid-cols-2'
                 } gap-6 sm:gap-8 items-stretch`}
               >
-                <HostWelcomeCard property={property} />
+                <HostWelcomeCard property={activeProperty} t={t} />
                 <DirectBookingBenefitsCard
                   hostFirstName={hostFirstName}
                   onCheckDates={scrollToCalendar}
+                  t={t}
                 />
               </div>
 
               {/* Spaces & Atmosphere Gallery */}
               <div ref={spacesRef} className="scroll-mt-24">
                 <PropertyGallery
-                  images={property.images}
-                  title={property.title}
+                  images={activeProperty.images}
+                  title={activeProperty.title}
                   isMobileView={isMobileView}
                   onCheckDates={scrollToCalendar}
                 />
@@ -112,29 +136,40 @@ export function PropertyPage({
 
               {/* Standardized Amenities Grid */}
               <div className="bg-white rounded-3xl p-5 sm:p-8 border border-zinc-200/80 shadow-xs">
-                <AmenitiesList amenities={property.amenities} />
+                <AmenitiesList amenities={activeProperty.amenities} locale={currentLocale} />
               </div>
 
               {/* Location & Map Section */}
-              {property.coordinates && (
+              {activeProperty.coordinates && (
                 <div ref={mapRef}>
                   <PropertyMap
-                    lat={property.coordinates.lat}
-                    lng={property.coordinates.lng}
-                    locationName={property.location}
-                    title={property.title}
+                    lat={activeProperty.coordinates.lat}
+                    lng={activeProperty.coordinates.lng}
+                    locationName={activeProperty.location}
+                    title={activeProperty.title}
                   />
                 </div>
+              )}
+
+              {/* Frequently Asked Questions */}
+              {activeProperty.faq && activeProperty.faq.length > 0 && (
+                <PropertyFAQ
+                  faq={activeProperty.faq}
+                  hostFirstName={hostFirstName}
+                  isMobileView={isMobileView}
+                  t={t}
+                />
               )}
 
               {/* Dedicated Reservation Suite */}
               <div ref={calendarRef} className="scroll-mt-24 pt-4">
                 <BookingSuite
-                  property={property}
+                  property={activeProperty}
                   selectedRange={selectedRange}
                   onSelectRange={setSelectedRange}
                   isMobileView={isMobileView}
                   onOpenModal={() => setIsModalOpen(true)}
+                  t={t}
                 />
               </div>
             </div>
@@ -142,19 +177,22 @@ export function PropertyPage({
 
           {/* Footer */}
           <Footer
-            title={property.title}
-            hostInfo={property.hostInfo}
+            title={activeProperty.title}
+            hostInfo={activeProperty.hostInfo}
             isMobileView={isMobileView}
+            locale={currentLocale}
           />
 
           {/* Mobile Bottom CTA */}
           <MobileBottomCTA
-            pricePerNight={property.pricePerNight}
-            currency={property.currency}
-            accentColor={property.theme.accentColor}
+            pricePerNight={activeProperty.pricePerNight}
+            currency={activeProperty.currency}
+            accentColor={activeProperty.theme.accentColor}
             hasDateRange={Boolean(selectedRange?.from && selectedRange?.to)}
             onAction={scrollToCalendar}
             isMobileView={isMobileView}
+            actionLabel={Boolean(selectedRange?.from && selectedRange?.to) ? t.proceedToBook : t.travelDates}
+            priceLabel={t.directRate}
           />
         </div>
 
@@ -162,14 +200,16 @@ export function PropertyPage({
         <PaymentModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          propertyTitle={property.title}
-          pricePerNight={property.pricePerNight}
-          currency={property.currency}
+          propertyTitle={activeProperty.title}
+          pricePerNight={activeProperty.pricePerNight}
+          currency={activeProperty.currency}
           selectedRange={selectedRange}
-          theme={property.theme}
-          hostInfo={property.hostInfo}
-          depositPercent={property.depositPercent}
-          cancellationPolicy={property.cancellationPolicy}
+          theme={activeProperty.theme}
+          hostInfo={activeProperty.hostInfo}
+          depositPercent={activeProperty.depositPercent}
+          cancellationPolicy={activeProperty.cancellationPolicy}
+          t={t}
+          locale={currentLocale}
         />
 
         {/* Demo Property Switcher Floating Pill */}
