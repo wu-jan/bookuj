@@ -27,7 +27,20 @@ export function getSupabaseClient(): SupabaseClient | null {
   }
   try {
     if (!supabaseClient) {
-      supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+      supabaseClient = createClient(supabaseUrl, supabaseAnonKey, {
+        auth: {
+          persistSession: false,
+          autoRefreshToken: false,
+        },
+        global: {
+          fetch: (url, options = {}) => {
+            return fetch(url, {
+              ...options,
+              next: { revalidate: 60 },
+            });
+          },
+        },
+      });
     }
     return supabaseClient;
   } catch (err) {
