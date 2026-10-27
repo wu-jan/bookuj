@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DateRange } from 'react-day-picker';
 import { format, differenceInCalendarDays } from 'date-fns';
+import { pl, enUS } from 'date-fns/locale';
 import {
   X,
   Building2,
@@ -66,6 +67,18 @@ function PaymentModalContent({
   const [guestNotes, setGuestNotes] = useState('');
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [bookingRef] = useState<string>(() => `DIR-${Math.floor(100000 + Math.random() * 900000)}`);
+
+  // Prevent background scroll while modal is active
+  useEffect(() => {
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, []);
+
+  const dateFnsLocale = locale === 'pl' ? pl : enUS;
+  const dateFormatPattern = locale === 'pl' ? 'd MMM yyyy' : 'MMM d, yyyy';
 
   const nights =
     selectedRange?.from && selectedRange?.to
@@ -131,9 +144,7 @@ function PaymentModalContent({
               {t.directReservationRequest}
             </h2>
             <p className="text-xs text-zinc-500 mt-1">
-              {locale === 'pl'
-                ? `Rezerwacja bezpośrednia u gospodarza ${hostInfo?.name || ''} dla ${propertyTitle}`
-                : `Booking directly with ${hostInfo?.name || 'Host'} for ${propertyTitle}`}
+              {t.bookingDirectWith(hostInfo?.name || (locale === 'pl' ? 'gospodarza' : 'Host'), propertyTitle)}
             </p>
 
             {/* Reservation summary card */}
@@ -142,8 +153,8 @@ function PaymentModalContent({
                 <span className="font-semibold text-zinc-500 uppercase tracking-wider text-[10px]">{t.dates}</span>
                 <span className="font-medium text-zinc-900">
                   {selectedRange?.from && selectedRange?.to
-                    ? `${format(selectedRange.from, 'MMM d, yyyy')} – ${format(selectedRange.to, 'MMM d, yyyy')} (${t.nightCount(nights)})`
-                    : 'Flexible stay'}
+                    ? `${format(selectedRange.from, dateFormatPattern, { locale: dateFnsLocale })} – ${format(selectedRange.to, dateFormatPattern, { locale: dateFnsLocale })} (${t.nightCount(nights)})`
+                    : t.flexibleStay}
                 </span>
               </div>
               <div className="flex justify-between items-center text-zinc-700">
@@ -175,16 +186,14 @@ function PaymentModalContent({
               {/* Cancellation Policy note */}
               {cancellationPolicy && (
                 <div className="text-[11px] text-zinc-500 pt-1 border-t border-zinc-200/60 leading-relaxed">
-                  <span className="font-semibold text-zinc-700">{locale === 'pl' ? 'Zasady odwołania: ' : 'Cancellation Policy: '}</span>
+                  <span className="font-semibold text-zinc-700">{t.cancellationPolicyLabel}</span>
                   {cancellationPolicy}
                 </div>
               )}
 
               {/* Soft-hold reassurance copy */}
               <div className="text-[10px] text-zinc-400 italic pt-0.5">
-                {locale === 'pl'
-                  ? 'Wybrane daty są wstępnie blokowane na 2 godziny do czasu potwierdzenia zadatku.'
-                  : 'Selected dates are held for 2 hours pending deposit confirmation.'}
+                {t.softHoldReassurance(2)}
               </div>
             </div>
 
@@ -201,7 +210,7 @@ function PaymentModalContent({
                     placeholder={locale === 'pl' ? 'np. Jan Kowalski' : 'e.g. Maya Lin'}
                     value={guestName}
                     onChange={(e) => setGuestName(e.target.value)}
-                    className="w-full rounded-xl border border-zinc-200 px-3 py-2 text-xs font-medium text-zinc-800 placeholder:text-zinc-400 focus:border-zinc-800 focus:outline-none"
+                    className="w-full rounded-xl border border-zinc-200 px-3 py-2 text-base sm:text-xs font-medium text-zinc-800 placeholder:text-zinc-400 focus:border-zinc-800 focus:outline-none"
                   />
                 </div>
                 <div>
@@ -214,7 +223,7 @@ function PaymentModalContent({
                     placeholder={locale === 'pl' ? 'np. jan@example.pl' : 'e.g. maya@example.com'}
                     value={guestEmail}
                     onChange={(e) => setGuestEmail(e.target.value)}
-                    className="w-full rounded-xl border border-zinc-200 px-3 py-2 text-xs font-medium text-zinc-800 placeholder:text-zinc-400 focus:border-zinc-800 focus:outline-none"
+                    className="w-full rounded-xl border border-zinc-200 px-3 py-2 text-base sm:text-xs font-medium text-zinc-800 placeholder:text-zinc-400 focus:border-zinc-800 focus:outline-none"
                   />
                 </div>
               </div>
@@ -228,7 +237,7 @@ function PaymentModalContent({
                   placeholder={t.specialRequestsPlaceholder}
                   value={guestNotes}
                   onChange={(e) => setGuestNotes(e.target.value)}
-                  className="w-full rounded-xl border border-zinc-200 px-3 py-2 text-xs font-medium text-zinc-800 placeholder:text-zinc-400 focus:border-zinc-800 focus:outline-none"
+                  className="w-full rounded-xl border border-zinc-200 px-3 py-2 text-base sm:text-xs font-medium text-zinc-800 placeholder:text-zinc-400 focus:border-zinc-800 focus:outline-none"
                 />
               </div>
 
@@ -307,10 +316,10 @@ function PaymentModalContent({
               <div className="rounded-xl bg-zinc-50 border border-zinc-200 p-3 text-xs text-zinc-600 space-y-1">
                 <div className="flex items-center gap-1.5 font-semibold text-zinc-800">
                   <ShieldCheck className="h-4 w-4 text-emerald-600" />
-                  <span>Contactless Host Handoff</span>
+                  <span>{t.contactlessHandoffTitle}</span>
                 </div>
                 <p className="text-[11px] leading-relaxed text-zinc-500">
-                  We connect you directly to the property owner. No third-party payment middleman extracts commissions from your stay.
+                  {t.contactlessHandoffDesc}
                 </p>
               </div>
 
@@ -323,8 +332,8 @@ function PaymentModalContent({
                 }}
               >
                 {hasDeposit
-                  ? `Request Reservation (${formatCurrency(advanceDeposit, currency)} Deposit)`
-                  : 'Request Reservation'}
+                  ? t.requestWithDeposit(formatCurrency(advanceDeposit, currency))
+                  : t.requestDirectReservation}
               </button>
             </form>
           </div>
@@ -340,10 +349,10 @@ function PaymentModalContent({
               />
             </div>
             <h3 className="mt-6 text-xl font-bold text-zinc-900">
-              Notifying {hostFirstName}...
+              {t.notifyingHost(hostFirstName)}
             </h3>
             <p className="mt-2 text-xs text-zinc-500 max-w-xs">
-              Directly registering your dates and preparing host transfer coordinates.
+              {t.notifyingHostDesc}
             </p>
           </div>
         )}

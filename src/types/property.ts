@@ -13,6 +13,7 @@ export interface PropertyTheme {
   backgroundColor: string; // Base canvas background
   fontStyle: 'sans' | 'serif'; // Font family toggle
   logoUrl?: string;        // Optional custom logo / insignia
+  layout?: 'boutique' | 'minimal' | 'alpine';
 }
 
 export type SupportedCurrency = 'USD' | 'EUR' | 'GBP' | 'PLN';
@@ -30,6 +31,7 @@ export interface PropertyLocalizedContent {
   amenities?: string[];
   cancellationPolicy?: string;
   faq?: FAQItem[];
+  hostBio?: string;
 }
 
 export interface Property {
@@ -59,5 +61,8 @@ export interface Property {
     pl?: PropertyLocalizedContent;
     en?: PropertyLocalizedContent;
   };
+  hostBio?: string;         // 1-2 sentence personal story shown in boutique host section
+  icalUrl?: string;         // Airbnb / Google Calendar .ics URL for live availability sync
+  softHoldHours?: number;   // Hours a pending booking holds dates before auto-expiry (default: 2)
 }
 

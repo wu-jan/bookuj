@@ -14,6 +14,7 @@ export interface PropertyTheme {
   backgroundColor: string; // Base page canvas background (e.g., off-white #FAFAFA or midnight dark)
   fontStyle: 'sans' | 'serif'; // 'serif' for boutique luxury/cabins, 'sans' for sleek modern lofts
   logoUrl?: string;        // Custom property insignia/logo (falls back to stylized property title)
+  layout?: 'boutique' | 'minimal' | 'alpine'; // Layout preset ('boutique' default for Polish properties)
 }
 
 export type SupportedCurrency = 'USD' | 'EUR' | 'GBP' | 'PLN';
@@ -35,6 +36,19 @@ export interface Property {
     lat: number;
     lng: number;
   };
+  minimumStay?: number;
+  depositPercent?: number;
+  cancellationPolicy?: string;
+  tagline?: string;
+  faq?: FAQItem[];
+  defaultLocale?: 'pl' | 'en';
+  translations?: {
+    pl?: PropertyLocalizedContent;
+    en?: PropertyLocalizedContent;
+  };
+  hostBio?: string;         // 1-2 sentence personal story shown in boutique host section
+  icalUrl?: string;         // Airbnb / Google Calendar .ics URL for live availability sync
+  softHoldHours?: number;   // Hours a pending booking holds dates before auto-expiry (default: 2)
 }
 ```
 

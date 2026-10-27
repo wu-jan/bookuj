@@ -10,6 +10,7 @@ interface MobileBottomCTAProps {
   isMobileView: boolean;
   actionLabel?: string;
   priceLabel?: string;
+  perNightSuffix?: string;
 }
 
 export function MobileBottomCTA({
@@ -21,6 +22,7 @@ export function MobileBottomCTA({
   isMobileView,
   actionLabel,
   priceLabel = 'Direct Price',
+  perNightSuffix = '/ night',
 }: MobileBottomCTAProps) {
   return (
     <div
@@ -28,7 +30,7 @@ export function MobileBottomCTA({
         isMobileView
           ? 'sticky bottom-0 left-0 right-0 z-30'
           : 'md:hidden fixed bottom-0 left-0 right-0 z-30'
-      } bg-white/95 backdrop-blur-lg border-t border-black/10 px-4 py-3 flex items-center justify-between shadow-2xl`}
+      } bg-white/95 backdrop-blur-lg border-t border-black/10 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] flex items-center justify-between shadow-2xl`}
     >
       <div>
         <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block">
@@ -36,7 +38,7 @@ export function MobileBottomCTA({
         </span>
         <span className="text-base font-extrabold text-zinc-900">
           {formatCurrency(pricePerNight, currency)}{' '}
-          <span className="text-xs font-normal text-zinc-500">/ night</span>
+          <span className="text-xs font-normal text-zinc-500">{perNightSuffix}</span>
         </span>
       </div>
 

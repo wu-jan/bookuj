@@ -2,11 +2,14 @@ import { getAllProperties, getPropertyBySlug } from '@/lib/propertyData';
 import { PropertyPage } from '@/components/PropertyPage';
 import type { Metadata } from 'next';
 
+export const revalidate = 60;
+
 export async function generateMetadata(): Promise<Metadata> {
   const featuredSlug = process.env.NEXT_PUBLIC_FEATURED_SLUG;
+  const all = await getAllProperties();
   const property = featuredSlug
-    ? getPropertyBySlug(featuredSlug)
-    : getAllProperties()[0];
+    ? await getPropertyBySlug(featuredSlug)
+    : all[0];
 
   if (property) {
     return {
@@ -20,11 +23,11 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function HomePage() {
-  const allProperties = getAllProperties();
+export default async function HomePage() {
+  const allProperties = await getAllProperties();
   const featuredSlug = process.env.NEXT_PUBLIC_FEATURED_SLUG;
   const defaultProperty = featuredSlug
-    ? (getPropertyBySlug(featuredSlug) ?? allProperties[0])
+    ? ((await getPropertyBySlug(featuredSlug)) ?? allProperties[0])
     : allProperties[0];
 
   return (

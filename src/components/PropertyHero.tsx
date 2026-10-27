@@ -70,7 +70,7 @@ export function PropertyHero({
             className={`group flex items-center gap-2 sm:gap-4 rounded-xl sm:rounded-2xl bg-white text-zinc-900 ${
               isMobileView
                 ? 'px-2.5 py-2 w-auto'
-                : 'px-3 py-2.5 sm:px-6 sm:py-4 w-full sm:w-[300px]'
+                : 'px-2.5 py-2 sm:px-6 sm:py-4 w-auto sm:w-[300px]'
             } shadow-2xl hover:bg-zinc-50 active:scale-95 transition-all cursor-pointer`}
           >
             <div
@@ -122,7 +122,7 @@ export function PropertyHero({
               className={`group flex items-center gap-2 sm:gap-4 rounded-xl sm:rounded-2xl bg-white text-zinc-900 ${
                 isMobileView
                   ? 'px-2.5 py-2 w-auto'
-                  : 'px-3 py-2.5 sm:px-6 sm:py-4 w-full sm:w-[300px]'
+                  : 'px-2.5 py-2 sm:px-6 sm:py-4 w-auto sm:w-[300px]'
               } shadow-2xl hover:bg-zinc-50 active:scale-95 transition-all cursor-pointer`}
             >
               <div

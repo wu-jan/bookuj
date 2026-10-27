@@ -3,10 +3,11 @@
 import React from 'react';
 import { DateRange } from 'react-day-picker';
 import { format, differenceInCalendarDays } from 'date-fns';
+import { pl, enUS } from 'date-fns/locale';
 import { Property } from '@/types/property';
 import { BookingCalendar } from '@/components/BookingCalendar';
 import { formatCurrency } from '@/lib/utils';
-import { TranslationDictionary } from '@/lib/translations';
+import { TranslationDictionary, Locale } from '@/lib/translations';
 
 interface BookingSuiteProps {
   property: Property;
@@ -15,6 +16,7 @@ interface BookingSuiteProps {
   isMobileView: boolean;
   onOpenModal: () => void;
   t: TranslationDictionary;
+  locale?: Locale;
 }
 
 export function BookingSuite({
@@ -24,7 +26,12 @@ export function BookingSuite({
   isMobileView,
   onOpenModal,
   t,
+  locale = 'en',
 }: BookingSuiteProps) {
+  const dateFnsLocale = locale === 'pl' ? pl : enUS;
+  const dateFormatPattern = locale === 'pl' ? 'd MMM yyyy' : 'MMM d, yyyy';
+  const shortDateFormatPattern = locale === 'pl' ? 'd MMM' : 'MMM d';
+
   const totalNights =
     selectedRange?.from && selectedRange?.to
       ? differenceInCalendarDays(selectedRange.to, selectedRange.from)
@@ -69,6 +76,7 @@ export function BookingSuite({
             isMobileView={isMobileView}
             minimumStay={property.minimumStay || 1}
             t={t}
+            locale={locale}
           />
         </div>
 
@@ -83,7 +91,7 @@ export function BookingSuite({
                 <div className="rounded-xl bg-white p-3 border border-zinc-200">
                   <span className="text-[10px] uppercase font-bold text-zinc-400 block">{t.dates}</span>
                   <p className="font-bold text-zinc-900 mt-0.5">
-                    {format(selectedRange.from, 'MMM d')} – {format(selectedRange.to, 'MMM d, yyyy')}
+                    {format(selectedRange.from, shortDateFormatPattern, { locale: dateFnsLocale })} – {format(selectedRange.to, dateFormatPattern, { locale: dateFnsLocale })}
                   </p>
                   <p className="text-emerald-700 font-semibold mt-0.5">
                     {t.nightCount(totalNights)}

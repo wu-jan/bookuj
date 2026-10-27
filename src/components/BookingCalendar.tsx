@@ -3,8 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import { DayPicker, DateRange } from 'react-day-picker';
 import { parseISO, isSameDay, format, differenceInCalendarDays } from 'date-fns';
+import { pl, enUS } from 'date-fns/locale';
 import { Calendar as CalendarIcon, X, Check, Sparkles } from 'lucide-react';
-import { TranslationDictionary } from '@/lib/translations';
+import { TranslationDictionary, Locale } from '@/lib/translations';
 
 interface BookingCalendarProps {
   occupiedDates: string[]; // ISO date strings (YYYY-MM-DD)
@@ -14,6 +15,7 @@ interface BookingCalendarProps {
   isMobileView?: boolean;
   minimumStay?: number;
   t: TranslationDictionary;
+  locale?: Locale;
 }
 
 export function BookingCalendar({
@@ -24,7 +26,11 @@ export function BookingCalendar({
   isMobileView = false,
   minimumStay = 1,
   t,
+  locale = 'en',
 }: BookingCalendarProps) {
+  const dateFnsLocale = locale === 'pl' ? pl : enUS;
+  const dateFormatPattern = locale === 'pl' ? 'd MMM yyyy' : 'MMM d, yyyy';
+  const shortDateFormatPattern = locale === 'pl' ? 'd MMM' : 'MMM d';
   // Mobile detection for true viewport
   const [isWindowMobile, setIsWindowMobile] = useState(false);
   const [isMobileSheetOpen, setIsMobileSheetOpen] = useState(false);
@@ -117,7 +123,7 @@ export function BookingCalendar({
                   {t.checkIn}
                 </span>
                 <span className="text-sm font-extrabold text-zinc-900 block mt-0.5 truncate">
-                  {selectedRange?.from ? format(selectedRange.from, 'MMM d, yyyy') : t.addDate}
+                  {selectedRange?.from ? format(selectedRange.from, dateFormatPattern, { locale: dateFnsLocale }) : t.addDate}
                 </span>
               </div>
               <div className="pl-3">
@@ -125,7 +131,7 @@ export function BookingCalendar({
                   {t.checkOut}
                 </span>
                 <span className="text-sm font-extrabold text-zinc-900 block mt-0.5 truncate">
-                  {selectedRange?.to ? format(selectedRange.to, 'MMM d, yyyy') : t.addDate}
+                  {selectedRange?.to ? format(selectedRange.to, dateFormatPattern, { locale: dateFnsLocale }) : t.addDate}
                 </span>
               </div>
             </div>
@@ -171,10 +177,10 @@ export function BookingCalendar({
                 {selectedRange?.from ? (
                   selectedRange.to ? (
                     <span className="font-medium text-emerald-700">
-                      {format(selectedRange.from, 'MMM d, yyyy')} – {format(selectedRange.to, 'MMM d, yyyy')} ({t.nightCount(totalNights)})
+                      {format(selectedRange.from, dateFormatPattern, { locale: dateFnsLocale })} – {format(selectedRange.to, dateFormatPattern, { locale: dateFnsLocale })} ({t.nightCount(totalNights)})
                     </span>
                   ) : (
-                    <span>{t.checkIn}: <strong className="text-zinc-800">{format(selectedRange.from, 'MMM d, yyyy')}</strong></span>
+                    <span>{t.checkIn}: <strong className="text-zinc-800">{format(selectedRange.from, dateFormatPattern, { locale: dateFnsLocale })}</strong></span>
                   )
                 ) : (
                   <span>{t.selectDatesSubtitle}</span>
@@ -200,6 +206,7 @@ export function BookingCalendar({
               onSelect={handleSelectRange}
               disabled={isDateDisabled}
               numberOfMonths={2}
+              locale={dateFnsLocale}
               className="font-sans text-sm"
             />
           </div>
@@ -256,7 +263,7 @@ export function BookingCalendar({
                   <h4 className="text-base font-bold text-zinc-900">{t.travelDates}</h4>
                   <p className="text-[11px] text-zinc-500">
                     {selectedRange?.from && selectedRange?.to
-                      ? `${format(selectedRange.from, 'MMM d')} – ${format(selectedRange.to, 'MMM d, yyyy')} (${t.nightCount(totalNights)})`
+                      ? `${format(selectedRange.from, shortDateFormatPattern, { locale: dateFnsLocale })} – ${format(selectedRange.to, dateFormatPattern, { locale: dateFnsLocale })} (${t.nightCount(totalNights)})`
                       : t.selectDatesPrompt}
                   </p>
                 </div>
@@ -278,6 +285,7 @@ export function BookingCalendar({
                 onSelect={handleSelectRange}
                 disabled={isDateDisabled}
                 numberOfMonths={1}
+                locale={dateFnsLocale}
                 className="font-sans text-sm"
               />
 
@@ -289,8 +297,8 @@ export function BookingCalendar({
               )}
             </div>
 
-            {/* Drawer Bottom Action Bar */}
-            <div className="p-4 border-t border-zinc-100 bg-white/95 backdrop-blur-md flex items-center justify-between gap-3">
+            {/* Drawer Bottom Action Bar with iOS Safe-Area Padding */}
+            <div className="p-4 pb-[max(1rem,env(safe-area-inset-bottom))] border-t border-zinc-100 bg-white/95 backdrop-blur-md flex items-center justify-between gap-3">
               <button
                 type="button"
                 onClick={() => onSelectRange(undefined)}

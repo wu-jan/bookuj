@@ -493,7 +493,8 @@
       "primaryColor": "#2C1A0E",
       "accentColor": "#E8A045",
       "backgroundColor": "#FAF6F0",
-      "fontStyle": "serif"
+      "fontStyle": "serif",
+      "layout": "boutique"
     },
     "coordinates": {
       "lat": 49.299,
@@ -536,7 +537,8 @@
           "Narciarnia z suszarką do butów",
           "Drewno do kominka i regionalne herbaty w cenie"
         ],
-        "cancellationPolicy": "Bezpłatne odwołanie do 7 dni przed przyjazdem. W ciągu 7 dni zatrzymywany jest zadatek."
+        "cancellationPolicy": "Bezpłatne odwołanie do 7 dni przed przyjazdem. W ciągu 7 dni zatrzymywany jest zadatek.",
+        "hostBio": "Od urodzenia związany z Podhalem, z pasją dzielę się tradycją i spokojem tatrzańskiej natury z naszymi gośćmi."
       },
       "en": {
         "title": "Zakopane Highland Chalet",
@@ -551,9 +553,13 @@
           "Ski Storage & Boot Warmer",
           "Complimentary Highland Tea & Firewood"
         ],
-        "cancellationPolicy": "Free cancellation up to 7 days before check-in. 50% deposit retained within 7 days."
+        "cancellationPolicy": "Free cancellation up to 7 days before check-in. 50% deposit retained within 7 days.",
+        "hostBio": "Born and raised in the Tatra highlands, I passionately share local tradition and serene mountain tranquility with our guests."
       }
-    }
+    },
+    "hostBio": "Od urodzenia związany z Podhalem, z pasją dzielę się tradycją i spokojem tatrzańskiej natury z naszymi gośćmi.",
+    "softHoldHours": 2,
+    "icalUrl": "https://cal.bookuj.pl/mock/zakopane-gorna-chata.ics"
   },
   {
     "id": "prop-12",
@@ -596,7 +602,8 @@
       "primaryColor": "#1A3A5C",
       "accentColor": "#4EACC9",
       "backgroundColor": "#F0F7FC",
-      "fontStyle": "sans"
+      "fontStyle": "sans",
+      "layout": "boutique"
     },
     "coordinates": {
       "lat": 53.795,
@@ -639,7 +646,8 @@
           "Sauna fińska",
           "Zwierzęta mile widziane"
         ],
-        "cancellationPolicy": "Bezpłatne odwołanie do 14 dni przed przyjazdem."
+        "cancellationPolicy": "Bezpłatne odwołanie do 14 dni przed przyjazdem.",
+        "hostBio": "Miłośniczka żeglarstwa i mazurskich zachodów słońca, stworzyłam to miejsce jako azyl z dala od miejskiego zgiełku."
       },
       "en": {
         "title": "Mazury Lakeside Haven",
@@ -654,9 +662,13 @@
           "Outdoor Finnish Sauna",
           "Pet Friendly"
         ],
-        "cancellationPolicy": "Free cancellation up to 14 days before check-in. Non-refundable within 14 days."
+        "cancellationPolicy": "Free cancellation up to 14 days before check-in. Non-refundable within 14 days.",
+        "hostBio": "Sailing enthusiast and Mazurian sunset lover, I crafted this haven as a peaceful retreat away from city life."
       }
-    }
+    },
+    "hostBio": "Miłośniczka żeglarstwa i mazurskich zachodów słońca, stworzyłam to miejsce jako azyl z dala od miejskiego zgiełku.",
+    "softHoldHours": 2,
+    "icalUrl": "https://cal.bookuj.pl/mock/mazury-domek-nad-jeziorem.ics"
   },
   {
     "id": "prop-13",
@@ -699,7 +711,8 @@
       "primaryColor": "#0D4F7C",
       "accentColor": "#F4A534",
       "backgroundColor": "#F5FBFF",
-      "fontStyle": "sans"
+      "fontStyle": "sans",
+      "layout": "boutique"
     },
     "coordinates": {
       "lat": 54.441,
@@ -738,7 +751,8 @@
           "Ekspres ciśnieniowy",
           "Wygodne biurko do pracy"
         ],
-        "cancellationPolicy": "50% zwrotu przy odwołaniu powyżej 5 dni przed przyjazdem."
+        "cancellationPolicy": "50% zwrotu przy odwołaniu powyżej 5 dni przed przyjazdem.",
+        "hostBio": "Architekt i rodowity sopocianin, dbam o to, by każdy pobyt łączył nadmorski klimat z najwyższym komfortem."
       },
       "en": {
         "title": "Baltic Horizon Seaside Apartment",
@@ -753,9 +767,13 @@
           "Espresso Bar & Wine Cooler",
           "Dedicated Workspace"
         ],
-        "cancellationPolicy": "50% refund for cancellations more than 5 days before arrival."
+        "cancellationPolicy": "50% refund for cancellations more than 5 days before arrival.",
+        "hostBio": "Architect and native Sopot resident, dedicated to combining sea breeze ambience with exceptional modern comfort."
       }
-    }
+    },
+    "hostBio": "Architekt i rodowity sopocianin, dbam o to, by każdy pobyt łączył nadmorski klimat z najwyższym komfortem.",
+    "softHoldHours": 2,
+    "icalUrl": "https://cal.bookuj.pl/mock/trojmiejski-apartament.ics"
   },
   {
     "id": "prop-14",
@@ -798,7 +816,8 @@
       "primaryColor": "#1E3B20",
       "accentColor": "#7CB87E",
       "backgroundColor": "#F4F8F0",
-      "fontStyle": "sans"
+      "fontStyle": "sans",
+      "layout": "boutique"
     },
     "coordinates": {
       "lat": 49.432,
@@ -837,7 +856,8 @@
           "Zwierzęta mile widziane",
           "Palenisko na ognisko i hamaki"
         ],
-        "cancellationPolicy": "Pełny zwrot do 10 dni przed przyjazdem."
+        "cancellationPolicy": "Pełny zwrot do 10 dni przed przyjazdem.",
+        "hostBio": "Przewodnik bieszczadzki i pasjonat dzikiej przyrody, zapraszam na odpoczynek pod najciemniejszym niebem w Polsce."
       },
       "en": {
         "title": "Bieszczady Forest Sanctuary",
@@ -852,9 +872,13 @@
           "Pet Friendly",
           "Fire Pit & Hammock Grove"
         ],
-        "cancellationPolicy": "Full refund up to 10 days before. No refund within 10 days."
+        "cancellationPolicy": "Full refund up to 10 days before. No refund within 10 days.",
+        "hostBio": "Bieszczady mountain guide and wilderness enthusiast, inviting you to recharge under Poland's darkest starry skies."
       }
-    }
+    },
+    "hostBio": "Przewodnik bieszczadzki i pasjonat dzikiej przyrody, zapraszam na odpoczynek pod najciemniejszym niebem w Polsce.",
+    "softHoldHours": 2,
+    "icalUrl": "https://cal.bookuj.pl/mock/bieszczadzka-ostoja.ics"
   },
   {
     "id": "prop-15",
@@ -897,7 +921,8 @@
       "primaryColor": "#1C1C1E",
       "accentColor": "#C9A84C",
       "backgroundColor": "#FAF9F7",
-      "fontStyle": "serif"
+      "fontStyle": "serif",
+      "layout": "boutique"
     },
     "coordinates": {
       "lat": 50.05,
@@ -936,7 +961,8 @@
           "5 minut spacerem na Wawel",
           "Ekspres ciśnieniowy i kawa speciality"
         ],
-        "cancellationPolicy": "Bezpłatne odwołanie do 48 godzin przed przyjazdem."
+        "cancellationPolicy": "Bezpłatne odwołanie do 48 godzin przed przyjazdem.",
+        "hostBio": "Historyk sztuki i krakowska przewodniczka, odrestaurowałam tę kamienicę z myślą o miłośnikach klimatu dawnego Kazimierza."
       },
       "en": {
         "title": "Kraków Kazimierz Heritage Loft",
@@ -951,8 +977,12 @@
           "5-Min Walk to Wawel Castle",
           "Espresso Machine & Specialty Coffee"
         ],
-        "cancellationPolicy": "Free cancellation up to 48 hours before check-in."
+        "cancellationPolicy": "Free cancellation up to 48 hours before check-in.",
+        "hostBio": "Art historian and Kraków guide, I restored this historic townhouse loft for lovers of authentic Kazimierz character."
       }
-    }
+    },
+    "hostBio": "Historyk sztuki i krakowska przewodniczka, odrestaurowałam tę kamienicę z myślą o miłośnikach klimatu dawnego Kazimierza.",
+    "softHoldHours": 2,
+    "icalUrl": "https://cal.bookuj.pl/mock/krakow-kazimierz-loft.ics"
   }
 ]

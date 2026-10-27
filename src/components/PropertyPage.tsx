@@ -131,6 +131,7 @@ export function PropertyPage({
                   title={activeProperty.title}
                   isMobileView={isMobileView}
                   onCheckDates={scrollToCalendar}
+                  t={t}
                 />
               </div>
 
@@ -147,6 +148,7 @@ export function PropertyPage({
                     lng={activeProperty.coordinates.lng}
                     locationName={activeProperty.location}
                     title={activeProperty.title}
+                    t={t}
                   />
                 </div>
               )}
@@ -170,6 +172,7 @@ export function PropertyPage({
                   isMobileView={isMobileView}
                   onOpenModal={() => setIsModalOpen(true)}
                   t={t}
+                  locale={currentLocale}
                 />
               </div>
             </div>
@@ -181,6 +184,7 @@ export function PropertyPage({
             hostInfo={activeProperty.hostInfo}
             isMobileView={isMobileView}
             locale={currentLocale}
+            t={t}
           />
 
           {/* Mobile Bottom CTA */}
@@ -193,6 +197,7 @@ export function PropertyPage({
             isMobileView={isMobileView}
             actionLabel={Boolean(selectedRange?.from && selectedRange?.to) ? t.proceedToBook : t.travelDates}
             priceLabel={t.directRate}
+            perNightSuffix={t.perNightSuffix}
           />
         </div>
 

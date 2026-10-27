@@ -39,9 +39,15 @@ export function HostWelcomeCard({ property, t }: HostWelcomeCardProps) {
           </div>
         </div>
 
-        <p className="text-xs sm:text-sm leading-relaxed text-zinc-600 italic border-l-2 border-emerald-500/50 pl-3">
-          {t.welcomeQuote(property.title)}
-        </p>
+        {property.hostBio ? (
+          <p className="text-xs sm:text-sm leading-relaxed text-zinc-700 border-l-2 border-emerald-500/70 pl-3.5 py-0.5">
+            „{property.hostBio}”
+          </p>
+        ) : (
+          <p className="text-xs sm:text-sm leading-relaxed text-zinc-600 italic border-l-2 border-emerald-500/50 pl-3">
+            {t.welcomeQuote(property.title)}
+          </p>
+        )}
       </div>
 
       {/* About the property summary */}

@@ -47,10 +47,20 @@ export interface TranslationDictionary {
   photoShowcase: string;
   propertyAmenities: string;
   featuredComforts: string;
+  spacesAndAtmosphere: string;
+  gallerySubtitle: string;
+  checkDatesForSpaces: string;
+  viewAllPhotos: (count: number) => string;
+  viewFullscreen: string;
+  photoOf: (current: number, total: number) => string;
 
   // Map
   exactLocationProvided: string;
   openGoogleMaps: string;
+  approximateLocation: string;
+  locationAndSurroundings: string;
+  openInOsm: string;
+  privacyDisclaimer: string;
 
   // FAQ
   faqBadge: string;
@@ -94,10 +104,20 @@ export interface TranslationDictionary {
 
   // Mobile Sticky Bar
   proceedToBook: string;
+  perNightSuffix: string;
 
   // Payment Modal
   directReservationRequest: string;
   stepSummaryTitle: string;
+  contactlessHandoffTitle: string;
+  contactlessHandoffDesc: string;
+  requestWithDeposit: (amount: string) => string;
+  notifyingHost: (name: string) => string;
+  notifyingHostDesc: string;
+  flexibleStay: string;
+  softHoldReassurance: (hours: number) => string;
+  cancellationPolicyLabel: string;
+  bookingDirectWith: (host: string, property: string) => string;
   paymentMethodHeading: string;
   stayDetails: string;
   checkInDate: string;
@@ -141,6 +161,12 @@ export interface TranslationDictionary {
 
   // Switcher / Lang
   switchLanguage: string;
+
+  // Footer
+  footerDirectPerks: string;
+  footerHospitality: string;
+  footerDirectConcierge: string;
+  footerRightsReserved: (year: number, title: string) => string;
 }
 
 export const dictionaries: Record<Locale, TranslationDictionary> = {
@@ -186,9 +212,19 @@ export const dictionaries: Record<Locale, TranslationDictionary> = {
     photoShowcase: 'Zdjęcia i Klimat Miejsca',
     propertyAmenities: 'Udogodnienia i Wyposażenie',
     featuredComforts: 'Wszystko, czego potrzebujesz do komfortowego pobytu',
+    spacesAndAtmosphere: 'Przestrzeń i Klimat',
+    gallerySubtitle: 'Autentyczne zdjęcia wnętrz, stref relaksu i otaczającej przyrody.',
+    checkDatesForSpaces: 'Sprawdź terminy dla tych przestrzeni ↓',
+    viewAllPhotos: (count) => `Zobacz wszystkie zdjęcia (${count})`,
+    viewFullscreen: 'Pełny ekran',
+    photoOf: (current, total) => `${current} z ${total}`,
 
     exactLocationProvided: 'Dokładny adres otrzymasz po potwierdzeniu rezerwacji.',
     openGoogleMaps: 'Otwórz w Google Maps',
+    approximateLocation: 'Przybliżona lokalizacja • Ochrona prywatności',
+    locationAndSurroundings: 'Lokalizacja i Okolica',
+    openInOsm: 'Otwórz w OpenStreetMap ↗',
+    privacyDisclaimer: 'W trosce o prywatność gospodarza, dokładny adres obiektu otrzymasz po zatwierdzeniu rezerwacji.',
 
     faqBadge: 'Często zadawane pytania',
     faqHeading: 'Warto wiedzieć przed przyjazdem',
@@ -231,9 +267,19 @@ export const dictionaries: Record<Locale, TranslationDictionary> = {
     selectAtLeastNights: (minStay) => `Wybierz minimum ${minStay} noce`,
 
     proceedToBook: 'Przejdź do rezerwacji',
+    perNightSuffix: '/ noc',
 
     directReservationRequest: 'Rezerwacja bezpośrednia',
     stepSummaryTitle: 'Szczegóły pobytu i dane gościa',
+    contactlessHandoffTitle: 'Bezpośrednie rozliczenie z gospodarzem',
+    contactlessHandoffDesc: 'Łączymy Cię bezpośrednio z właścicielem obiektu. Żaden pośrednik ani portal nie pobiera prowizji od Twojego pobytu.',
+    requestWithDeposit: (amount) => `Poproś o rezerwację (zadatek: ${amount})`,
+    notifyingHost: (name) => `Powiadamianie gospodarza (${name})...`,
+    notifyingHostDesc: 'Rejestrujemy wstępną rezerwację wybranych dat i przygotowujemy dane rozliczeniowe.',
+    flexibleStay: 'Elastyczny termin',
+    softHoldReassurance: (hours) => `Wybrane daty są wstępnie blokowane na ${hours} ${hours === 1 ? 'godzinę' : 'godziny'} do czasu zaksięgowania zadatku.`,
+    cancellationPolicyLabel: 'Zasady odwołania: ',
+    bookingDirectWith: (host, property) => `Rezerwacja bezpośrednia u gospodarza ${host} dla ${property}`,
     paymentMethodHeading: 'Wybierz formę rozliczenia zadatku',
     stayDetails: 'Podsumowanie rezerwacji',
     checkInDate: 'Data przyjazdu',
@@ -276,6 +322,11 @@ export const dictionaries: Record<Locale, TranslationDictionary> = {
     methodArrivalDesc: 'Rozliczenie całości bezpośrednio przy odbiorze kluczy.',
 
     switchLanguage: 'Język / Language',
+
+    footerDirectPerks: '0% Prowizji • Gwarancja Najlepszej Ceny',
+    footerHospitality: 'Osobista Gościnność',
+    footerDirectConcierge: 'Bezpośrednia rezerwacja u gospodarza & kameralny pobyt',
+    footerRightsReserved: (year, title) => `© ${year} ${title}. Wszelkie prawa zastrzeżone.`,
   },
   en: {
     directGuestPortal: 'Direct Guest Portal • 0% Markup',
@@ -319,9 +370,19 @@ export const dictionaries: Record<Locale, TranslationDictionary> = {
     photoShowcase: 'Photo Showcase',
     propertyAmenities: 'Standardized Amenities & Comforts',
     featuredComforts: 'Everything you need for a restful stay',
+    spacesAndAtmosphere: 'Spaces & Atmosphere',
+    gallerySubtitle: 'Authentic photography of the interior, private relaxation spaces, and surrounding nature.',
+    checkDatesForSpaces: 'Check dates for these spaces ↓',
+    viewAllPhotos: (count) => `View all photos (${count})`,
+    viewFullscreen: 'View Fullscreen',
+    photoOf: (current, total) => `${current} of ${total}`,
 
     exactLocationProvided: 'Exact location details provided immediately upon reservation confirmation.',
     openGoogleMaps: 'Open in Google Maps',
+    approximateLocation: 'Approximate Location • Privacy Protected',
+    locationAndSurroundings: 'Location & Surroundings',
+    openInOsm: 'Open in OpenStreetMap ↗',
+    privacyDisclaimer: 'To preserve privacy, exact address is dispatched with your host confirmation.',
 
     faqBadge: 'Frequently Asked Questions',
     faqHeading: 'Good to know before your stay',
@@ -364,9 +425,19 @@ export const dictionaries: Record<Locale, TranslationDictionary> = {
     selectAtLeastNights: (minStay) => `Select at least ${minStay} nights`,
 
     proceedToBook: 'Proceed to Book',
+    perNightSuffix: '/ night',
 
     directReservationRequest: 'Direct Reservation',
     stepSummaryTitle: 'Reservation Summary & Guest Details',
+    contactlessHandoffTitle: 'Contactless Host Handoff',
+    contactlessHandoffDesc: 'We connect you directly to the property owner. No third-party payment middleman extracts commissions from your stay.',
+    requestWithDeposit: (amount) => `Request Reservation (${amount} Deposit)`,
+    notifyingHost: (name) => `Notifying ${name}...`,
+    notifyingHostDesc: 'Directly registering your dates and preparing host transfer coordinates.',
+    flexibleStay: 'Flexible stay',
+    softHoldReassurance: (hours) => `Selected dates are held for ${hours} hours pending deposit confirmation.`,
+    cancellationPolicyLabel: 'Cancellation Policy: ',
+    bookingDirectWith: (host, property) => `Booking directly with ${host} for ${property}`,
     paymentMethodHeading: 'Select Deposit Settlement Method',
     stayDetails: 'Stay Details',
     checkInDate: 'Check-in',
@@ -409,6 +480,11 @@ export const dictionaries: Record<Locale, TranslationDictionary> = {
     methodArrivalDesc: 'Settle the entire stay balance upon check-in directly with host.',
 
     switchLanguage: 'Language',
+
+    footerDirectPerks: '0% Commission • Best Rate Online',
+    footerHospitality: 'Personalized Guest Experience',
+    footerDirectConcierge: 'Direct booking concierge & bespoke stay experience',
+    footerRightsReserved: (year, title) => `© ${year} ${title}. All rights reserved.`,
   },
 };
 
@@ -429,5 +505,6 @@ export function getLocalizedProperty(property: Property, locale: Locale): Proper
     amenities: tr.amenities ?? property.amenities,
     cancellationPolicy: tr.cancellationPolicy ?? property.cancellationPolicy,
     faq: tr.faq ?? property.faq,
+    hostBio: tr.hostBio ?? property.hostBio,
   };
 }

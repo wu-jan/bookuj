@@ -2,16 +2,25 @@ import React from 'react';
 import Image from 'next/image';
 import { HostInfo } from '@/types/property';
 import { ShieldCheck, Phone, Heart } from 'lucide-react';
+import { TranslationDictionary } from '@/lib/translations';
 
 interface FooterProps {
   title: string;
   hostInfo: HostInfo;
   isMobileView?: boolean;
   locale?: 'pl' | 'en';
+  t?: TranslationDictionary;
 }
 
-export function Footer({ title, hostInfo, isMobileView = false, locale = 'en' }: FooterProps) {
+export function Footer({ title, hostInfo, isMobileView = false, locale = 'en', t }: FooterProps) {
   const isPl = locale === 'pl';
+  const currentYear = new Date().getFullYear();
+
+  const directPerks = t?.footerDirectPerks ?? (isPl ? '0% Prowizji • Gwarancja Najlepszej Ceny' : '0% Commission • Best Rate Online');
+  const hospitality = t?.footerHospitality ?? (isPl ? 'Osobista Gościnność' : 'Personalized Guest Experience');
+  const concierge = t?.footerDirectConcierge ?? (isPl ? 'Bezpośrednia rezerwacja u gospodarza & kameralny pobyt' : 'Direct booking concierge & bespoke stay experience');
+  const rightsReserved = t?.footerRightsReserved ? t.footerRightsReserved(currentYear, title) : `© ${currentYear} ${title}. All rights reserved.`;
+
   return (
     <footer className="w-full border-t border-black/5 bg-white/50 backdrop-blur-xs mt-12 sm:mt-20">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:py-12 sm:px-6 lg:px-8">
@@ -37,11 +46,11 @@ export function Footer({ title, hostInfo, isMobileView = false, locale = 'en' }:
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-center gap-4 text-xs text-zinc-600">
             <div className="flex items-center gap-1.5">
               <ShieldCheck className="h-4 w-4 text-emerald-600" />
-              <span>{isPl ? '0% Prowizji • Gwarancja Najlepszej Ceny' : '0% Commission • Best Rate Online'}</span>
+              <span>{directPerks}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <Heart className="h-4 w-4 text-rose-500" />
-              <span>{isPl ? 'Osobista Gościnność' : 'Personalized Guest Experience'}</span>
+              <span>{hospitality}</span>
             </div>
           </div>
 
@@ -76,8 +85,8 @@ export function Footer({ title, hostInfo, isMobileView = false, locale = 'en' }:
         </div>
 
         <div className="mt-8 pt-8 border-t border-zinc-100 flex flex-col sm:flex-row items-center justify-between text-xs text-zinc-400 gap-4">
-          <p>© {new Date().getFullYear()} {title}. All rights reserved.</p>
-          <p className="text-zinc-400">Direct booking concierge & bespoke stay experience</p>
+          <p>{rightsReserved}</p>
+          <p className="text-zinc-400">{concierge}</p>
         </div>
       </div>
     </footer>

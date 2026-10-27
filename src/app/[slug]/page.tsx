@@ -7,14 +7,16 @@ interface SlugPageProps {
   params: Promise<{ slug: string }>;
 }
 
+export const revalidate = 60;
+
 export async function generateStaticParams() {
-  const slugs = getAllSlugs();
+  const slugs = await getAllSlugs();
   return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: SlugPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const property = getPropertyBySlug(slug);
+  const property = await getPropertyBySlug(slug);
 
   if (!property) {
     return {
@@ -30,13 +32,13 @@ export async function generateMetadata({ params }: SlugPageProps): Promise<Metad
 
 export default async function SlugPage({ params }: SlugPageProps) {
   const { slug } = await params;
-  const property = getPropertyBySlug(slug);
+  const property = await getPropertyBySlug(slug);
 
   if (!property) {
     notFound();
   }
 
-  const allProperties = getAllProperties();
+  const allProperties = await getAllProperties();
 
   return (
     <PropertyPage
