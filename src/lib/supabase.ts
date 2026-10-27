@@ -1,21 +1,39 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
-const supabaseUrl = rawUrl?.replace(/\/rest\/v1\/?$/, '').replace(/\/+$/, '');
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
+function isValidHttpUrl(str: string | undefined): boolean {
+  if (!str) return false;
+  try {
+    const parsed = new URL(str);
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
 
-export const isSupabaseConfigured: boolean = Boolean(supabaseUrl && supabaseAnonKey);
+const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+const supabaseUrl = rawUrl?.trim().replace(/\/rest\/v1\/?$/, '').replace(/\/+$/, '');
+const rawKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
+const supabaseAnonKey = rawKey?.trim();
+
+export const isSupabaseConfigured: boolean = Boolean(
+  isValidHttpUrl(supabaseUrl) && supabaseAnonKey && supabaseAnonKey.length > 10
+);
 
 let supabaseClient: SupabaseClient | null = null;
 
 export function getSupabaseClient(): SupabaseClient | null {
-  if (!isSupabaseConfigured) {
+  if (!isSupabaseConfigured || !supabaseUrl || !supabaseAnonKey) {
     return null;
   }
-  if (!supabaseClient && supabaseUrl && supabaseAnonKey) {
-    supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+  try {
+    if (!supabaseClient) {
+      supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+    }
+    return supabaseClient;
+  } catch (err) {
+    console.warn('Failed to initialize Supabase client:', err);
+    return null;
   }
-  return supabaseClient;
 }
 
 export const supabase = getSupabaseClient();
