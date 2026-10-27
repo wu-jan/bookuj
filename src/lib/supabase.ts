@@ -10,9 +10,17 @@ function isValidHttpUrl(str: string | undefined): boolean {
   }
 }
 
-const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+let rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+let rawKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
+
+// Self-healing: if URL and Key were accidentally swapped in environment variables
+if (rawUrl && rawKey && (rawUrl.startsWith('sb_') || rawUrl.startsWith('ey')) && rawKey.startsWith('http')) {
+  const temp = rawUrl;
+  rawUrl = rawKey;
+  rawKey = temp;
+}
+
 const supabaseUrl = rawUrl?.trim().replace(/\/rest\/v1\/?$/, '').replace(/\/+$/, '');
-const rawKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
 const supabaseAnonKey = rawKey?.trim();
 
 export const isSupabaseConfigured: boolean = Boolean(
