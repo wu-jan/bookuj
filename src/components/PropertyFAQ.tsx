@@ -42,7 +42,7 @@ export function PropertyFAQ({
   if (!faq || faq.length === 0) return null;
 
   return (
-    <section className="bg-white rounded-3xl p-5 sm:p-8 md:p-10 border border-zinc-200/80 shadow-xs">
+    <section id="faq" className="scroll-mt-24 bg-white rounded-3xl p-5 sm:p-8 md:p-10 border border-zinc-200/80 shadow-xs">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-100">
         <div>
           <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-700 mb-1">

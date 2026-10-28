@@ -9,6 +9,8 @@ import { AmenitiesList } from '@/components/AmenitiesList';
 import { PropertyHero } from '@/components/PropertyHero';
 import { HostWelcomeCard } from '@/components/HostWelcomeCard';
 import { DirectBookingBenefitsCard } from '@/components/DirectBookingBenefitsCard';
+import { BoutiqueHostStory } from '@/components/BoutiqueHostStory';
+import { BoutiqueAmenities } from '@/components/BoutiqueAmenities';
 import { PropertyGallery } from '@/components/PropertyGallery';
 import { BookingSuite } from '@/components/BookingSuite';
 import { MobileBottomCTA } from '@/components/MobileBottomCTA';
@@ -43,15 +45,30 @@ export function PropertyPage({
   const mapRef = useRef<HTMLDivElement>(null);
 
   const scrollToCalendar = () => {
-    calendarRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const el = document.getElementById('reserve');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      calendarRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const scrollToSpaces = () => {
-    spacesRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const el = document.getElementById('gallery');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      spacesRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const scrollToMap = () => {
-    mapRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const el = document.getElementById('location');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      mapRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   // Resolve localized text for current property
@@ -66,6 +83,7 @@ export function PropertyPage({
   };
 
   const hostFirstName = activeProperty.hostInfo.name.split(' ')[0];
+  const isBoutique = activeProperty.theme.layout === 'boutique';
 
   return (
     <ThemeProvider theme={activeProperty.theme}>
@@ -92,91 +110,201 @@ export function PropertyPage({
             isMobileView={isMobileView}
           />
 
-          {/* Main Content Showcase */}
-          <main
-            className={`mx-auto w-full max-w-7xl flex-1 ${
-              isMobileView ? 'px-3 pt-3 pb-20' : 'px-4 sm:px-6 lg:px-8 pt-4 pb-24 md:pb-16'
-            }`}
-          >
-            {/* Cinematic Hero */}
-            <PropertyHero
-              property={activeProperty}
-              t={t}
-              isMobileView={isMobileView}
-              onScrollToCalendar={scrollToCalendar}
-              onScrollToGallery={scrollToSpaces}
-              onScrollToMap={scrollToMap}
-            />
+          {isBoutique ? (
+            /* =========================================================================
+             * BOUTIQUE EDITORIAL LAYOUT PRESET (Inspired by zacnylasek.com & bespoke retreats)
+             * ========================================================================= */
+            <main className="w-full flex-1 flex flex-col">
+              {/* Full-width edge-to-edge Hero */}
+              <PropertyHero
+                property={activeProperty}
+                t={t}
+                isMobileView={isMobileView}
+                onScrollToCalendar={scrollToCalendar}
+                onScrollToGallery={scrollToSpaces}
+                onScrollToMap={scrollToMap}
+              />
 
-            {/* Content Stack */}
-            <div className="mt-8 sm:mt-12 space-y-8 sm:space-y-12 max-w-5xl mx-auto">
-              {/* Host Welcome & Direct Booking Benefits */}
+              {/* Section-based vertical rhythm with generous editorial breathing room */}
               <div
-                className={`grid grid-cols-1 ${
-                  isMobileView ? '' : 'md:grid-cols-2'
-                } gap-6 sm:gap-8 items-stretch`}
+                className={`w-full max-w-6xl mx-auto ${
+                  isMobileView
+                    ? 'px-3 py-6 space-y-8 pb-20'
+                    : 'px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-12 sm:space-y-16 pb-24 md:pb-16'
+                }`}
               >
-                <HostWelcomeCard property={activeProperty} t={t} />
-                <DirectBookingBenefitsCard
-                  hostFirstName={hostFirstName}
-                  onCheckDates={scrollToCalendar}
+                {/* 1. Host Story & Authentic Philosophy */}
+                <BoutiqueHostStory
+                  property={activeProperty}
                   t={t}
-                />
-              </div>
-
-              {/* Spaces & Atmosphere Gallery */}
-              <div ref={spacesRef} className="scroll-mt-24">
-                <PropertyGallery
-                  images={activeProperty.images}
-                  title={activeProperty.title}
+                  locale={currentLocale}
                   isMobileView={isMobileView}
                   onCheckDates={scrollToCalendar}
-                  t={t}
                 />
-              </div>
 
-              {/* Standardized Amenities Grid */}
-              <div className="bg-white rounded-3xl p-5 sm:p-8 border border-zinc-200/80 shadow-xs">
-                <AmenitiesList amenities={activeProperty.amenities} locale={currentLocale} />
-              </div>
-
-              {/* Location & Map Section */}
-              {activeProperty.coordinates && (
-                <div ref={mapRef}>
-                  <PropertyMap
-                    lat={activeProperty.coordinates.lat}
-                    lng={activeProperty.coordinates.lng}
-                    locationName={activeProperty.location}
+                {/* 2. Atmosphere & Spaces Gallery */}
+                <div ref={spacesRef}>
+                  <PropertyGallery
+                    images={activeProperty.images}
                     title={activeProperty.title}
+                    isMobileView={isMobileView}
+                    onCheckDates={scrollToCalendar}
+                    t={t}
+                    isBoutique={true}
+                  />
+                </div>
+
+                {/* 3. Typography-First Curated Amenities */}
+                <BoutiqueAmenities
+                  amenities={activeProperty.amenities}
+                  t={t}
+                  locale={currentLocale}
+                  isMobileView={isMobileView}
+                />
+
+                {/* 4. Setting & Surroundings Map */}
+                {activeProperty.coordinates && (
+                  <div ref={mapRef}>
+                    <PropertyMap
+                      lat={activeProperty.coordinates.lat}
+                      lng={activeProperty.coordinates.lng}
+                      locationName={activeProperty.location}
+                      title={activeProperty.title}
+                      t={t}
+                    />
+                  </div>
+                )}
+
+                {/* 5. Frequently Asked Questions */}
+                {activeProperty.faq && activeProperty.faq.length > 0 && (
+                  <PropertyFAQ
+                    faq={activeProperty.faq}
+                    hostFirstName={hostFirstName}
+                    isMobileView={isMobileView}
+                    t={t}
+                  />
+                )}
+
+                {/* 6. Dedicated Luxury Reservation Area */}
+                <div id="reserve" ref={calendarRef} className="scroll-mt-24 w-full">
+                  <div className="bg-stone-900 border border-stone-800 text-white rounded-3xl p-5 sm:p-8 md:p-12 shadow-2xl">
+                    <div className="max-w-2xl mb-6 sm:mb-8">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                        <span className="text-xs uppercase tracking-[0.2em] font-semibold text-emerald-400">
+                          {t.directPrivilege}
+                        </span>
+                      </div>
+                      <h3 className="font-serif text-2xl sm:text-4xl font-normal text-white tracking-tight">
+                        {t.reserveBoutiqueTitle}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-stone-300 mt-2 leading-relaxed">
+                        {t.reserveBoutiqueSubtitle}
+                      </p>
+                    </div>
+
+                    <BookingSuite
+                      property={activeProperty}
+                      selectedRange={selectedRange}
+                      onSelectRange={setSelectedRange}
+                      isMobileView={isMobileView}
+                      onOpenModal={() => setIsModalOpen(true)}
+                      t={t}
+                      locale={currentLocale}
+                    />
+                  </div>
+                </div>
+              </div>
+            </main>
+          ) : (
+            /* =========================================================================
+             * STANDARD / MINIMAL LAYOUT PRESET (Card grid container)
+             * ========================================================================= */
+            <main
+              className={`mx-auto w-full max-w-7xl flex-1 ${
+                isMobileView ? 'px-3 pt-3 pb-20' : 'px-4 sm:px-6 lg:px-8 pt-4 pb-24 md:pb-16'
+              }`}
+            >
+              {/* Cinematic Hero Card */}
+              <PropertyHero
+                property={activeProperty}
+                t={t}
+                isMobileView={isMobileView}
+                onScrollToCalendar={scrollToCalendar}
+                onScrollToGallery={scrollToSpaces}
+                onScrollToMap={scrollToMap}
+              />
+
+              {/* Content Stack */}
+              <div className="mt-8 sm:mt-12 space-y-8 sm:space-y-12 max-w-5xl mx-auto">
+                {/* Host Welcome & Direct Booking Benefits */}
+                <div
+                  className={`grid grid-cols-1 ${
+                    isMobileView ? '' : 'md:grid-cols-2'
+                  } gap-6 sm:gap-8 items-stretch`}
+                >
+                  <HostWelcomeCard property={activeProperty} t={t} />
+                  <DirectBookingBenefitsCard
+                    hostFirstName={hostFirstName}
+                    onCheckDates={scrollToCalendar}
                     t={t}
                   />
                 </div>
-              )}
 
-              {/* Frequently Asked Questions */}
-              {activeProperty.faq && activeProperty.faq.length > 0 && (
-                <PropertyFAQ
-                  faq={activeProperty.faq}
-                  hostFirstName={hostFirstName}
-                  isMobileView={isMobileView}
-                  t={t}
-                />
-              )}
+                {/* Spaces & Atmosphere Gallery */}
+                <div ref={spacesRef} className="scroll-mt-24">
+                  <PropertyGallery
+                    images={activeProperty.images}
+                    title={activeProperty.title}
+                    isMobileView={isMobileView}
+                    onCheckDates={scrollToCalendar}
+                    t={t}
+                  />
+                </div>
 
-              {/* Dedicated Reservation Suite */}
-              <div ref={calendarRef} className="scroll-mt-24 pt-4">
-                <BookingSuite
-                  property={activeProperty}
-                  selectedRange={selectedRange}
-                  onSelectRange={setSelectedRange}
-                  isMobileView={isMobileView}
-                  onOpenModal={() => setIsModalOpen(true)}
-                  t={t}
-                  locale={currentLocale}
-                />
+                {/* Standardized Amenities Grid */}
+                <div className="bg-white rounded-3xl p-5 sm:p-8 border border-zinc-200/80 shadow-xs">
+                  <AmenitiesList amenities={activeProperty.amenities} locale={currentLocale} />
+                </div>
+
+                {/* Location & Map Section */}
+                {activeProperty.coordinates && (
+                  <div ref={mapRef}>
+                    <PropertyMap
+                      lat={activeProperty.coordinates.lat}
+                      lng={activeProperty.coordinates.lng}
+                      locationName={activeProperty.location}
+                      title={activeProperty.title}
+                      t={t}
+                    />
+                  </div>
+                )}
+
+                {/* Frequently Asked Questions */}
+                {activeProperty.faq && activeProperty.faq.length > 0 && (
+                  <PropertyFAQ
+                    faq={activeProperty.faq}
+                    hostFirstName={hostFirstName}
+                    isMobileView={isMobileView}
+                    t={t}
+                  />
+                )}
+
+                {/* Dedicated Reservation Suite */}
+                <div ref={calendarRef} className="scroll-mt-24 pt-4">
+                  <BookingSuite
+                    property={activeProperty}
+                    selectedRange={selectedRange}
+                    onSelectRange={setSelectedRange}
+                    isMobileView={isMobileView}
+                    onOpenModal={() => setIsModalOpen(true)}
+                    t={t}
+                    locale={currentLocale}
+                  />
+                </div>
               </div>
-            </div>
-          </main>
+            </main>
+          )}
 
           {/* Footer */}
           <Footer

@@ -22,6 +22,126 @@ export function PropertyHero({
   onScrollToGallery,
   onScrollToMap,
 }: PropertyHeroProps) {
+  const isBoutique = property.theme.layout === 'boutique';
+
+  if (isBoutique) {
+    return (
+      <div
+        className={`relative ${
+          isMobileView
+            ? 'h-[520px]'
+            : 'h-[75vh] min-h-[520px] sm:h-[80vh] sm:min-h-[600px] lg:h-[85vh]'
+        } w-full overflow-hidden select-none`}
+      >
+        <div className="relative h-full w-full animate-ken-burns">
+          <Image
+            src={property.images[0]}
+            alt={property.title}
+            fill
+            priority
+            className="object-cover brightness-[0.88]"
+            sizes="100vw"
+          />
+        </div>
+        {/* Full-bleed gradient scrim */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/25 pointer-events-none" />
+
+        {/* Top Badges */}
+        <div
+          className={`absolute ${
+            isMobileView
+              ? 'top-4 left-4 right-4'
+              : 'top-6 sm:top-10 left-6 right-6 sm:left-12 sm:right-12'
+          } z-10 flex items-center justify-between gap-3 pointer-events-none`}
+        >
+          <div className="inline-flex items-center gap-2 rounded-full bg-black/40 border border-white/20 px-3.5 py-1.5 text-[11px] sm:text-xs font-medium text-white backdrop-blur-md shadow-lg pointer-events-auto">
+            <Sparkles className="h-3.5 w-3.5 text-emerald-400" />
+            <span className="tracking-wider uppercase text-[10px] sm:text-[11px] font-semibold">
+              {t.boutiquePrivateStay}
+            </span>
+          </div>
+
+          <button
+            type="button"
+            onClick={onScrollToGallery}
+            className="pointer-events-auto inline-flex items-center gap-2 rounded-full bg-white/20 hover:bg-white/30 border border-white/30 px-3.5 py-1.5 text-xs font-semibold text-white backdrop-blur-md transition-colors cursor-pointer"
+          >
+            <span>{t.spacesAndInterior}</span>
+            <span className="bg-white/20 px-1.5 py-0.5 rounded-full text-[10px]">
+              {property.images.length}
+            </span>
+          </button>
+        </div>
+
+        {/* Bottom Editorial Content */}
+        <div
+          className={`absolute ${
+            isMobileView
+              ? 'bottom-4 left-4 right-4'
+              : 'bottom-8 sm:bottom-12 left-6 right-6 sm:left-12 sm:right-12'
+          } z-10 text-white flex flex-col justify-end max-w-4xl`}
+        >
+          <div className="flex items-center gap-2 text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase text-emerald-300 mb-2 sm:mb-3">
+            <MapPin className="h-3.5 w-3.5 text-emerald-400" />
+            <span>{property.location}</span>
+          </div>
+
+          <h1
+            className={`font-serif font-normal text-3xl sm:text-5xl lg:text-7xl tracking-tight leading-[1.08] text-white drop-shadow-md`}
+          >
+            {property.title}
+          </h1>
+
+          {property.tagline && (
+            <p className="mt-2.5 sm:mt-4 text-base sm:text-2xl font-serif italic text-zinc-200/95 leading-snug max-w-2xl">
+              {property.tagline}
+            </p>
+          )}
+
+          {property.hostInfo.name && (
+            <p className="mt-2 text-xs sm:text-sm text-zinc-300/90 font-medium">
+              {t.hostedBy} <span className="text-white font-semibold">{property.hostInfo.name}</span>
+            </p>
+          )}
+
+          {/* Action Row */}
+          <div className="mt-6 flex flex-wrap items-center gap-3 sm:gap-4">
+            <button
+              type="button"
+              onClick={onScrollToCalendar}
+              className="inline-flex items-center gap-3 rounded-2xl bg-white text-zinc-950 px-5 py-3.5 sm:px-6 sm:py-4 text-sm font-bold shadow-2xl hover:bg-zinc-100 active:scale-95 transition-all cursor-pointer"
+            >
+              <div className="text-left">
+                <span className="block text-[10px] uppercase font-bold tracking-wider text-zinc-500">
+                  {t.directRate}
+                </span>
+                <span className="text-sm sm:text-base font-extrabold text-zinc-900">
+                  {formatCurrency(property.pricePerNight, property.currency)}{' '}
+                  <span className="text-xs font-normal text-zinc-500">{t.perNight}</span>
+                </span>
+              </div>
+              <div className="h-6 w-px bg-zinc-200" />
+              <span className="text-emerald-700 font-bold flex items-center gap-1">
+                {t.reserveDates} →
+              </span>
+            </button>
+
+            {property.coordinates && (
+              <button
+                type="button"
+                onClick={onScrollToMap}
+                className="inline-flex items-center gap-2 rounded-2xl bg-black/40 hover:bg-black/60 border border-white/25 px-4 py-3 sm:px-5 sm:py-4 text-xs sm:text-sm font-semibold text-white backdrop-blur-md transition-all cursor-pointer"
+              >
+                <Compass className="h-4 w-4 text-emerald-300" />
+                <span>{t.surroundings}</span>
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       className={`relative ${

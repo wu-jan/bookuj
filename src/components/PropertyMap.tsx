@@ -24,7 +24,7 @@ export function PropertyMap({ lat, lng, locationName, title, t }: PropertyMapPro
   const privacyText = t?.privacyDisclaimer ?? 'To preserve privacy, exact address is dispatched with your host confirmation.';
 
   return (
-    <div id="location-map" className="scroll-mt-24 rounded-3xl border border-zinc-200/80 bg-white p-6 sm:p-8 shadow-xs">
+    <div id="location" className="scroll-mt-24 rounded-3xl border border-zinc-200/80 bg-white p-6 sm:p-8 shadow-xs">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 gap-2">
         <div>
           <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full w-fit mb-2">

@@ -162,6 +162,31 @@ export interface TranslationDictionary {
   // Switcher / Lang
   switchLanguage: string;
 
+  // Boutique Navigation & Layout Preset
+  navAbout: string;
+  navGallery: string;
+  navAmenities: string;
+  navLocation: string;
+  navFaq: string;
+  navReserve: string;
+  boutiquePrivateStay: string;
+  hostStoryEyebrow: string;
+  meetYourHost: (name: string) => string;
+  theHostStory: string;
+  directHospitalityPromise: string;
+  directPromiseDesc: string;
+  guaranteedBestRate: string;
+  guaranteedBestRateDesc: string;
+  personalHostCare: string;
+  personalHostCareDesc: string;
+  flexibleCheckIn: string;
+  flexibleCheckInDesc: string;
+  curatedAmenitiesTitle: string;
+  curatedAmenitiesSubtitle: string;
+  reserveBoutiqueTitle: string;
+  reserveBoutiqueSubtitle: string;
+  chatWithHostDirectly: string;
+
   // Footer
   footerDirectPerks: string;
   footerHospitality: string;
@@ -323,6 +348,30 @@ export const dictionaries: Record<Locale, TranslationDictionary> = {
 
     switchLanguage: 'Język / Language',
 
+    navAbout: 'O obiekcie',
+    navGallery: 'Galeria',
+    navAmenities: 'Udogodnienia',
+    navLocation: 'Lokalizacja',
+    navFaq: 'Pytania',
+    navReserve: 'Rezerwacja',
+    boutiquePrivateStay: 'Prywatny obiekt gościnny na wyłączność',
+    hostStoryEyebrow: 'GOSPODARZE & HISTORIA MIEJSCA',
+    meetYourHost: (name) => `Gospodarz: ${name}`,
+    theHostStory: 'Historia Gospodarzy',
+    directHospitalityPromise: 'Gwarancja Bezpośredniej Gościnności',
+    directPromiseDesc: 'Rezerwując bezpośrednio na naszej stronie, masz bezpośredni kontakt z nami — bez pośredników, prowizji platform i ukrytych opłat.',
+    guaranteedBestRate: 'Najlepsza cena bezpośrednia',
+    guaranteedBestRateDesc: 'Bez prowizji pośredników i ukrytych opłat serwisowych doliczanych przy kasie.',
+    personalHostCare: 'Bezpośrednia relacja i opieka',
+    personalHostCareDesc: 'Osobisty kontakt telefoniczny i przez WhatsApp przed i w trakcie pobytu.',
+    flexibleCheckIn: 'Elastyczność i lokalne wskazówki',
+    flexibleCheckInDesc: 'Prywatne porady dotyczące szlaków, restauracji i atrakcji regionu.',
+    curatedAmenitiesTitle: 'Wyposażenie & Komfort',
+    curatedAmenitiesSubtitle: 'Każdy element wyposażenia został dobrany z myślą o autentycznym relaksie i bezkompromisowej wygodzie.',
+    reserveBoutiqueTitle: 'Zarezerwuj swój pobyt',
+    reserveBoutiqueSubtitle: 'Wybierz dogodny termin w kalendarzu poniżej. Rezerwacja trafia bezpośrednio do nas bez pośredników.',
+    chatWithHostDirectly: 'Napisz bezpośrednio do gospodarza',
+
     footerDirectPerks: '0% Prowizji • Gwarancja Najlepszej Ceny',
     footerHospitality: 'Osobista Gościnność',
     footerDirectConcierge: 'Bezpośrednia rezerwacja u gospodarza & kameralny pobyt',
@@ -480,6 +529,30 @@ export const dictionaries: Record<Locale, TranslationDictionary> = {
     methodArrivalDesc: 'Settle the entire stay balance upon check-in directly with host.',
 
     switchLanguage: 'Language',
+
+    navAbout: 'About',
+    navGallery: 'Gallery',
+    navAmenities: 'Amenities',
+    navLocation: 'Location',
+    navFaq: 'FAQ',
+    navReserve: 'Reserve',
+    boutiquePrivateStay: 'Private Boutique Stay & Retreat',
+    hostStoryEyebrow: 'HOST STORY & PHILOSOPHY',
+    meetYourHost: (name) => `Hosted by ${name}`,
+    theHostStory: 'The Host Story',
+    directHospitalityPromise: 'The Direct Hospitality Promise',
+    directPromiseDesc: 'By reserving directly on our site, you connect straight with us — zero platform markups, zero middleman fees, and genuine personal care.',
+    guaranteedBestRate: 'Guaranteed Best Direct Rate',
+    guaranteedBestRateDesc: 'Zero intermediary commissions and zero hidden checkout service fees.',
+    personalHostCare: 'Direct Host Relationship',
+    personalHostCareDesc: 'Personal contact by phone and WhatsApp before and throughout your stay.',
+    flexibleCheckIn: 'Priority Flexibility & Local Guidance',
+    flexibleCheckInDesc: 'Authentic insider tips for secret trails, local dining, and seasonal sights.',
+    curatedAmenitiesTitle: 'Curated Amenities & Details',
+    curatedAmenitiesSubtitle: 'Every detail thoughtfully considered for peaceful seclusion and uncompromising comfort.',
+    reserveBoutiqueTitle: 'Reserve Your Stay',
+    reserveBoutiqueSubtitle: 'Select your dates in the calendar below. Your reservation is dispatched directly to your host with zero fees.',
+    chatWithHostDirectly: 'Chat directly with your host',
 
     footerDirectPerks: '0% Commission • Best Rate Online',
     footerHospitality: 'Personalized Guest Experience',

@@ -46,9 +46,22 @@ export function Header({
     ? `https://wa.me/${cleanWhatsapp}?text=Hi+${encodeURIComponent(hostFirstName)}%2C+I%27m+interested+in+booking+${encodedPropertyTitle}%E2%80%A6`
     : undefined;
 
+  const isBoutique = theme.layout === 'boutique';
+
+  const scrollToAnchor = (anchorId: string) => {
+    if (anchorId === 'reserve' && onCheckAvailability) {
+      onCheckAvailability();
+      return;
+    }
+    const el = document.getElementById(anchorId);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <header className={`w-full border-b border-black/5 bg-white/90 backdrop-blur-md sticky ${isMobileView ? 'top-[37px]' : 'top-0'} z-40`}>
-      <div className={`mx-auto flex max-w-7xl items-center justify-between ${isMobileView ? 'px-3 py-2.5' : 'px-4 py-3.5 sm:px-6 lg:px-8'}`}>
+    <header className={`w-full border-b border-black/5 bg-white/95 backdrop-blur-md sticky ${isMobileView ? 'top-[37px]' : 'top-0'} z-40`}>
+      <div className={`mx-auto flex max-w-7xl items-center justify-between ${isMobileView ? 'px-3 py-2.5' : 'px-4 py-3 sm:px-6 lg:px-8'}`}>
         {/* Brand identity: Custom Logo or Stylized Title + Host Badge */}
         <div className="flex items-center gap-2.5 min-w-0">
           {hostAvatar && (
@@ -72,7 +85,9 @@ export function Header({
               />
             ) : (
               <span
-                className="text-base sm:text-xl font-bold tracking-tight transition-colors block truncate max-w-[160px] sm:max-w-xs"
+                className={`text-base sm:text-lg font-bold tracking-tight transition-colors block truncate max-w-[150px] sm:max-w-xs ${
+                  theme.fontStyle === 'serif' ? 'font-serif' : 'font-sans'
+                }`}
                 style={{ color: 'var(--color-primary, #18181b)' }}
               >
                 {title}
@@ -85,6 +100,47 @@ export function Header({
             )}
           </div>
         </div>
+
+        {/* Boutique Desktop Navigation Links */}
+        {isBoutique && !isMobileView && (
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-xs font-semibold tracking-wide text-zinc-600">
+            <button
+              type="button"
+              onClick={() => scrollToAnchor('about')}
+              className="hover:text-zinc-950 transition-colors cursor-pointer py-1"
+            >
+              {t.navAbout}
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollToAnchor('gallery')}
+              className="hover:text-zinc-950 transition-colors cursor-pointer py-1"
+            >
+              {t.navGallery}
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollToAnchor('amenities')}
+              className="hover:text-zinc-950 transition-colors cursor-pointer py-1"
+            >
+              {t.navAmenities}
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollToAnchor('location')}
+              className="hover:text-zinc-950 transition-colors cursor-pointer py-1"
+            >
+              {t.navLocation}
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollToAnchor('reserve')}
+              className="hover:text-emerald-700 font-bold transition-colors cursor-pointer py-1"
+            >
+              {t.navReserve}
+            </button>
+          </nav>
+        )}
 
         {/* Header Badges & Direct Booking Assurance */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
@@ -158,6 +214,47 @@ export function Header({
           )}
         </div>
       </div>
+
+      {/* Boutique Mobile Sub-Navigation Bar */}
+      {isBoutique && (
+        <div className="lg:hidden flex items-center gap-2 overflow-x-auto py-2 px-3 sm:px-4 border-t border-zinc-100 bg-white/95 text-xs no-scrollbar">
+          <button
+            type="button"
+            onClick={() => scrollToAnchor('about')}
+            className="px-3 py-1 rounded-full bg-zinc-100 text-zinc-700 font-medium whitespace-nowrap hover:bg-zinc-200 transition-colors shrink-0"
+          >
+            {t.navAbout}
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollToAnchor('gallery')}
+            className="px-3 py-1 rounded-full bg-zinc-100 text-zinc-700 font-medium whitespace-nowrap hover:bg-zinc-200 transition-colors shrink-0"
+          >
+            {t.navGallery}
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollToAnchor('amenities')}
+            className="px-3 py-1 rounded-full bg-zinc-100 text-zinc-700 font-medium whitespace-nowrap hover:bg-zinc-200 transition-colors shrink-0"
+          >
+            {t.navAmenities}
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollToAnchor('location')}
+            className="px-3 py-1 rounded-full bg-zinc-100 text-zinc-700 font-medium whitespace-nowrap hover:bg-zinc-200 transition-colors shrink-0"
+          >
+            {t.navLocation}
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollToAnchor('reserve')}
+            className="px-3 py-1 rounded-full bg-emerald-700 text-white font-medium whitespace-nowrap hover:bg-emerald-800 transition-colors shrink-0"
+          >
+            {t.navReserve}
+          </button>
+        </div>
+      )}
     </header>
   );
 }

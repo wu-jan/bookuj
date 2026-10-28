@@ -11,6 +11,7 @@ interface PropertyGalleryProps {
   isMobileView: boolean;
   onCheckDates: () => void;
   t: TranslationDictionary;
+  isBoutique?: boolean;
 }
 
 export function PropertyGallery({
@@ -19,6 +20,7 @@ export function PropertyGallery({
   isMobileView,
   onCheckDates,
   t,
+  isBoutique = false,
 }: PropertyGalleryProps) {
   const [activeGalleryIndex, setActiveGalleryIndex] = useState<number | null>(null);
   const touchStartX = useRef<number | null>(null);
@@ -81,10 +83,10 @@ export function PropertyGallery({
 
   return (
     <>
-      <div className="bg-white rounded-3xl p-5 sm:p-8 border border-zinc-200/80 shadow-xs">
+      <div id="gallery" className="bg-white rounded-3xl p-5 sm:p-8 lg:p-10 border border-stone-200/80 shadow-xs scroll-mt-24">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-5 sm:mb-6 gap-2">
           <div>
-            <h3 className="text-lg sm:text-xl font-bold tracking-tight text-zinc-900">
+            <h3 className={`${isBoutique ? 'font-serif text-xl sm:text-3xl font-normal' : 'text-lg sm:text-xl font-bold'} tracking-tight text-zinc-900`}>
               {t.spacesAndAtmosphere}
             </h3>
             <p className="text-xs text-zinc-500 mt-0.5">
