@@ -83,74 +83,120 @@ export function PropertyGallery({
 
   return (
     <>
-      <div id="gallery" className="bg-white rounded-3xl p-5 sm:p-8 lg:p-10 border border-stone-200/80 shadow-xs scroll-mt-24">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-5 sm:mb-6 gap-2">
-          <div>
-            <h3 className={`${isBoutique ? 'font-serif text-xl sm:text-3xl font-normal' : 'text-lg sm:text-xl font-bold'} tracking-tight text-zinc-900`}>
-              {t.spacesAndAtmosphere}
-            </h3>
-            <p className="text-xs text-zinc-500 mt-0.5">
-              {t.gallerySubtitle}
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
+      {isBoutique ? (
+        /* Compact Expandable Gallery Widget for Boutique Layout */
+        <div id="gallery" className="bg-white rounded-3xl p-5 sm:p-7 border border-stone-200/80 shadow-xs scroll-mt-24 max-w-4xl mx-auto">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-4 min-w-0">
+              {/* Mini thumbnail preview stack */}
+              <div className="flex -space-x-3 sm:-space-x-4 overflow-hidden py-1 shrink-0">
+                {images.slice(0, 3).map((img, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => setActiveGalleryIndex(i)}
+                    className="relative h-12 w-14 sm:h-14 sm:w-18 rounded-xl overflow-hidden ring-2 ring-white shadow-md hover:scale-105 transition-transform cursor-pointer"
+                    title={`Zobacz zdjęcie ${i + 1}`}
+                  >
+                    <Image src={img} alt="" fill className="object-cover" sizes="80px" />
+                  </button>
+                ))}
+              </div>
+
+              <div className="min-w-0">
+                <span className="text-[11px] uppercase tracking-[0.2em] font-semibold text-stone-400 block mb-0.5">
+                  {t.spacesAndInterior}
+                </span>
+                <h3 className="font-serif text-lg sm:text-2xl font-normal text-stone-900 tracking-tight truncate">
+                  {t.spacesAndAtmosphere}
+                </h3>
+                <p className="text-xs text-stone-500 mt-0.5 hidden sm:block truncate">
+                  {t.gallerySubtitle}
+                </p>
+              </div>
+            </div>
+
             <button
               type="button"
               onClick={() => setActiveGalleryIndex(0)}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-700 hover:text-zinc-900 bg-zinc-100 hover:bg-zinc-200/80 px-3 py-1.5 rounded-full transition-colors cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-stone-900 hover:bg-stone-800 text-white px-5 py-2.5 text-xs font-semibold shadow-xs transition-all active:scale-95 cursor-pointer shrink-0"
             >
-              <Images className="h-3.5 w-3.5 text-zinc-500" />
+              <Images className="h-4 w-4" />
               <span>{t.viewAllPhotos(totalCount)}</span>
-            </button>
-            <button
-              type="button"
-              onClick={onCheckDates}
-              className="self-start sm:self-auto text-xs font-bold text-emerald-700 hover:text-emerald-800 transition-colors cursor-pointer"
-            >
-              {t.checkDatesForSpaces}
             </button>
           </div>
         </div>
-
-        <div className={`grid grid-cols-1 ${isMobileView ? 'gap-4' : 'sm:grid-cols-3 gap-5'}`}>
-          {previewImages.map((img, idx) => {
-            const imageIndex = idx + 1;
-            const isLast = idx === 2 && remainingCount > 0;
-            return (
+      ) : (
+        /* Standard 3-card photo grid */
+        <div id="gallery" className="bg-white rounded-3xl p-5 sm:p-8 lg:p-10 border border-stone-200/80 shadow-xs scroll-mt-24">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-5 sm:mb-6 gap-2">
+            <div>
+              <h3 className="text-lg sm:text-xl font-bold tracking-tight text-zinc-900">
+                {t.spacesAndAtmosphere}
+              </h3>
+              <p className="text-xs text-zinc-500 mt-0.5">
+                {t.gallerySubtitle}
+              </p>
+            </div>
+            <div className="flex items-center gap-3">
               <button
-                key={idx}
                 type="button"
-                onClick={() => setActiveGalleryIndex(imageIndex)}
-                className="relative h-64 sm:h-72 rounded-2xl overflow-hidden bg-zinc-100 group shadow-xs cursor-pointer text-left focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                onClick={() => setActiveGalleryIndex(0)}
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-700 hover:text-zinc-900 bg-zinc-100 hover:bg-zinc-200/80 px-3 py-1.5 rounded-full transition-colors cursor-pointer"
               >
-                <Image
-                  src={img}
-                  alt={`${title} space ${imageIndex}`}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
+                <Images className="h-3.5 w-3.5 text-zinc-500" />
+                <span>{t.viewAllPhotos(totalCount)}</span>
+              </button>
+              <button
+                type="button"
+                onClick={onCheckDates}
+                className="self-start sm:self-auto text-xs font-bold text-emerald-700 hover:text-emerald-800 transition-colors cursor-pointer"
+              >
+                {t.checkDatesForSpaces}
+              </button>
+            </div>
+          </div>
 
-                {isLast && (
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center text-white backdrop-blur-[2px] transition-colors group-hover:bg-black/50">
-                    <div className="flex items-center gap-2 font-bold text-sm bg-white/20 px-3.5 py-1.5 rounded-full border border-white/30 backdrop-blur-md">
-                      <Images className="h-4 w-4" />
-                      <span>+{remainingCount + 1}</span>
+          <div className={`grid grid-cols-1 ${isMobileView ? 'gap-4' : 'sm:grid-cols-3 gap-5'}`}>
+            {previewImages.map((img, idx) => {
+              const imageIndex = idx + 1;
+              const isLast = idx === 2 && remainingCount > 0;
+              return (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => setActiveGalleryIndex(imageIndex)}
+                  className="relative h-64 sm:h-72 rounded-2xl overflow-hidden bg-zinc-100 group shadow-xs cursor-pointer text-left focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                >
+                  <Image
+                    src={img}
+                    alt={`${title} space ${imageIndex}`}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+
+                  {isLast && (
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center text-white backdrop-blur-[2px] transition-colors group-hover:bg-black/50">
+                      <div className="flex items-center gap-2 font-bold text-sm bg-white/20 px-3.5 py-1.5 rounded-full border border-white/30 backdrop-blur-md">
+                        <Images className="h-4 w-4" />
+                        <span>+{remainingCount + 1}</span>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                    <div className="flex items-center gap-2 bg-white/95 text-zinc-900 rounded-full px-4 py-2 text-xs font-bold shadow-lg backdrop-blur-md transform translate-y-2 group-hover:translate-y-0 transition-all">
+                      <Maximize2 className="h-3.5 w-3.5 text-emerald-600" />
+                      <span>{t.viewFullscreen}</span>
                     </div>
                   </div>
-                )}
-
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                  <div className="flex items-center gap-2 bg-white/95 text-zinc-900 rounded-full px-4 py-2 text-xs font-bold shadow-lg backdrop-blur-md transform translate-y-2 group-hover:translate-y-0 transition-all">
-                    <Maximize2 className="h-3.5 w-3.5 text-emerald-600" />
-                    <span>{t.viewFullscreen}</span>
-                  </div>
-                </div>
-              </button>
-            );
-          })}
+                </button>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Animated Maximized Photo Gallery Lightbox */}
       {activeGalleryIndex !== null && (

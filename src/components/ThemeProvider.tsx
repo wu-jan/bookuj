@@ -7,8 +7,6 @@ interface ThemeProviderProps {
 }
 
 export function ThemeProvider({ theme, children }: ThemeProviderProps) {
-  const fontClass = theme.fontStyle === 'serif' ? 'font-serif' : 'font-sans';
-
   const styleVariables = {
     '--color-primary': theme.primaryColor,
     '--color-accent': theme.accentColor,
@@ -17,7 +15,7 @@ export function ThemeProvider({ theme, children }: ThemeProviderProps) {
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-300 ${fontClass}`}
+      className="min-h-screen transition-colors duration-300 font-sans"
       style={{
         ...styleVariables,
         backgroundColor: theme.backgroundColor,

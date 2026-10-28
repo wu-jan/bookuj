@@ -31,17 +31,17 @@ export function BoutiqueLocation({
     locale === 'pl'
       ? [
           { name: 'Szlaki turystyczne i natura', dist: '1,5 km' },
-          { name: 'Stacje narciarskie & wyciągi', dist: '2,2 km' },
-          { name: 'Baseny termalne & SPA', dist: '7,5 km' },
+          { name: 'Stacje narciarskie i wyciągi', dist: '2,2 km' },
+          { name: 'Baseny termalne i SPA', dist: '7,5 km' },
           { name: 'Tradycyjne karczmy i restauracje', dist: '900 m' },
-          { name: 'Centrum miejscowości & sklepy', dist: '3,5 km' },
+          { name: 'Centrum miejscowości i sklepy', dist: '3,5 km' },
         ]
       : [
-          { name: 'Mountain trails & nature', dist: '1.5 km' },
-          { name: 'Ski slopes & lifts', dist: '2.2 km' },
-          { name: 'Thermal baths & wellness', dist: '7.5 km' },
-          { name: 'Local dining & artisan inns', dist: '900 m' },
-          { name: 'Town centre & provisions', dist: '3.5 km' },
+          { name: 'Mountain trails and nature', dist: '1.5 km' },
+          { name: 'Ski slopes and lifts', dist: '2.2 km' },
+          { name: 'Thermal baths and wellness', dist: '7.5 km' },
+          { name: 'Local dining and artisan inns', dist: '900 m' },
+          { name: 'Town centre and provisions', dist: '3.5 km' },
         ];
 
   return (
@@ -49,11 +49,11 @@ export function BoutiqueLocation({
       <div className="rounded-3xl overflow-hidden border border-stone-200/80 shadow-md bg-white">
         <div className={`grid grid-cols-1 ${isMobileView ? '' : 'lg:grid-cols-12'} items-stretch`}>
           {/* Left Column: Typographic Details & Distances (matches Zacny Lasek Screenshot 4) */}
-          <div className={`${isMobileView ? 'p-6 sm:p-8' : 'lg:col-span-6 p-8 sm:p-12 xl:p-16 flex flex-col justify-center'} bg-white text-stone-900`}>
+          <div className={`${isMobileView ? 'p-6 sm:p-8' : 'lg:col-span-6 p-8 sm:p-12 xl:p-16 flex flex-col justify-center'} bg-white text-stone-900 font-sans`}>
             {/* Header */}
             <div className="mb-4">
-              <span className="text-xs uppercase tracking-[0.25em] font-bold text-stone-400 block mb-1">
-                {locale === 'pl' ? 'Okolica & Dojazd' : 'Surroundings & Access'}
+              <span className="text-xs uppercase tracking-[0.25em] font-semibold text-stone-400 block mb-1">
+                {locale === 'pl' ? 'Okolica i dojazd' : 'Surroundings and Access'}
               </span>
               <h3 className="font-serif text-3xl sm:text-4xl font-normal tracking-tight text-stone-900">
                 {locale === 'pl' ? 'LOKALIZACJA:' : 'LOCATION:'}
@@ -62,7 +62,7 @@ export function BoutiqueLocation({
 
             <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-normal mb-6">
               {title} {locale === 'pl' ? 'położony jest w malowniczej i spokojnej części' : 'is situated in a peaceful and scenic area of'}{' '}
-              <strong className="text-stone-900">{locationName}</strong>.{' '}
+              <span className="text-stone-900 font-medium">{locationName}</span>.{' '}
               {locale === 'pl'
                 ? 'To idealne miejsce dla osób ceniących ciszę, górską przyrodę i bliskość najważniejszych atrakcji Podhala.'
                 : 'A serene sanctuary for those who value mountain tranquility and close proximity to premier regional highlights.'}
@@ -70,7 +70,7 @@ export function BoutiqueLocation({
 
             {/* Distances List */}
             <div className="mb-6">
-              <span className="text-xs uppercase font-bold tracking-wider text-stone-400 block mb-3">
+              <span className="text-xs uppercase font-semibold tracking-wider text-stone-400 block mb-3">
                 {locale === 'pl' ? 'Orientacyjne przykładowe odległości:' : 'Sample approximate distances:'}
               </span>
               <div className="space-y-2.5">
@@ -79,8 +79,8 @@ export function BoutiqueLocation({
                     key={idx}
                     className="flex items-center justify-between text-xs sm:text-sm text-stone-700 py-1 border-b border-stone-100 last:border-b-0"
                   >
-                    <span className="font-medium text-stone-800">{item.name}</span>
-                    <span className="font-mono text-stone-500 font-semibold">— {item.dist}</span>
+                    <span className="font-normal text-stone-800">{item.name}</span>
+                    <span className="font-mono text-stone-500 font-normal">— {item.dist}</span>
                   </div>
                 ))}
               </div>
@@ -96,7 +96,7 @@ export function BoutiqueLocation({
                 href={googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-stone-900 hover:text-emerald-700 transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1.5 text-xs font-medium text-stone-700 hover:text-stone-950 underline hover:no-underline transition-colors focus:outline-none"
               >
                 <span>{locale === 'pl' ? 'Otwórz w Google Maps' : 'Open in Google Maps'}</span>
                 <ExternalLink className="h-3.5 w-3.5" />
@@ -123,3 +123,4 @@ export function BoutiqueLocation({
     </section>
   );
 }
+

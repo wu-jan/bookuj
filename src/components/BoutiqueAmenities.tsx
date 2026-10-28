@@ -128,20 +128,20 @@ export function BoutiqueAmenities({
 
             {/* Title */}
             <h3 className="font-serif text-2xl sm:text-4xl font-normal tracking-tight text-white mb-6 sm:mb-8">
-              {locale === 'pl' ? 'Wyposażenie & Udogodnienia' : 'Bespoke Amenities & Comfort'}
+              {locale === 'pl' ? 'Wyposażenie i udogodnienia' : 'Bespoke Amenities and Comfort'}
             </h3>
 
             {/* Curated list with line icons and descriptions */}
-            <div className="space-y-4 sm:space-y-5">
+            <div className="space-y-4 sm:space-y-5 font-sans">
               {amenities.slice(0, 6).map((item, idx) => (
                 <div key={idx} className="flex items-start gap-4">
                   <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/15 border border-white/20 text-white mt-0.5">
                     {getAmenityIcon(item)}
                   </div>
                   <div>
-                    <strong className="text-sm sm:text-base font-semibold block text-white leading-snug">
+                    <span className="text-sm sm:text-base font-semibold block text-white leading-snug">
                       {item}
-                    </strong>
+                    </span>
                     <span className="text-xs text-white/80 leading-relaxed block mt-0.5 font-normal">
                       {getAmenityDescription(item)}
                     </span>
@@ -150,17 +150,17 @@ export function BoutiqueAmenities({
               ))}
 
               {/* Direct Payment assurance item as in Zacny Lasek */}
-              <div className="flex items-start gap-4 pt-2 border-t border-white/20">
+              <div className="flex items-start gap-4 pt-3 border-t border-white/20">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/15 border border-white/20 text-white mt-0.5">
                   <CreditCard className="h-5 w-5" />
                 </div>
                 <div>
-                  <strong className="text-sm sm:text-base font-semibold block text-white leading-snug">
+                  <span className="text-sm sm:text-base font-semibold block text-white leading-snug">
                     {locale === 'pl' ? 'Wygodne płatności bezpośrednie' : 'Direct payment flexibility'}
-                  </strong>
+                  </span>
                   <span className="text-xs text-white/80 leading-relaxed block mt-0.5 font-normal">
                     {locale === 'pl'
-                      ? 'Płatność błyskawicznym przelewem BLIK na numer telefonu, tradycyjnym przelewem bankowym lub na miejscu.'
+                      ? 'Płatność błyskawicznym przelewem BLIK na numer telefonu, przelewem bankowym lub na miejscu.'
                       : 'Instant BLIK mobile transfer, standard bank transfer, or payment upon arrival with zero fees.'}
                   </span>
                 </div>
