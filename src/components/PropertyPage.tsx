@@ -11,6 +11,7 @@ import { HostWelcomeCard } from '@/components/HostWelcomeCard';
 import { DirectBookingBenefitsCard } from '@/components/DirectBookingBenefitsCard';
 import { BoutiqueHostStory } from '@/components/BoutiqueHostStory';
 import { BoutiqueAmenities } from '@/components/BoutiqueAmenities';
+import { BoutiqueLocation } from '@/components/BoutiqueLocation';
 import { PropertyGallery } from '@/components/PropertyGallery';
 import { BookingSuite } from '@/components/BookingSuite';
 import { MobileBottomCTA } from '@/components/MobileBottomCTA';
@@ -154,23 +155,27 @@ export function PropertyPage({
                   />
                 </div>
 
-                {/* 3. Typography-First Curated Amenities */}
+                {/* 3. Splitted Interior & Comfort Showcase (matches Zacny Lasek Screenshot 4) */}
                 <BoutiqueAmenities
                   amenities={activeProperty.amenities}
+                  image={activeProperty.images[2] || activeProperty.images[1]}
+                  themeColor={activeProperty.theme.primaryColor || '#944933'}
                   t={t}
                   locale={currentLocale}
                   isMobileView={isMobileView}
                 />
 
-                {/* 4. Setting & Surroundings Map */}
+                {/* 4. Setting & Surroundings Map with Sample Distances (matches Zacny Lasek Screenshot 4) */}
                 {activeProperty.coordinates && (
                   <div ref={mapRef}>
-                    <PropertyMap
+                    <BoutiqueLocation
                       lat={activeProperty.coordinates.lat}
                       lng={activeProperty.coordinates.lng}
                       locationName={activeProperty.location}
                       title={activeProperty.title}
+                      locale={currentLocale}
                       t={t}
+                      isMobileView={isMobileView}
                     />
                   </div>
                 )}
