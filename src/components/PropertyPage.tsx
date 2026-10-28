@@ -19,6 +19,7 @@ import { MobileDeviceFrame } from '@/components/MobileDeviceFrame';
 import { PaymentModal } from '@/components/PaymentModal';
 import { PropertyMap } from '@/components/PropertyMap';
 import { PropertyFAQ } from '@/components/PropertyFAQ';
+import { PropertyGalleryModal } from '@/components/PropertyGalleryModal';
 import { Footer } from '@/components/Footer';
 import { DemoPropertySwitcher } from '@/components/DemoPropertySwitcher';
 import { dictionaries, getLocalizedProperty, Locale } from '@/lib/translations';
@@ -39,6 +40,7 @@ export function PropertyPage({
 
   const [selectedRange, setSelectedRange] = useState<DateRange | undefined>(undefined);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
 
   const calendarRef = useRef<HTMLDivElement>(null);
@@ -108,6 +110,7 @@ export function PropertyPage({
             pricePerNight={activeProperty.pricePerNight}
             currency={activeProperty.currency}
             onCheckAvailability={scrollToCalendar}
+            onOpenGallery={() => setIsGalleryOpen(true)}
             isMobileView={isMobileView}
           />
 
@@ -116,15 +119,19 @@ export function PropertyPage({
              * BOUTIQUE EDITORIAL LAYOUT PRESET (Inspired by zacnylasek.com & bespoke retreats)
              * ========================================================================= */
             <main className="w-full flex-1 flex flex-col">
-              {/* Full-width edge-to-edge Hero */}
-              <PropertyHero
-                property={activeProperty}
-                t={t}
-                isMobileView={isMobileView}
-                onScrollToCalendar={scrollToCalendar}
-                onScrollToGallery={scrollToSpaces}
-                onScrollToMap={scrollToMap}
-              />
+              {/* Rounded Hero Card with container margins */}
+              <div className="w-full max-w-6xl mx-auto px-3 sm:px-6 lg:px-8 pt-3 sm:pt-6">
+                <PropertyHero
+                  property={activeProperty}
+                  t={t}
+                  locale={currentLocale}
+                  isMobileView={isMobileView}
+                  onScrollToCalendar={scrollToCalendar}
+                  onScrollToGallery={() => setIsGalleryOpen(true)}
+                  onScrollToMap={scrollToMap}
+                  onOpenGallery={() => setIsGalleryOpen(true)}
+                />
+              </div>
 
               {/* Section-based vertical rhythm with generous editorial breathing room */}
               <div
@@ -143,19 +150,7 @@ export function PropertyPage({
                   onCheckDates={scrollToCalendar}
                 />
 
-                {/* 2. Atmosphere & Spaces Gallery */}
-                <div ref={spacesRef}>
-                  <PropertyGallery
-                    images={activeProperty.images}
-                    title={activeProperty.title}
-                    isMobileView={isMobileView}
-                    onCheckDates={scrollToCalendar}
-                    t={t}
-                    isBoutique={true}
-                  />
-                </div>
-
-                {/* 3. Splitted Interior & Comfort Showcase (matches Zacny Lasek Screenshot 4) */}
+                {/* 2. Splitted Interior & Comfort Showcase (matches Zacny Lasek Screenshot 4) */}
                 <BoutiqueAmenities
                   amenities={activeProperty.amenities}
                   image={activeProperty.images[2] || activeProperty.images[1]}
@@ -165,7 +160,7 @@ export function PropertyPage({
                   isMobileView={isMobileView}
                 />
 
-                {/* 4. Setting & Surroundings Map with Sample Distances (matches Zacny Lasek Screenshot 4) */}
+                {/* 3. Setting & Surroundings Map with Sample Distances (matches Zacny Lasek Screenshot 4) */}
                 {activeProperty.coordinates && (
                   <div ref={mapRef}>
                     <BoutiqueLocation
@@ -180,7 +175,7 @@ export function PropertyPage({
                   </div>
                 )}
 
-                {/* 5. Frequently Asked Questions */}
+                {/* 4. Frequently Asked Questions */}
                 {activeProperty.faq && activeProperty.faq.length > 0 && (
                   <PropertyFAQ
                     faq={activeProperty.faq}
@@ -190,10 +185,10 @@ export function PropertyPage({
                   />
                 )}
 
-                {/* 6. Dedicated Luxury Reservation Area */}
+                {/* 5. Dedicated Luxury Reservation Area */}
                 <div id="reserve" ref={calendarRef} className="scroll-mt-24 w-full">
-                  <div className="bg-stone-900 border border-stone-800 text-white rounded-3xl p-5 sm:p-8 md:p-12 shadow-2xl">
-                    <div className="max-w-2xl mb-6 sm:mb-8">
+                  <div className="bg-stone-900 border border-stone-800 text-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-8 md:p-12 shadow-2xl">
+                    <div className="max-w-2xl mb-5 sm:mb-8">
                       <div className="flex items-center gap-2 mb-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                         <span className="text-xs uppercase tracking-[0.2em] font-semibold text-emerald-400">
@@ -234,10 +229,12 @@ export function PropertyPage({
               <PropertyHero
                 property={activeProperty}
                 t={t}
+                locale={currentLocale}
                 isMobileView={isMobileView}
                 onScrollToCalendar={scrollToCalendar}
-                onScrollToGallery={scrollToSpaces}
+                onScrollToGallery={() => setIsGalleryOpen(true)}
                 onScrollToMap={scrollToMap}
+                onOpenGallery={() => setIsGalleryOpen(true)}
               />
 
               {/* Content Stack */}
@@ -348,6 +345,15 @@ export function PropertyPage({
           cancellationPolicy={activeProperty.cancellationPolicy}
           t={t}
           locale={currentLocale}
+        />
+
+        {/* Fullscreen Photo Gallery Lightbox Modal */}
+        <PropertyGalleryModal
+          isOpen={isGalleryOpen}
+          onClose={() => setIsGalleryOpen(false)}
+          images={activeProperty.images}
+          title={activeProperty.title}
+          t={t}
         />
 
         {/* Demo Property Switcher Floating Pill */}

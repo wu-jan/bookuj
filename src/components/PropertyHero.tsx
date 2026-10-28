@@ -1,26 +1,30 @@
 import React from 'react';
 import Image from 'next/image';
-import { Sparkles, Compass, MapPin } from 'lucide-react';
+import { Sparkles, Compass, MapPin, Images } from 'lucide-react';
 import { Property } from '@/types/property';
 import { formatCurrency } from '@/lib/utils';
-import { TranslationDictionary } from '@/lib/translations';
+import { TranslationDictionary, Locale } from '@/lib/translations';
 
 interface PropertyHeroProps {
   property: Property;
   t: TranslationDictionary;
+  locale?: Locale;
   isMobileView: boolean;
   onScrollToCalendar: () => void;
   onScrollToGallery: () => void;
   onScrollToMap: () => void;
+  onOpenGallery?: () => void;
 }
 
 export function PropertyHero({
   property,
   t,
+  locale = 'pl',
   isMobileView,
   onScrollToCalendar,
   onScrollToGallery,
   onScrollToMap,
+  onOpenGallery,
 }: PropertyHeroProps) {
   const isBoutique = property.theme.layout === 'boutique';
 
@@ -29,9 +33,9 @@ export function PropertyHero({
       <div
         className={`relative ${
           isMobileView
-            ? 'h-[520px]'
-            : 'h-[75vh] min-h-[500px] sm:h-[80vh] sm:min-h-[560px] lg:h-[85vh]'
-        } w-full overflow-hidden select-none`}
+            ? 'h-[480px]'
+            : 'h-[65vh] min-h-[460px] sm:h-[72vh] sm:min-h-[520px] lg:h-[78vh]'
+        } w-full overflow-hidden rounded-3xl shadow-xl select-none`}
       >
         <div className="relative h-full w-full animate-ken-burns">
           <Image
@@ -46,37 +50,50 @@ export function PropertyHero({
         {/* Subtle cinematic gradient scrim */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/20 pointer-events-none" />
 
+        {/* Top Right Quick Gallery Button */}
+        {onOpenGallery && (
+          <button
+            type="button"
+            onClick={onOpenGallery}
+            className="absolute top-4 right-4 sm:top-6 sm:right-6 z-10 inline-flex items-center gap-1.5 sm:gap-2 rounded-full bg-black/40 backdrop-blur-md px-3.5 py-1.5 sm:px-4 sm:py-2 text-xs font-semibold text-white border border-white/20 hover:bg-black/60 active:scale-95 transition-all cursor-pointer shadow-lg"
+            aria-label="Open photo gallery"
+          >
+            <Images className="h-3.5 w-3.5" />
+            <span>{locale === 'pl' ? 'Zdjęcia' : 'Photos'} ({property.images.length})</span>
+          </button>
+        )}
+
         {/* Clean, Majestic Editorial Typography & Action */}
         <div
           className={`absolute ${
             isMobileView
-              ? 'bottom-6 left-5 right-5'
-              : 'bottom-10 sm:bottom-16 left-6 right-6 sm:left-14 sm:right-14'
+              ? 'bottom-6 left-4 right-4'
+              : 'bottom-8 sm:bottom-12 left-5 right-5 sm:left-10 sm:right-10'
           } z-10 text-white flex flex-col justify-end max-w-4xl`}
         >
-          <div className="flex items-center gap-2 text-[11px] sm:text-xs font-semibold tracking-[0.25em] uppercase text-stone-300 mb-2 sm:mb-3">
+          <div className="flex items-center gap-2 text-[11px] sm:text-xs font-semibold tracking-[0.25em] uppercase text-stone-300 mb-2 sm:mb-2.5">
             <MapPin className="h-3.5 w-3.5 text-stone-300" />
             <span>{property.location}</span>
           </div>
 
           <h1
-            className={`font-serif font-normal text-3xl sm:text-5xl lg:text-7xl tracking-tight leading-[1.08] text-white drop-shadow-md`}
+            className={`font-serif font-normal text-2xl sm:text-4xl lg:text-6xl tracking-tight leading-[1.1] text-white drop-shadow-md`}
           >
             {property.title}
           </h1>
 
           {property.tagline && (
-            <p className="mt-2.5 sm:mt-4 text-base sm:text-2xl font-serif italic text-stone-200/95 leading-snug max-w-2xl">
+            <p className="mt-2 sm:mt-3 text-sm sm:text-xl font-serif italic text-stone-200/95 leading-snug max-w-2xl">
               {property.tagline}
             </p>
           )}
 
           {/* Minimalist Action & Rate */}
-          <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-4 sm:gap-6">
+          <div className="mt-5 sm:mt-7 flex flex-wrap items-center gap-3 sm:gap-4">
             <button
               type="button"
               onClick={onScrollToCalendar}
-              className="inline-flex items-center gap-2.5 rounded-xl px-6 py-3.5 sm:px-8 sm:py-4 text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-xl hover:brightness-105 active:scale-95 transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 rounded-xl px-5 py-3 sm:px-7 sm:py-3.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-xl hover:brightness-105 active:scale-95 transition-all cursor-pointer"
               style={{
                 backgroundColor: property.theme.accentColor || '#B45A42',
               }}
@@ -85,7 +102,18 @@ export function PropertyHero({
               <span className="text-base font-normal">→</span>
             </button>
 
-            <div className="text-xs sm:text-sm text-stone-200/90 font-medium">
+            {onOpenGallery && (
+              <button
+                type="button"
+                onClick={onOpenGallery}
+                className="inline-flex items-center gap-2 rounded-xl bg-white/20 backdrop-blur-md px-4 py-3 sm:px-5 sm:py-3.5 text-xs sm:text-sm font-semibold text-white border border-white/25 hover:bg-white/30 active:scale-95 transition-all cursor-pointer shadow-md"
+              >
+                <Images className="h-4 w-4" />
+                <span>{locale === 'pl' ? 'Zobacz zdjęcia' : 'View photos'} ({property.images.length})</span>
+              </button>
+            )}
+
+            <div className="text-xs sm:text-sm text-stone-200/90 font-medium ml-1">
               <span>{t.directRate}: </span>
               <strong className="text-white font-bold">
                 {formatCurrency(property.pricePerNight, property.currency)}
@@ -142,7 +170,7 @@ export function PropertyHero({
           {/* View Photos Widget */}
           <button
             type="button"
-            onClick={onScrollToGallery}
+            onClick={onOpenGallery || onScrollToGallery}
             className={`group flex items-center gap-2 sm:gap-4 rounded-xl sm:rounded-2xl bg-white text-zinc-900 ${
               isMobileView
                 ? 'px-2.5 py-2 w-auto'

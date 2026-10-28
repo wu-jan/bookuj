@@ -40,7 +40,7 @@ export function BookingSuite({
   const totalStayPrice = totalNights * property.pricePerNight;
 
   return (
-    <div className={`rounded-3xl border border-zinc-200 bg-white ${isMobileView ? 'p-3' : 'p-4 sm:p-8 md:p-10'} shadow-lg`}>
+    <div className={`rounded-2xl sm:rounded-3xl border border-zinc-200 bg-white ${isMobileView ? 'p-3' : 'p-3.5 sm:p-8 md:p-10'} shadow-lg w-full max-w-full overflow-hidden`}>
       <div className="pb-4 mb-4 sm:pb-6 sm:mb-6 border-b border-zinc-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
           {!isMobileView && (
@@ -66,8 +66,8 @@ export function BookingSuite({
         )}
       </div>
 
-      <div className={`grid grid-cols-1 ${isMobileView ? '' : 'lg:grid-cols-12'} gap-6 sm:gap-8 items-start`}>
-        <div className={isMobileView ? 'w-full' : 'lg:col-span-8'}>
+      <div className={`grid grid-cols-1 ${isMobileView ? '' : 'lg:grid-cols-12'} gap-4 sm:gap-8 items-start w-full`}>
+        <div className={isMobileView ? 'w-full' : 'w-full lg:col-span-8'}>
           <BookingCalendar
             occupiedDates={property.occupiedDates}
             selectedRange={selectedRange}
@@ -81,7 +81,7 @@ export function BookingSuite({
         </div>
 
         {/* Summary Box beside calendar */}
-        <div className={`${isMobileView ? 'w-full' : 'lg:col-span-4'} rounded-2xl bg-zinc-50 border border-zinc-200 p-5 sm:p-6 flex flex-col justify-between`}>
+        <div className={`${isMobileView ? 'w-full' : 'w-full lg:col-span-4'} rounded-2xl bg-zinc-50 border border-zinc-200 p-4 sm:p-6 flex flex-col justify-between`}>
           <div>
             <h4 className="font-bold text-sm text-zinc-900">{t.staySummary}</h4>
             <p className="text-xs text-zinc-500 mt-0.5">{t.staySummarySubtitle}</p>

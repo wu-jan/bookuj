@@ -21,6 +21,7 @@ interface HeaderProps {
   pricePerNight?: number;
   currency?: string;
   onCheckAvailability?: () => void;
+  onOpenGallery?: () => void;
   isMobileView?: boolean;
 }
 
@@ -38,6 +39,7 @@ export function Header({
   pricePerNight,
   currency,
   onCheckAvailability,
+  onOpenGallery,
   isMobileView = false,
 }: HeaderProps) {
   const [isContactOpen, setIsContactOpen] = useState(false);
@@ -74,12 +76,12 @@ export function Header({
   };
 
   return (
-    <header className={`w-full border-b border-black/5 bg-white/95 backdrop-blur-md sticky ${isMobileView ? 'top-[37px]' : 'top-0'} z-40`}>
-      <div className={`mx-auto flex max-w-7xl items-center justify-between ${isMobileView ? 'px-3 py-2.5' : 'px-4 py-3 sm:px-6 lg:px-8'}`}>
+    <header className={`w-full max-w-full overflow-x-clip border-b border-black/5 bg-white/95 backdrop-blur-md sticky ${isMobileView ? 'top-[37px]' : 'top-0'} z-40`}>
+      <div className={`mx-auto flex max-w-7xl items-center justify-between ${isMobileView ? 'px-3 py-2' : 'px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3'}`}>
         {/* Brand identity: Custom Logo or Stylized Title + Host Badge */}
-        <div className="flex items-center gap-3 min-w-0">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 sm:flex-initial">
           {hostAvatar && (
-            <div className="relative h-8 w-8 sm:h-9 sm:w-9 overflow-hidden rounded-full ring-2 ring-stone-200 shrink-0">
+            <div className="relative h-7 w-7 sm:h-9 sm:w-9 overflow-hidden rounded-full ring-2 ring-stone-200 shrink-0">
               <Image
                 src={hostAvatar}
                 alt={hostName || 'Host'}
@@ -88,18 +90,18 @@ export function Header({
               />
             </div>
           )}
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             {theme.logoUrl ? (
               <Image
                 src={theme.logoUrl}
                 alt={title}
                 width={40}
                 height={40}
-                className="h-9 w-auto object-contain"
+                className="h-7 sm:h-9 w-auto object-contain"
               />
             ) : (
               <span
-                className={`text-base sm:text-xl font-bold tracking-tight transition-colors block truncate max-w-[180px] sm:max-w-xs ${
+                className={`text-sm sm:text-xl font-bold tracking-tight transition-colors block truncate max-w-[125px] xs:max-w-[160px] sm:max-w-xs ${
                   theme.fontStyle === 'serif' ? 'font-serif' : 'font-sans'
                 }`}
                 style={{ color: 'var(--color-primary, #18181b)' }}
@@ -127,7 +129,7 @@ export function Header({
             </button>
             <button
               type="button"
-              onClick={() => scrollToAnchor('gallery')}
+              onClick={() => onOpenGallery ? onOpenGallery() : scrollToAnchor('gallery')}
               className="hover:text-zinc-950 transition-colors cursor-pointer py-1"
             >
               {t.navGallery}
@@ -157,37 +159,23 @@ export function Header({
         )}
 
         {/* Right Action Elements */}
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-          {/* Language Switcher */}
-          {hasTranslations && onToggleLocale && (
-            <button
-              type="button"
-              onClick={onToggleLocale}
-              className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white px-2.5 py-1 text-[11px] sm:text-xs font-semibold text-zinc-700 shadow-2xs hover:bg-zinc-50 active:scale-95 transition-all cursor-pointer"
-              title="Toggle Polish / English"
-            >
-              <Globe className="h-3.5 w-3.5 text-zinc-500" />
-              <span className="uppercase">{locale === 'pl' ? 'EN' : 'PL'}</span>
-            </button>
-          )}
-
+        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
           {isBoutique ? (
             /* ==========================================================
-             * BOUTIQUE CLEAN RIGHT BAR: Expandable Contact + REZERWACJA
+             * BOUTIQUE CLEAN RIGHT BAR: Contact + REZERWACJA + Persistent Language
              * ========================================================== */
             <>
-              {/* Expandable Contact Dropdown (replaces separate phone & whatsapp buttons) */}
+              {/* Expandable Contact Dropdown (compact & responsive) */}
               {(hostPhone || whatsappUrl) && (
                 <div className="relative" ref={contactRef}>
                   <button
                     type="button"
                     onClick={() => setIsContactOpen(!isContactOpen)}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-stone-200 bg-white px-3 py-1.5 text-xs font-semibold text-stone-800 shadow-2xs hover:bg-stone-50 active:scale-95 transition-all cursor-pointer"
+                    className="inline-flex items-center justify-center gap-1 rounded-full border border-stone-200 bg-white p-1.5 sm:px-3 sm:py-1.5 text-xs font-semibold text-stone-800 shadow-2xs hover:bg-stone-50 active:scale-95 transition-all cursor-pointer"
                     aria-label="Direct host contact options"
                   >
-                    <Phone className="h-3.5 w-3.5 text-stone-600" />
+                    <Phone className="h-3.5 w-3.5 text-stone-600 shrink-0" />
                     <span className="hidden sm:inline font-mono text-[11px]">{hostPhone || t.contactHost}</span>
-                    <span className="sm:hidden">{t.contactHost}</span>
                     <ChevronDown className={`h-3 w-3 text-stone-400 transition-transform duration-200 ${isContactOpen ? 'rotate-180' : ''}`} />
                   </button>
 
@@ -242,12 +230,12 @@ export function Header({
                 </div>
               )}
 
-              {/* Single Bold REZERWACJA Button */}
+              {/* Single Bold REZERWACJA Button with FIXED width so it never shifts when toggling languages */}
               {onCheckAvailability && (
                 <button
                   type="button"
                   onClick={onCheckAvailability}
-                  className="inline-flex items-center justify-center rounded-xl px-4 py-2 sm:px-5 sm:py-2 text-xs font-bold uppercase tracking-wider text-white shadow-sm hover:brightness-105 active:scale-95 transition-all cursor-pointer shrink-0"
+                  className="w-[84px] sm:w-[110px] inline-flex items-center justify-center rounded-xl py-1.5 sm:py-2 text-[11px] sm:text-xs font-bold uppercase tracking-wider text-white shadow-sm hover:brightness-105 active:scale-95 transition-all cursor-pointer shrink-0 text-center"
                   style={{
                     backgroundColor: theme.accentColor || '#B45A42',
                   }}
@@ -312,12 +300,25 @@ export function Header({
               )}
             </>
           )}
+
+          {/* Persistent Fixed-Width Language Switcher in Far Upper-Right Corner */}
+          {hasTranslations && onToggleLocale && (
+            <button
+              type="button"
+              onClick={onToggleLocale}
+              className="w-11 h-7.5 sm:w-13 sm:h-8.5 shrink-0 inline-flex items-center justify-center gap-1 rounded-full border border-stone-200 bg-white text-xs font-semibold text-stone-700 shadow-2xs hover:bg-stone-50 active:scale-95 transition-all cursor-pointer"
+              title="Toggle Polish / English"
+            >
+              <Globe className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-stone-400 shrink-0" />
+              <span className="font-mono text-[11px] font-bold w-4 text-center">{locale === 'pl' ? 'EN' : 'PL'}</span>
+            </button>
+          )}
         </div>
       </div>
 
       {/* Boutique Mobile Sub-Navigation Bar */}
       {isBoutique && (
-        <div className="lg:hidden flex items-center gap-2 overflow-x-auto py-2 px-3 sm:px-4 border-t border-stone-100 bg-white/95 text-xs no-scrollbar">
+        <div className="lg:hidden flex items-center gap-2 overflow-x-auto py-2 px-3 sm:px-4 border-t border-stone-100 bg-white/95 text-xs no-scrollbar touch-pan-x w-full max-w-full">
           <button
             type="button"
             onClick={() => scrollToAnchor('about')}
@@ -327,7 +328,7 @@ export function Header({
           </button>
           <button
             type="button"
-            onClick={() => scrollToAnchor('gallery')}
+            onClick={() => onOpenGallery ? onOpenGallery() : scrollToAnchor('gallery')}
             className="px-3 py-1 rounded-full bg-stone-100 text-stone-700 font-medium whitespace-nowrap hover:bg-stone-200 transition-colors shrink-0"
           >
             {t.navGallery}

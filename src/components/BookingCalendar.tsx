@@ -31,18 +31,7 @@ export function BookingCalendar({
   const dateFnsLocale = locale === 'pl' ? pl : enUS;
   const dateFormatPattern = locale === 'pl' ? 'd MMM yyyy' : 'MMM d, yyyy';
   const shortDateFormatPattern = locale === 'pl' ? 'd MMM' : 'MMM d';
-  // Mobile detection for true viewport
-  const [isWindowMobile, setIsWindowMobile] = useState(false);
   const [isMobileSheetOpen, setIsMobileSheetOpen] = useState(false);
-
-  useEffect(() => {
-    const check = () => setIsWindowMobile(window.innerWidth < 640);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
-
-  const showMobileWidget = isMobileView || isWindowMobile;
 
   // Convert ISO string dates to Date objects
   const disabledDates = React.useMemo(() => {
@@ -93,80 +82,77 @@ export function BookingCalendar({
       {/* ─────────────────────────────────────────────────────────────
           1. MOBILE VIEW: Airbnb-Style Travel Date Capsule Card
           ───────────────────────────────────────────────────────────── */}
-      {showMobileWidget && (
-        <div className="w-full rounded-3xl border border-zinc-200/90 bg-white p-3.5 shadow-sm">
-          <div className="flex items-center justify-between gap-2 mb-2.5">
-            <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full">
-              <CalendarIcon className="h-3.5 w-3.5 text-emerald-600" />
-              <span>{t.travelDates}</span>
-            </div>
-            {selectedRange?.from && (
-              <button
-                type="button"
-                onClick={() => onSelectRange(undefined)}
-                className="text-xs text-zinc-400 hover:text-zinc-700 underline cursor-pointer"
-              >
-                {t.clearDates}
-              </button>
-            )}
+      <div className={`${isMobileView ? 'block' : 'block sm:hidden'} w-full rounded-2xl sm:rounded-3xl border border-zinc-200/90 bg-white p-3 sm:p-3.5 shadow-sm`}>
+        <div className="flex items-center justify-between gap-2 mb-2.5">
+          <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full">
+            <CalendarIcon className="h-3.5 w-3.5 text-emerald-600" />
+            <span>{t.travelDates}</span>
           </div>
-
-          {/* Airbnb-style 2-column date picker button trigger */}
-          <button
-            type="button"
-            onClick={() => setIsMobileSheetOpen(true)}
-            className="w-full text-left rounded-2xl border-2 border-zinc-200 hover:border-emerald-500 active:scale-[0.99] transition-all bg-zinc-50/70 p-3 shadow-xs cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
-          >
-            <div className="grid grid-cols-2 divide-x divide-zinc-200">
-              <div className="pr-3">
-                <span className="text-[10px] uppercase font-bold tracking-wider text-zinc-400 block">
-                  {t.checkIn}
-                </span>
-                <span className="text-sm font-extrabold text-zinc-900 block mt-0.5 truncate">
-                  {selectedRange?.from ? format(selectedRange.from, dateFormatPattern, { locale: dateFnsLocale }) : t.addDate}
-                </span>
-              </div>
-              <div className="pl-3">
-                <span className="text-[10px] uppercase font-bold tracking-wider text-zinc-400 block">
-                  {t.checkOut}
-                </span>
-                <span className="text-sm font-extrabold text-zinc-900 block mt-0.5 truncate">
-                  {selectedRange?.to ? format(selectedRange.to, dateFormatPattern, { locale: dateFnsLocale }) : t.addDate}
-                </span>
-              </div>
-            </div>
-
-            {selectedRange?.from && selectedRange?.to && (
-              <div className="mt-2.5 pt-2 border-t border-zinc-200/60 flex items-center justify-between text-xs font-semibold">
-                {totalNights < minimumStay ? (
-                  <span className="text-amber-700">⚠️ {t.minStayAlert(minimumStay, totalNights)}</span>
-                ) : (
-                  <span className="text-emerald-700">{t.nightCount(totalNights)}</span>
-                )}
-                <span className="text-zinc-600">→</span>
-              </div>
-            )}
-          </button>
-
-          <div className="mt-3 flex items-center justify-between text-[11px] text-zinc-400">
-            <div className="flex items-center gap-1.5">
-              <Sparkles className="h-3 w-3 text-zinc-400 shrink-0" />
-              <span>{t.instantBookingConfirmation}</span>
-            </div>
-            {minimumStay > 1 && (
-              <span className="font-medium text-zinc-500 bg-zinc-100 px-2 py-0.5 rounded-full">
-                {t.minStayNotice(minimumStay)}
-              </span>
-            )}
-          </div>
+          {selectedRange?.from && (
+            <button
+              type="button"
+              onClick={() => onSelectRange(undefined)}
+              className="text-xs text-zinc-400 hover:text-zinc-700 underline cursor-pointer"
+            >
+              {t.clearDates}
+            </button>
+          )}
         </div>
-      )}
+
+        {/* Airbnb-style 2-column date picker button trigger */}
+        <button
+          type="button"
+          onClick={() => setIsMobileSheetOpen(true)}
+          className="w-full text-left rounded-2xl border-2 border-zinc-200 hover:border-emerald-500 active:scale-[0.99] transition-all bg-zinc-50/70 p-3 shadow-xs cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+        >
+          <div className="grid grid-cols-2 divide-x divide-zinc-200">
+            <div className="pr-3">
+              <span className="text-[10px] uppercase font-bold tracking-wider text-zinc-400 block">
+                {t.checkIn}
+              </span>
+              <span className="text-sm font-extrabold text-zinc-900 block mt-0.5 truncate">
+                {selectedRange?.from ? format(selectedRange.from, dateFormatPattern, { locale: dateFnsLocale }) : t.addDate}
+              </span>
+            </div>
+            <div className="pl-3">
+              <span className="text-[10px] uppercase font-bold tracking-wider text-zinc-400 block">
+                {t.checkOut}
+              </span>
+              <span className="text-sm font-extrabold text-zinc-900 block mt-0.5 truncate">
+                {selectedRange?.to ? format(selectedRange.to, dateFormatPattern, { locale: dateFnsLocale }) : t.addDate}
+              </span>
+            </div>
+          </div>
+
+          {selectedRange?.from && selectedRange?.to && (
+            <div className="mt-2.5 pt-2 border-t border-zinc-200/60 flex items-center justify-between text-xs font-semibold">
+              {totalNights < minimumStay ? (
+                <span className="text-amber-700">⚠️ {t.minStayAlert(minimumStay, totalNights)}</span>
+              ) : (
+                <span className="text-emerald-700">{t.nightCount(totalNights)}</span>
+              )}
+              <span className="text-zinc-600">→</span>
+            </div>
+          )}
+        </button>
+
+        <div className="mt-3 flex items-center justify-between text-[11px] text-zinc-400">
+          <div className="flex items-center gap-1.5">
+            <Sparkles className="h-3 w-3 text-zinc-400 shrink-0" />
+            <span>{t.instantBookingConfirmation}</span>
+          </div>
+          {minimumStay > 1 && (
+            <span className="font-medium text-zinc-500 bg-zinc-100 px-2 py-0.5 rounded-full">
+              {t.minStayNotice(minimumStay)}
+            </span>
+          )}
+        </div>
+      </div>
 
       {/* ─────────────────────────────────────────────────────────────
           2. DESKTOP VIEW: Full Side-by-Side 2-Month Calendar Grid
           ───────────────────────────────────────────────────────────── */}
-      {!showMobileWidget && (
-        <div className="w-full rounded-3xl border border-black/5 bg-white p-6 shadow-sm">
+      <div className={`${isMobileView ? 'hidden' : 'hidden sm:block'} w-full rounded-3xl border border-black/5 bg-white p-6 shadow-sm overflow-hidden`}>
           <div className="flex items-center justify-between gap-2 mb-6 pb-4 border-b border-zinc-100">
             <div>
               <h3 className="text-xl font-bold tracking-tight text-zinc-900 flex items-center gap-2">
@@ -247,7 +233,6 @@ export function BookingCalendar({
             )}
           </div>
         </div>
-      )}
 
       {/* ─────────────────────────────────────────────────────────────
           3. MOBILE SLIDE-UP BOTTOM SHEET MODAL (Airbnb-style)

@@ -22,6 +22,12 @@
   --rdp-day_button-width: 38px;
 }
 
+html,
+body {
+  overflow-x: clip;
+  max-width: 100vw;
+}
+
 /* React DayPicker High Contrast & Clean Aesthetics */
 .rdp-root {
   color: #18181b !important;
