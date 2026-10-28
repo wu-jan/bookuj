@@ -1,0 +1,108 @@
+[
+  {
+    "id": "prop-zakopane-fallback",
+    "slug": "zakopane-gorna-chata",
+    "title": "Zakopane Górska Chata",
+    "location": "Zakopane, Podhale, Polska",
+    "description": "Tradycyjna drewniana chata z ręcznie ciosanych bali świerkowych, z prywatną sauną panoramiczną, kominkiem z kamienia rzecznego i widokiem na panoramę Tatr Wysokich.",
+    "pricePerNight": 499,
+    "currency": "PLN",
+    "images": [
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "amenities": [
+      "Prywatna sauna panoramiczna",
+      "Kominek z kamienia rzecznego",
+      "Widok na Tatry Wysokie",
+      "Szybki internet światłowodowy (300 Mb/s)",
+      "Prywatny zamykany parking",
+      "Przechowalnia nart z suszarkami do butów",
+      "Drewno do kominka w cenie",
+      "Ekspres ciśnieniowy do kawy"
+    ],
+    "occupiedDates": [
+      "2026-11-01",
+      "2026-11-02",
+      "2026-11-03",
+      "2026-11-10",
+      "2026-11-11"
+    ],
+    "hostInfo": {
+      "name": "Stanisław Gąsienica",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
+      "phone": "+48 601 234 567",
+      "blikPhone": "+48 601 234 567",
+      "whatsappNumber": "+48 601 234 567"
+    },
+    "theme": {
+      "primaryColor": "#1E293B",
+      "accentColor": "#059669",
+      "backgroundColor": "#FDFCFB",
+      "fontStyle": "serif",
+      "layout": "boutique"
+    },
+    "coordinates": {
+      "lat": 49.2992,
+      "lng": 19.9496
+    },
+    "minimumStay": 2,
+    "depositPercent": 30,
+    "cancellationPolicy": "Bezpłatne odwołanie do 14 dni przed zameldowaniem. Zwrot 100% zadatku.",
+    "tagline": "Autentyczna góralska gościnność, minuty od szlaków i stoków.",
+    "faq": [
+      {
+        "question": "Czy drewno do kominka jest wliczone w cenę?",
+        "answer": "Tak, przygotowujemy zapas suchego drewna bukowego na cały pobyt."
+      },
+      {
+        "question": "Jak wygląda dojazd zimą?",
+        "answer": "Droga dojazdowa jest regularnie odśnieżana przez gminę. Zalecamy opony zimowe, a w przypadku intensywnych opadów śniegu łańcuchy na koła."
+      }
+    ],
+    "defaultLocale": "pl",
+    "translations": {
+      "pl": {
+        "title": "Zakopane Górska Chata",
+        "tagline": "Autentyczna góralska gościnność, minuty od szlaków i stoków.",
+        "location": "Zakopane, Podhale, Polska",
+        "description": "Tradycyjna drewniana chata z ręcznie ciosanych bali świerkowych, z prywatną sauną panoramiczną, kominkiem z kamienia rzecznego i widokiem na panoramę Tatr Wysokich.",
+        "amenities": [
+          "Prywatna sauna panoramiczna",
+          "Kominek z kamienia rzecznego",
+          "Widok na Tatry Wysokie",
+          "Szybki internet światłowodowy (300 Mb/s)",
+          "Prywatny zamykany parking",
+          "Przechowalnia nart z suszarkami do butów",
+          "Drewno do kominka w cenie",
+          "Ekspres ciśnieniowy do kawy"
+        ],
+        "cancellationPolicy": "Bezpłatne odwołanie do 14 dni przed zameldowaniem. Zwrot 100% zadatku.",
+        "hostBio": "Od trzech pokoleń nasza rodzina wita gości pod Tatrami. Stworzyliśmy Górską Chatę, by dzielić się magią Podhala z tymi, którzy cenią autentyczność, ciepło kominka i spokój górskiego poranka."
+      },
+      "en": {
+        "title": "Zakopane Mountain Chalet",
+        "tagline": "Authentic highland hospitality, minutes from trails and ski slopes.",
+        "location": "Zakopane, Podhale, Poland",
+        "description": "Traditional wooden chalet crafted from hand-hewn spruce logs, featuring a private panoramic sauna, river stone fireplace, and sweeping views of the High Tatras.",
+        "amenities": [
+          "Private panoramic sauna",
+          "River stone fireplace",
+          "High Tatras panorama view",
+          "Fiber high-speed WiFi (300 Mbps)",
+          "Private gated parking",
+          "Ski storage with boot warmers",
+          "Fireplace wood included",
+          "Espresso machine"
+        ],
+        "cancellationPolicy": "Free cancellation up to 14 days before check-in. 100% refund of deposit.",
+        "hostBio": "For three generations, our family has welcomed travelers to the Tatra foothills. We built this chalet to share the authentic warmth of Podhale crafts, crackling hearth fires, and pristine mountain mornings."
+      }
+    },
+    "hostBio": "Od trzech pokoleń nasza rodzina wita gości pod Tatrami. Stworzyliśmy Górską Chatę, by dzielić się magią Podhala z tymi, którzy cenią autentyczność, ciepło kominka i spokój górskiego poranka.",
+    "icalUrl": "https://calendar.google.com/calendar/ical/sample-zakopane%40example.com/public/basic.ics",
+    "softHoldHours": 2
+  }
+]

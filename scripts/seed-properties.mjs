@@ -38,7 +38,9 @@ if (!supabaseUrl || !supabaseKey) {
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-const dataPath = path.resolve(__dirname, '../src/data/sample-properties.json');
+const dataPath = fs.existsSync(path.resolve(__dirname, '../supabase/seed-data.json'))
+  ? path.resolve(__dirname, '../supabase/seed-data.json')
+  : path.resolve(__dirname, '../src/data/default-properties.json');
 const rawData = fs.readFileSync(dataPath, 'utf-8');
 const properties = JSON.parse(rawData);
 

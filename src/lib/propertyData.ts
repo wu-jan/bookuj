@@ -1,8 +1,8 @@
-import propertiesData from '@/data/sample-properties.json';
+import defaultPropertiesData from '@/data/default-properties.json';
 import { Property } from '@/types/property';
 import { getSupabaseClient, isSupabaseConfigured } from '@/lib/supabase';
 
-const localProperties: Property[] = propertiesData as Property[];
+const fallbackProperties: Property[] = defaultPropertiesData as Property[];
 
 function shouldUseLocalData(): boolean {
   if (process.env.NEXT_PUBLIC_USE_LOCAL_DATA === 'true') {
@@ -41,15 +41,15 @@ export function mapDatabaseRowToProperty(row: any): Property {
 
 /**
  * Fetch all available properties.
- * Reads from Supabase when configured, otherwise falls back to local sample-properties.json.
+ * Reads from Supabase when configured, otherwise falls back to local fallback placeholders.
  */
 export async function getAllProperties(): Promise<Property[]> {
   if (shouldUseLocalData()) {
-    return localProperties;
+    return fallbackProperties;
   }
 
   const client = getSupabaseClient();
-  if (!client) return localProperties;
+  if (!client) return fallbackProperties;
 
   try {
     const { data, error } = await client
@@ -58,14 +58,14 @@ export async function getAllProperties(): Promise<Property[]> {
       .order('id', { ascending: true });
 
     if (error || !data || data.length === 0) {
-      console.warn('Supabase fetch failed or returned 0 properties, falling back to local JSON:', error?.message);
-      return localProperties;
+      console.warn('Supabase fetch failed or returned 0 properties, falling back to local defaults:', error?.message);
+      return fallbackProperties;
     }
 
     return data.map(mapDatabaseRowToProperty);
   } catch (err) {
     console.error('Error fetching properties from Supabase:', err);
-    return localProperties;
+    return fallbackProperties;
   }
 }
 
@@ -74,11 +74,11 @@ export async function getAllProperties(): Promise<Property[]> {
  */
 export async function getPropertyBySlug(slug: string): Promise<Property | undefined> {
   if (shouldUseLocalData()) {
-    return localProperties.find((p) => p.slug === slug);
+    return fallbackProperties.find((p) => p.slug === slug);
   }
 
   const client = getSupabaseClient();
-  if (!client) return localProperties.find((p) => p.slug === slug);
+  if (!client) return fallbackProperties.find((p) => p.slug === slug);
 
   try {
     const { data, error } = await client
@@ -88,14 +88,14 @@ export async function getPropertyBySlug(slug: string): Promise<Property | undefi
       .maybeSingle();
 
     if (error || !data) {
-      // Fallback to local properties if not found in database or query error
-      return localProperties.find((p) => p.slug === slug);
+      // Fallback to local default properties if not found in database or query error
+      return fallbackProperties.find((p) => p.slug === slug);
     }
 
     return mapDatabaseRowToProperty(data);
   } catch (err) {
     console.error(`Error fetching property by slug (${slug}) from Supabase:`, err);
-    return localProperties.find((p) => p.slug === slug);
+    return fallbackProperties.find((p) => p.slug === slug);
   }
 }
 
@@ -104,11 +104,11 @@ export async function getPropertyBySlug(slug: string): Promise<Property | undefi
  */
 export async function getAllSlugs(): Promise<string[]> {
   if (shouldUseLocalData()) {
-    return localProperties.map((p) => p.slug);
+    return fallbackProperties.map((p) => p.slug);
   }
 
   const client = getSupabaseClient();
-  if (!client) return localProperties.map((p) => p.slug);
+  if (!client) return fallbackProperties.map((p) => p.slug);
 
   try {
     const { data, error } = await client
@@ -116,12 +116,12 @@ export async function getAllSlugs(): Promise<string[]> {
       .select('slug');
 
     if (error || !data || data.length === 0) {
-      return localProperties.map((p) => p.slug);
+      return fallbackProperties.map((p) => p.slug);
     }
 
     return data.map((row: { slug: string }) => row.slug);
   } catch {
-    return localProperties.map((p) => p.slug);
+    return fallbackProperties.map((p) => p.slug);
   }
 }
 
@@ -129,5 +129,5 @@ export async function getAllSlugs(): Promise<string[]> {
  * Synchronous local helper for components or contexts that need instant sync fallback.
  */
 export function getLocalProperties(): Property[] {
-  return localProperties;
+  return fallbackProperties;
 }
