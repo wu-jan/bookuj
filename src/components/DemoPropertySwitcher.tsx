@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Property } from '@/types/property';
-import { SlidersHorizontal, ChevronUp, ChevronDown, Check, Sparkles, Smartphone, Monitor } from 'lucide-react';
+import { SlidersHorizontal, ChevronUp, ChevronDown, Check, Sparkles, Smartphone, Monitor, LayoutTemplate } from 'lucide-react';
 
 interface DemoPropertySwitcherProps {
   properties: Property[];
@@ -11,6 +11,8 @@ interface DemoPropertySwitcherProps {
   isMobileSimulated?: boolean;
   onToggleMobileSimulated?: () => void;
   basePath?: string; // Prefix for links (e.g. '/demo' for demo showcase)
+  currentLayout?: 'boutique' | 'minimal';
+  onSelectLayout?: (layout: 'boutique' | 'minimal') => void;
 }
 
 export function DemoPropertySwitcher({
@@ -19,6 +21,8 @@ export function DemoPropertySwitcher({
   isMobileSimulated = false,
   onToggleMobileSimulated,
   basePath = '',
+  currentLayout,
+  onSelectLayout,
 }: DemoPropertySwitcherProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -69,6 +73,42 @@ export function DemoPropertySwitcher({
                 </div>
                 <span className="text-[10px] font-bold underline">Toggle</span>
               </button>
+            </div>
+          )}
+
+          {/* Layout Preset Switcher */}
+          {onSelectLayout && currentLayout && (
+            <div className="p-2 border-b border-zinc-100">
+              <div className="flex items-center justify-between p-2 rounded-2xl bg-zinc-50 border border-zinc-200/60 text-xs">
+                <div className="flex items-center gap-2 text-zinc-700">
+                  <LayoutTemplate className="h-4 w-4 text-amber-600" />
+                  <span>Layout Style:</span>
+                </div>
+                <div className="flex items-center gap-1 bg-white p-0.5 rounded-xl border border-zinc-200 shadow-2xs">
+                  <button
+                    type="button"
+                    onClick={() => onSelectLayout('boutique')}
+                    className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all cursor-pointer ${
+                      currentLayout === 'boutique'
+                        ? 'bg-zinc-900 text-white shadow-xs'
+                        : 'text-zinc-600 hover:text-zinc-900'
+                    }`}
+                  >
+                    Boutique
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => onSelectLayout('minimal')}
+                    className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all cursor-pointer ${
+                      currentLayout === 'minimal'
+                        ? 'bg-zinc-900 text-white shadow-xs'
+                        : 'text-zinc-600 hover:text-zinc-900'
+                    }`}
+                  >
+                    Minimal
+                  </button>
+                </div>
+              </div>
             </div>
           )}
 

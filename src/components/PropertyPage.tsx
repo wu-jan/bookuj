@@ -100,11 +100,22 @@ export function PropertyPage({
     setCurrentLocale((prev) => (prev === 'pl' ? 'en' : 'pl'));
   };
 
-  const hostFirstName = activeProperty.hostInfo.name.split(' ')[0];
-  const isBoutique = activeProperty.theme.layout === 'boutique';
+  // Interactive layout toggle override (for demo / concierge preview)
+  const [layoutOverride, setLayoutOverride] = useState<'boutique' | 'minimal' | undefined>(undefined);
+  const effectiveLayout = layoutOverride ?? activeProperty.theme.layout ?? 'minimal';
+  const effectiveProperty: Property = {
+    ...activeProperty,
+    theme: {
+      ...activeProperty.theme,
+      layout: effectiveLayout,
+    },
+  };
+
+  const hostFirstName = effectiveProperty.hostInfo.name.split(' ')[0];
+  const isBoutique = effectiveLayout === 'boutique';
 
   return (
-    <ThemeProvider theme={activeProperty.theme}>
+    <ThemeProvider theme={effectiveProperty.theme}>
       <MobileDeviceFrame
         isActive={isMobileView}
         onExit={() => setIsMobileView(false)}
@@ -112,18 +123,18 @@ export function PropertyPage({
         <div className={`transition-all duration-300 w-full ${isMobileView ? '' : 'flex flex-col pb-20 md:pb-0'}`}>
           {/* Top Direct Booking Header */}
           <Header
-            title={activeProperty.title}
-            theme={activeProperty.theme}
+            title={effectiveProperty.title}
+            theme={effectiveProperty.theme}
             t={t}
             locale={currentLocale}
             onToggleLocale={toggleLocale}
             hasTranslations={hasTranslations}
-            hostPhone={activeProperty.hostInfo.phone}
-            hostWhatsapp={activeProperty.hostInfo.whatsappNumber}
-            hostName={activeProperty.hostInfo.name}
-            hostAvatar={activeProperty.hostInfo.avatar}
-            pricePerNight={activeProperty.pricePerNight}
-            currency={activeProperty.currency}
+            hostPhone={effectiveProperty.hostInfo.phone}
+            hostWhatsapp={effectiveProperty.hostInfo.whatsappNumber}
+            hostName={effectiveProperty.hostInfo.name}
+            hostAvatar={effectiveProperty.hostInfo.avatar}
+            pricePerNight={effectiveProperty.pricePerNight}
+            currency={effectiveProperty.currency}
             onCheckAvailability={scrollToCalendar}
             onOpenGallery={() => setIsGalleryOpen(true)}
             isMobileView={isMobileView}
@@ -137,7 +148,7 @@ export function PropertyPage({
               {/* Rounded Hero Card with container margins */}
               <div className="w-full max-w-6xl mx-auto px-3 sm:px-6 lg:px-8 pt-3 sm:pt-6">
                 <PropertyHero
-                  property={activeProperty}
+                  property={effectiveProperty}
                   t={t}
                   locale={currentLocale}
                   isMobileView={isMobileView}
@@ -158,7 +169,7 @@ export function PropertyPage({
               >
                 {/* 1. Host Story & Authentic Philosophy */}
                 <BoutiqueHostStory
-                  property={activeProperty}
+                  property={effectiveProperty}
                   t={t}
                   locale={currentLocale}
                   isMobileView={isMobileView}
@@ -167,22 +178,22 @@ export function PropertyPage({
 
                 {/* 2. Splitted Interior & Comfort Showcase (matches Zacny Lasek Screenshot 4) */}
                 <BoutiqueAmenities
-                  amenities={activeProperty.amenities}
-                  image={activeProperty.images[2] || activeProperty.images[1]}
-                  themeColor={activeProperty.theme.primaryColor || '#944933'}
+                  amenities={effectiveProperty.amenities}
+                  image={effectiveProperty.images[2] || effectiveProperty.images[1]}
+                  themeColor={effectiveProperty.theme.primaryColor || '#944933'}
                   t={t}
                   locale={currentLocale}
                   isMobileView={isMobileView}
                 />
 
                 {/* 3. Setting & Surroundings Map with Sample Distances (matches Zacny Lasek Screenshot 4) */}
-                {activeProperty.coordinates && (
+                {effectiveProperty.coordinates && (
                   <div ref={mapRef}>
                     <BoutiqueLocation
-                      lat={activeProperty.coordinates.lat}
-                      lng={activeProperty.coordinates.lng}
-                      locationName={activeProperty.location}
-                      title={activeProperty.title}
+                      lat={effectiveProperty.coordinates.lat}
+                      lng={effectiveProperty.coordinates.lng}
+                      locationName={effectiveProperty.location}
+                      title={effectiveProperty.title}
                       locale={currentLocale}
                       t={t}
                       isMobileView={isMobileView}
@@ -191,9 +202,9 @@ export function PropertyPage({
                 )}
 
                 {/* 4. Frequently Asked Questions */}
-                {activeProperty.faq && activeProperty.faq.length > 0 && (
+                {effectiveProperty.faq && effectiveProperty.faq.length > 0 && (
                   <PropertyFAQ
-                    faq={activeProperty.faq}
+                    faq={effectiveProperty.faq}
                     hostFirstName={hostFirstName}
                     isMobileView={isMobileView}
                     t={t}
@@ -219,7 +230,7 @@ export function PropertyPage({
                     </div>
 
                     <BookingSuite
-                      property={activeProperty}
+                      property={effectiveProperty}
                       selectedRange={selectedRange}
                       onSelectRange={setSelectedRange}
                       isMobileView={isMobileView}
@@ -242,7 +253,7 @@ export function PropertyPage({
             >
               {/* Cinematic Hero Card */}
               <PropertyHero
-                property={activeProperty}
+                property={effectiveProperty}
                 t={t}
                 locale={currentLocale}
                 isMobileView={isMobileView}
@@ -260,7 +271,7 @@ export function PropertyPage({
                     isMobileView ? '' : 'md:grid-cols-2'
                   } gap-6 sm:gap-8 items-stretch`}
                 >
-                  <HostWelcomeCard property={activeProperty} t={t} />
+                  <HostWelcomeCard property={effectiveProperty} t={t} />
                   <DirectBookingBenefitsCard
                     hostFirstName={hostFirstName}
                     onCheckDates={scrollToCalendar}
@@ -271,8 +282,8 @@ export function PropertyPage({
                 {/* Spaces & Atmosphere Gallery */}
                 <div ref={spacesRef} className="scroll-mt-24">
                   <PropertyGallery
-                    images={activeProperty.images}
-                    title={activeProperty.title}
+                    images={effectiveProperty.images}
+                    title={effectiveProperty.title}
                     isMobileView={isMobileView}
                     onCheckDates={scrollToCalendar}
                     t={t}
@@ -281,26 +292,26 @@ export function PropertyPage({
 
                 {/* Standardized Amenities Grid */}
                 <div className="bg-white rounded-3xl p-5 sm:p-8 border border-zinc-200/80 shadow-xs">
-                  <AmenitiesList amenities={activeProperty.amenities} locale={currentLocale} />
+                  <AmenitiesList amenities={effectiveProperty.amenities} locale={currentLocale} />
                 </div>
 
                 {/* Location & Map Section */}
-                {activeProperty.coordinates && (
+                {effectiveProperty.coordinates && (
                   <div ref={mapRef}>
                     <PropertyMap
-                      lat={activeProperty.coordinates.lat}
-                      lng={activeProperty.coordinates.lng}
-                      locationName={activeProperty.location}
-                      title={activeProperty.title}
+                      lat={effectiveProperty.coordinates.lat}
+                      lng={effectiveProperty.coordinates.lng}
+                      locationName={effectiveProperty.location}
+                      title={effectiveProperty.title}
                       t={t}
                     />
                   </div>
                 )}
 
                 {/* Frequently Asked Questions */}
-                {activeProperty.faq && activeProperty.faq.length > 0 && (
+                {effectiveProperty.faq && effectiveProperty.faq.length > 0 && (
                   <PropertyFAQ
-                    faq={activeProperty.faq}
+                    faq={effectiveProperty.faq}
                     hostFirstName={hostFirstName}
                     isMobileView={isMobileView}
                     t={t}
@@ -310,7 +321,7 @@ export function PropertyPage({
                 {/* Dedicated Reservation Suite */}
                 <div ref={calendarRef} className="scroll-mt-24 pt-4">
                   <BookingSuite
-                    property={activeProperty}
+                    property={effectiveProperty}
                     selectedRange={selectedRange}
                     onSelectRange={setSelectedRange}
                     isMobileView={isMobileView}
@@ -325,8 +336,8 @@ export function PropertyPage({
 
           {/* Footer */}
           <Footer
-            title={activeProperty.title}
-            hostInfo={activeProperty.hostInfo}
+            title={effectiveProperty.title}
+            hostInfo={effectiveProperty.hostInfo}
             isMobileView={isMobileView}
             locale={currentLocale}
             t={t}
@@ -334,9 +345,9 @@ export function PropertyPage({
 
           {/* Mobile Bottom CTA */}
           <MobileBottomCTA
-            pricePerNight={activeProperty.pricePerNight}
-            currency={activeProperty.currency}
-            accentColor={activeProperty.theme.accentColor}
+            pricePerNight={effectiveProperty.pricePerNight}
+            currency={effectiveProperty.currency}
+            accentColor={effectiveProperty.theme.accentColor}
             hasDateRange={Boolean(selectedRange?.from && selectedRange?.to)}
             onAction={scrollToCalendar}
             isMobileView={isMobileView}
@@ -350,15 +361,15 @@ export function PropertyPage({
         <PaymentModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          propertyTitle={activeProperty.title}
-          pricePerNight={activeProperty.pricePerNight}
-          currency={activeProperty.currency}
+          propertyTitle={effectiveProperty.title}
+          pricePerNight={effectiveProperty.pricePerNight}
+          currency={effectiveProperty.currency}
           selectedRange={selectedRange}
-          theme={activeProperty.theme}
-          hostInfo={activeProperty.hostInfo}
-          depositPercent={activeProperty.depositPercent}
-          cancellationPolicy={activeProperty.cancellationPolicy}
-          softHoldHours={activeProperty.softHoldHours}
+          theme={effectiveProperty.theme}
+          hostInfo={effectiveProperty.hostInfo}
+          depositPercent={effectiveProperty.depositPercent}
+          cancellationPolicy={effectiveProperty.cancellationPolicy}
+          softHoldHours={effectiveProperty.softHoldHours}
           t={t}
           locale={currentLocale}
         />
@@ -367,8 +378,8 @@ export function PropertyPage({
         <PropertyGalleryModal
           isOpen={isGalleryOpen}
           onClose={() => setIsGalleryOpen(false)}
-          images={activeProperty.images}
-          title={activeProperty.title}
+          images={effectiveProperty.images}
+          title={effectiveProperty.title}
           t={t}
         />
 
@@ -380,6 +391,8 @@ export function PropertyPage({
             isMobileSimulated={isMobileView}
             onToggleMobileSimulated={() => setIsMobileView(!isMobileView)}
             basePath={isDemo ? '/demo' : ''}
+            currentLayout={effectiveLayout}
+            onSelectLayout={setLayoutOverride}
           />
         )}
       </MobileDeviceFrame>
