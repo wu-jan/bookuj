@@ -21,6 +21,18 @@ import { PropertyTheme, HostInfo } from '@/types/property';
 import { formatCurrency } from '@/lib/utils';
 import { TranslationDictionary, Locale } from '@/lib/translations';
 
+/**
+ * @component PaymentModal
+ * @description Direct reservation & contactless payment handoff modal.
+ *
+ * Lifecycle / States:
+ * 1. 'summary_and_payment': Guest enters name, email, optional notes, and selects settlement method
+ *    (BLIK P2P phone transfer, Direct IBAN, Revolut/P2P, or Pay on Arrival).
+ * 2. 'processing': High-fidelity interactive submission animation with spinner.
+ * 3. 'confirmed': Displays booking reference code (DIR-XXXXXX), settlement instructions,
+ *    and 1-click clipboard copy for host credentials (BLIK / IBAN / P2P).
+ */
+
 interface PaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -32,6 +44,7 @@ interface PaymentModalProps {
   hostInfo?: HostInfo;
   depositPercent?: number;
   cancellationPolicy?: string;
+  softHoldHours?: number;
   t: TranslationDictionary;
   locale?: Locale;
 }
@@ -54,6 +67,7 @@ function PaymentModalContent({
   hostInfo,
   depositPercent,
   cancellationPolicy,
+  softHoldHours = 2,
   t,
   locale = 'en',
 }: PaymentModalProps) {
@@ -113,8 +127,8 @@ function PaymentModalContent({
 
   // Host payment coordinates
   const hostFirstName = hostInfo?.name?.split(' ')[0] || 'Host';
-  const effectiveIban = hostInfo?.iban || 'NO93 8601 1117 9422';
-  const mockBic = 'DNBNO22';
+  const effectiveIban = hostInfo?.iban || 'PL00 0000 0000 0000 0000 0000 0000';
+  const mockBic = 'BPKOPLPW';
   const mockP2pHandle = `@${hostFirstName.toLowerCase()}-direct`;
   const hasBlik = Boolean(hostInfo?.blikPhone);
 
@@ -193,7 +207,7 @@ function PaymentModalContent({
 
               {/* Soft-hold reassurance copy */}
               <div className="text-[10px] text-zinc-400 italic pt-0.5">
-                {t.softHoldReassurance(2)}
+                {t.softHoldReassurance(softHoldHours)}
               </div>
             </div>
 

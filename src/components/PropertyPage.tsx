@@ -1,3 +1,16 @@
+/**
+ * @component PropertyPage
+ * @description Main client orchestrator for dedicated direct booking property pages.
+ *
+ * Core Responsibilities:
+ * - Locale state management (initial locale inferred from `property.defaultLocale` or currency).
+ * - Layout preset branch:
+ *   - `boutique`: Editorial, spacious retreat layout (BoutiqueHostStory, BoutiqueAmenities, BoutiqueLocation, dark reservation suite).
+ *   - standard (`minimal`): Card grid layout (HostWelcomeCard, DirectBookingBenefitsCard, PropertyGallery, AmenitiesList).
+ * - Date selection state and modal controller (PaymentModal, PropertyGalleryModal).
+ * - Interactive mobile device frame simulator (`isMobileView`).
+ */
+
 'use client';
 
 import React, { useState, useRef } from 'react';
@@ -26,12 +39,14 @@ import { dictionaries, getLocalizedProperty, Locale } from '@/lib/translations';
 
 interface PropertyPageProps {
   property: Property;
-  allProperties: Property[];
+  allProperties?: Property[];
+  isDemo?: boolean;
 }
 
 export function PropertyPage({
   property,
   allProperties,
+  isDemo = false,
 }: PropertyPageProps) {
   // Infer initial locale: if property has defaultLocale or currency is PLN -> 'pl', otherwise 'en'
   const initialLocale: Locale =
@@ -343,6 +358,7 @@ export function PropertyPage({
           hostInfo={activeProperty.hostInfo}
           depositPercent={activeProperty.depositPercent}
           cancellationPolicy={activeProperty.cancellationPolicy}
+          softHoldHours={activeProperty.softHoldHours}
           t={t}
           locale={currentLocale}
         />
@@ -356,13 +372,16 @@ export function PropertyPage({
           t={t}
         />
 
-        {/* Demo Property Switcher Floating Pill */}
-        <DemoPropertySwitcher
-          properties={allProperties}
-          currentSlug={property.slug}
-          isMobileSimulated={isMobileView}
-          onToggleMobileSimulated={() => setIsMobileView(!isMobileView)}
-        />
+        {/* Demo Property Switcher Floating Pill - only rendered on demo routes where allProperties is supplied */}
+        {allProperties && allProperties.length > 0 && (
+          <DemoPropertySwitcher
+            properties={allProperties}
+            currentSlug={property.slug}
+            isMobileSimulated={isMobileView}
+            onToggleMobileSimulated={() => setIsMobileView(!isMobileView)}
+            basePath={isDemo ? '/demo' : ''}
+          />
+        )}
       </MobileDeviceFrame>
     </ThemeProvider>
   );

@@ -10,6 +10,7 @@ interface DemoPropertySwitcherProps {
   currentSlug: string;
   isMobileSimulated?: boolean;
   onToggleMobileSimulated?: () => void;
+  basePath?: string; // Prefix for links (e.g. '/demo' for demo showcase)
 }
 
 export function DemoPropertySwitcher({
@@ -17,11 +18,13 @@ export function DemoPropertySwitcher({
   currentSlug,
   isMobileSimulated = false,
   onToggleMobileSimulated,
+  basePath = '',
 }: DemoPropertySwitcherProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Hidden in all real host deployments. Only shown when explicitly enabled.
-  if (process.env.NEXT_PUBLIC_SHOW_DEMO_SWITCHER !== 'true') return null;
+  // Visible on explicit demo/admin routes (when basePath is set) or when explicitly enabled via env
+  const isEnabled = Boolean(basePath) || process.env.NEXT_PUBLIC_SHOW_DEMO_SWITCHER === 'true';
+  if (!isEnabled) return null;
 
   const currentProperty = properties.find((p) => p.slug === currentSlug) || properties[0];
 
@@ -76,7 +79,7 @@ export function DemoPropertySwitcher({
               return (
                 <Link
                   key={property.slug}
-                  href={`/${property.slug}`}
+                  href={`${basePath || ''}/${property.slug}`}
                   onClick={() => setIsOpen(false)}
                   className={`flex items-center justify-between gap-2 p-2.5 rounded-2xl text-xs transition-all ${
                     isSelected

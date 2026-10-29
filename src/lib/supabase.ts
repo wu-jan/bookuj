@@ -1,3 +1,14 @@
+/**
+ * @file supabase.ts
+ * @description Supabase client singleton with environment validation and ISR fetch configuration.
+ *
+ * Design features:
+ * - Validates NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.
+ * - Self-heals in case URL and Key were accidentally swapped in environment settings.
+ * - Global fetch is configured with Next.js ISR revalidation ({ next: { revalidate: 60 } }).
+ * - Returns null gracefully when Supabase is not configured, triggering offline JSON fallback.
+ */
+
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 function isValidHttpUrl(str: string | undefined): boolean {

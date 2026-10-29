@@ -1,3 +1,9 @@
+/**
+ * @component BoutiqueHostStory
+ * @description Editorial host introduction card for the 'boutique' layout preset.
+ * Highlights host persona, property backstory, personal host bio, and direct hospitality promise.
+ */
+
 'use client';
 
 import React from 'react';
@@ -35,7 +41,7 @@ export function BoutiqueHostStory({
 
         {/* Headline */}
         <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal leading-snug tracking-tight text-stone-900 mb-6">
-          {property.title} to autentyczny azyl, gdzie nowoczesny komfort spotyka się z tradycją.
+          {t.hostStoryHeadline(property.title)}
         </h2>
 
         {/* Host Identity Stamp */}
@@ -53,7 +59,7 @@ export function BoutiqueHostStory({
               {property.hostInfo.name}
             </span>
             <span className="text-xs text-stone-500 font-normal block mt-0.5">
-              {locale === 'pl' ? 'Właściciel i Gospodarz obiektu' : 'Owner and Host'}
+              {t.hostStoryRole}
             </span>
           </div>
         </div>
@@ -71,16 +77,14 @@ export function BoutiqueHostStory({
           </p>
 
           <p className="text-stone-500 text-xs sm:text-sm italic">
-            {locale === 'pl'
-              ? 'Od lat dbamy o to miejsce z myślą o naszych gościach. Zależy nam, by każdy pobyt był źródłem prawdziwego spokoju i niezapomnianych wspomnień.'
-              : 'We have cared for this haven for years. Our goal is for your stay to be an authentic retreat of tranquility and warm memories.'}
+            {t.hostStoryCareNote}
           </p>
         </div>
 
         {/* Direct Privilege Note & Action */}
         <div className="mt-8 pt-6 border-t border-stone-100 flex flex-wrap items-center justify-between gap-4 text-xs">
           <span className="text-stone-500 font-medium">
-            {locale === 'pl' ? '0% prowizji pośredników • Rezerwacja bezpośrednia u gospodarza' : '0% portal commission • Direct reservation with host'}
+            {t.hostStoryDirectNote}
           </span>
 
           <button

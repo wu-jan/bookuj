@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { getPropertyBySlug, getAllProperties, getAllSlugs } from '@/lib/propertyData';
+import { getPropertyBySlug, getAllSlugs } from '@/lib/propertyData';
 import { PropertyPage } from '@/components/PropertyPage';
 
 interface SlugPageProps {
@@ -38,12 +38,9 @@ export default async function SlugPage({ params }: SlugPageProps) {
     notFound();
   }
 
-  const allProperties = await getAllProperties();
-
   return (
     <PropertyPage
       property={property}
-      allProperties={allProperties}
     />
   );
 }

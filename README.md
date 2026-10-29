@@ -1,22 +1,27 @@
-# Bookuj — Bespoke Direct Booking Showcase
+# Bookuj — Bespoke Direct Booking Platform (`bookuj.pl`)
 
-Bookuj is a high-conversion, white-label direct booking showcase platform for boutique vacation rentals and luxury hospitality hosts. It eliminates platform middleman fees (0% commissions) while preserving a premium guest reservation experience.
+Bookuj is a high-conversion, white-label direct booking showcase and reservation engine for boutique vacation rentals, alpine chalets, and luxury hospitality hosts. It eliminates platform middleman commissions (0% fees) while delivering an Airbnb-grade, branded guest experience.
 
-## ✨ Key Features
+---
 
-- **Cinematic Property Showcase**: Hero imagery with dynamic presentation, authentic gallery with fullscreen lightbox, and rich host storytelling.
-- **Dynamic White-Label Theming**: Custom brand colors, background hues, typography, and logos powered by CSS variable injection (`ThemeProvider`).
-- **Direct Reservation Engine**: Airbnb-grade interactive date range calendar (`react-day-picker`) with real-time stay cost breakdown and transparent deposit calculation.
-- **Simulation Checkout Modal**: Direct host communication and mock multi-state payment flow (IBAN, instant wire, pay on arrival).
-- **Mobile Device Simulation**: Built-in iPhone 15 Pro frame preview with viewport toggling for responsive testing.
-- **Demo Concierge Switcher**: Floating preview controller to switch instantly between 10 curated luxury profiles.
+## ⚡ Current Architecture & State
+
+- **Dedicated Host Routes (`/[slug]`):** Each property has its own clean, branded URL (e.g. `/zakopane-gorna-chata`). The root path (`/`) is an informational error page explaining that properties reside on dedicated paths.
+- **Supabase-First Data Layer:** Real listings are fetched from Supabase `public.properties` with ISR (`revalidate = 60`). When Supabase is unreachable or unconfigured, the app falls back to `src/data/default-properties.json`.
+- **Bilingual (Polish & English):** Domestic and international travelers are fully supported with instant language toggling in the header.
+- **Layout Presets:**
+  - `boutique`: Editorial storytelling layout for luxury retreats (host backstory, curated comforts split, surroundings map, dark luxury reservation suite).
+  - `minimal`: Clean card-grid layout for lofts and modern apartments.
+- **Contactless Host Settlement Modal:** Interactive direct reservation request simulation supporting BLIK P2P phone transfer, Direct Bank Wire (IBAN), Revolut/P2P, and Pay on Arrival with booking references.
+
+---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js 18.17+ or later
-- npm or pnpm
+- Node.js 18.17+ or later (on macOS with default setup: `/Users/jan/.local/bin/node`)
+- npm
 
 ### Installation & Development
 
@@ -28,52 +33,66 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the default showcase property.
+Open [http://localhost:3000/zakopane-gorna-chata](http://localhost:3000/zakopane-gorna-chata) to view the showcase retreat.
 
-### Production Build
+### Production Build Verification
+
+Always verify with 0 TypeScript/Turbopack errors:
 
 ```bash
-npm run build
-npm run start
+export PATH="/Users/jan/.local/bin:$PATH" && npm run build
 ```
+
+---
 
 ## 🗺️ Route Architecture
 
-- `/` — Primary featured showcase property.
-- `/demo/[slug]` — Static showcase route for any property profile (e.g. `/demo/nordic-glass-sanctuary`, `/demo/alpine-summit-chalet`).
+| Route | Purpose | Behavior |
+|---|---|---|
+| `/[slug]` | Dedicated Property Listing | Primary host page. Zero demo switcher contamination. Pre-rendered with SSG and kept fresh via ISR (`revalidate = 60`). |
+| `/demo/[slug]` | Sales Demo Showcase | Dedicated preview route with `DemoPropertySwitcher` active to switch profiles. |
+| `/demo` & `/admin` | Demo Entry Points | Convenience redirects to `/demo/zakopane-gorna-chata`. |
+| `/` | Informational Landing Page | Displays "Nie określono obiektu" error page with direct demo link. |
+| `/api/revalidate` | On-demand ISR Revalidation | Webhook endpoint to revalidate property cache. |
 
-## 🛠️ Adding or Editing Properties
+---
 
-Mock properties and profiles are stored in:
+## 🛠️ Data & Configuration
+
+### Environment Variables (`.env.local`)
+
+Copy `.env.example` to `.env.local` to configure:
+
+```bash
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+
+# Set to "true" to force offline JSON fallback during local development
+NEXT_PUBLIC_USE_LOCAL_DATA=false
+
+# Set to "true" on sales/demo deployments to show the floating property switcher
+NEXT_PUBLIC_SHOW_DEMO_SWITCHER=false
 ```
-src/data/sample-properties.json
-```
 
-Each property profile adheres strictly to the `Property` interface defined in `src/types/property.ts`, including:
-- Unique `slug`, `title`, `location`, and `description`
-- `pricePerNight` and `currency` (`USD` | `EUR` | `GBP` | `PLN`)
-- `images` (Unsplash CDN or local assets)
-- `amenities` and `occupiedDates` (ISO strings: `YYYY-MM-DD`)
-- `hostInfo` (name, avatar, phone)
-- `theme` (`primaryColor`, `accentColor`, `backgroundColor`, `fontStyle`)
-- Optional `coordinates` (`lat`, `lng`) for interactive maps
+### Property Data Sources
+- **Supabase:** Primary storage (`public.properties`). Seeding data is preserved in `supabase/seed-data.json`.
+- **Local Fallback:** Preserved in `src/data/default-properties.json` when running offline.
 
-## 📱 Developer Tools: Demo Property Switcher
-
-A floating preview pill (`DemoPropertySwitcher`) appears on screen during development:
-- **Switch Profiles**: Jump immediately across all 10 mock property profiles.
-- **Device Viewport Toggle**: Switch between Desktop Layout and an interactive Mobile Device Frame (iPhone 15 Pro simulation).
+---
 
 ## 📂 Documentation
 
-Full documentation lives in the `docs/` directory, organized by topic and reading order:
+Full documentation lives in the `docs/` directory:
 
-### Specifications (`docs/specs/`)
-- [01-prd.md](docs/specs/01-prd.md) — Product requirements document & MVP scope.
-- [02-architecture.md](docs/specs/02-architecture.md) — Technical architecture & system design.
-- [03-data-model.md](docs/specs/03-data-model.md) — Data contracts, types & localization standards.
-- [04-ui-ux-spec.md](docs/specs/04-ui-ux-spec.md) — UI/UX design specifications & theme engine.
-- [05-implementation-plan.md](docs/specs/05-implementation-plan.md) — Phased implementation roadmap.
-
-### Strategic Roadmap (`docs/roadmap/`)
-- [future-roadmap.md](docs/roadmap/future-roadmap.md) — 5 strategic post-MVP expansion ideas (AI hero cinemagraph, contactless payment handoff, attribute tagging, map enhancements, brand naming).
+- **[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)** — Comprehensive living architecture & system design guide.
+- **[`docs/specs/`](docs/specs/)** — Detailed specifications:
+  - `01-prd.md` — Product requirements document & scope.
+  - `02-architecture.md` — Component interaction & directory structure.
+  - `03-data-model.md` — Data contracts, types & database mapping.
+  - `04-ui-ux-spec.md` — Theme engine, layout presets & bilingual microcopy.
+  - `05-implementation-plan.md` — Phased implementation milestones.
+- **[`docs/roadmap/`](docs/roadmap/)** — Strategic roadmap & host onboarding backlog:
+  - `mvp-to-host-pages-roadmap.md` — Host onboarding roadmap & backlog.
+  - `future-roadmap.md` — Strategic post-MVP expansion concepts.

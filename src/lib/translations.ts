@@ -1,3 +1,15 @@
+/**
+ * @file translations.ts
+ * @description Internationalization dictionary and content localization utilities for Bookuj.
+ *
+ * Architecture:
+ * - Direct booking portals are bilingual (defaultLocale e.g. 'pl', with instant toggle to 'en').
+ * - `TranslationDictionary`: strongly-typed UI microcopy (labels, CTA buttons, status badges).
+ * - `getLocalizedProperty(property, locale)`: merges dynamic property-level translations
+ *   from `property.translations[locale]` (title, tagline, description, amenities, FAQ)
+ *   over the base property data when a translation is available.
+ */
+
 import { Property, PropertyLocalizedContent } from '@/types/property';
 
 export type Locale = 'pl' | 'en';
@@ -186,6 +198,10 @@ export interface TranslationDictionary {
   reserveBoutiqueTitle: string;
   reserveBoutiqueSubtitle: string;
   chatWithHostDirectly: string;
+  hostStoryHeadline: (title: string) => string;
+  hostStoryRole: string;
+  hostStoryCareNote: string;
+  hostStoryDirectNote: string;
 
   // Footer
   footerDirectPerks: string;
@@ -371,6 +387,10 @@ export const dictionaries: Record<Locale, TranslationDictionary> = {
     reserveBoutiqueTitle: 'Zarezerwuj swój pobyt',
     reserveBoutiqueSubtitle: 'Wybierz dogodny termin w kalendarzu poniżej. Rezerwacja trafia bezpośrednio do nas bez pośredników.',
     chatWithHostDirectly: 'Napisz bezpośrednio do gospodarza',
+    hostStoryHeadline: (title) => `${title} to autentyczny azyl, gdzie nowoczesny komfort spotyka się z tradycją.`,
+    hostStoryRole: 'Właściciel i Gospodarz obiektu',
+    hostStoryCareNote: 'Od lat dbamy o to miejsce z myślą o naszych gościach. Zależy nam, by każdy pobyt był źródłem prawdziwego spokoju i niezapomnianych wspomnień.',
+    hostStoryDirectNote: '0% prowizji pośredników • Rezerwacja bezpośrednia u gospodarza',
 
     footerDirectPerks: '0% Prowizji • Gwarancja Najlepszej Ceny',
     footerHospitality: 'Osobista Gościnność',
@@ -553,6 +573,10 @@ export const dictionaries: Record<Locale, TranslationDictionary> = {
     reserveBoutiqueTitle: 'Reserve Your Stay',
     reserveBoutiqueSubtitle: 'Select your dates in the calendar below. Your reservation is dispatched directly to your host with zero fees.',
     chatWithHostDirectly: 'Chat directly with your host',
+    hostStoryHeadline: (title) => `${title} is an authentic retreat where modern comfort meets timeless tradition.`,
+    hostStoryRole: 'Owner & Host',
+    hostStoryCareNote: 'We have cared for this haven for years with our guests in mind. Our wish is for every stay to be a source of genuine peace and cherished memories.',
+    hostStoryDirectNote: '0% portal commission • Direct reservation with host',
 
     footerDirectPerks: '0% Commission • Best Rate Online',
     footerHospitality: 'Personalized Guest Experience',

@@ -1,3 +1,10 @@
+/**
+ * @component BookingSuite
+ * @description Availability calendar and transparent rate breakdown section.
+ * Handles date selection, minimum stay validation, night calculation,
+ * deposit estimation, and triggers the direct reservation modal.
+ */
+
 'use client';
 
 import React from 'react';
