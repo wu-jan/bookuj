@@ -56,11 +56,17 @@ export function PropertyPage({
   const [selectedRange, setSelectedRange] = useState<DateRange | undefined>(undefined);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+  const [galleryInitialIndex, setGalleryInitialIndex] = useState(0);
   const [isMobileView, setIsMobileView] = useState(false);
 
   const calendarRef = useRef<HTMLDivElement>(null);
   const spacesRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<HTMLDivElement>(null);
+
+  const handleOpenGallery = (index: number = 0) => {
+    setGalleryInitialIndex(index);
+    setIsGalleryOpen(true);
+  };
 
   const scrollToCalendar = () => {
     const el = document.getElementById('reserve');
@@ -136,7 +142,7 @@ export function PropertyPage({
             pricePerNight={effectiveProperty.pricePerNight}
             currency={effectiveProperty.currency}
             onCheckAvailability={scrollToCalendar}
-            onOpenGallery={() => setIsGalleryOpen(true)}
+            onOpenGallery={() => handleOpenGallery(0)}
             isMobileView={isMobileView}
           />
 
@@ -145,17 +151,17 @@ export function PropertyPage({
              * BOUTIQUE EDITORIAL LAYOUT PRESET (Inspired by zacnylasek.com & bespoke retreats)
              * ========================================================================= */
             <main className="w-full flex-1 flex flex-col">
-              {/* Rounded Hero Card with container margins */}
-              <div className="w-full max-w-6xl mx-auto px-3 sm:px-6 lg:px-8 pt-3 sm:pt-6">
+              {/* Full width hero on desktop, rounded shape on mobile always */}
+              <div className={isMobileView ? 'w-full px-3 pt-3' : 'w-full px-3 pt-3 md:px-0 md:pt-0'}>
                 <PropertyHero
                   property={effectiveProperty}
                   t={t}
                   locale={currentLocale}
                   isMobileView={isMobileView}
                   onScrollToCalendar={scrollToCalendar}
-                  onScrollToGallery={() => setIsGalleryOpen(true)}
+                  onScrollToGallery={() => handleOpenGallery(0)}
                   onScrollToMap={scrollToMap}
-                  onOpenGallery={() => setIsGalleryOpen(true)}
+                  onOpenGallery={() => handleOpenGallery(0)}
                 />
               </div>
 
@@ -184,6 +190,7 @@ export function PropertyPage({
                   t={t}
                   locale={currentLocale}
                   isMobileView={isMobileView}
+                  onOpenGallery={() => handleOpenGallery(effectiveProperty.images[2] ? 2 : 1)}
                 />
 
                 {/* 3. Setting & Surroundings Map with Sample Distances (matches Zacny Lasek Screenshot 4) */}
@@ -258,9 +265,9 @@ export function PropertyPage({
                 locale={currentLocale}
                 isMobileView={isMobileView}
                 onScrollToCalendar={scrollToCalendar}
-                onScrollToGallery={() => setIsGalleryOpen(true)}
+                onScrollToGallery={() => handleOpenGallery(0)}
                 onScrollToMap={scrollToMap}
-                onOpenGallery={() => setIsGalleryOpen(true)}
+                onOpenGallery={() => handleOpenGallery(0)}
               />
 
               {/* Content Stack */}
@@ -381,6 +388,7 @@ export function PropertyPage({
           images={effectiveProperty.images}
           title={effectiveProperty.title}
           t={t}
+          initialIndex={galleryInitialIndex}
         />
 
         {/* Demo Property Switcher Floating Pill - only rendered on demo routes where allProperties is supplied */}

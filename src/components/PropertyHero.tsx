@@ -33,11 +33,16 @@ export function PropertyHero({
       <div
         className={`relative ${
           isMobileView
-            ? 'h-[480px]'
-            : 'h-[65vh] min-h-[460px] sm:h-[72vh] sm:min-h-[520px] lg:h-[78vh]'
-        } w-full overflow-hidden rounded-3xl shadow-xl select-none`}
+            ? 'h-[480px] rounded-3xl shadow-xl'
+            : 'h-[480px] rounded-3xl shadow-xl md:h-[80vh] md:min-h-[560px] lg:h-[85vh] md:rounded-none md:shadow-none'
+        } w-full overflow-hidden select-none`}
       >
-        <div className="relative h-full w-full animate-ken-burns">
+        {/* Hero Background Image */}
+        <div
+          onClick={onOpenGallery}
+          className={`relative h-full w-full animate-ken-burns ${onOpenGallery ? 'cursor-pointer' : ''}`}
+          title={locale === 'pl' ? 'Kliknij, aby otworzyć galerię zdjęć' : 'Click to view photo gallery'}
+        >
           <Image
             src={property.images[0]}
             alt={property.title}
@@ -47,14 +52,21 @@ export function PropertyHero({
             sizes="100vw"
           />
         </div>
+
         {/* Subtle cinematic gradient scrim */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/20 pointer-events-none" />
+        <div
+          onClick={onOpenGallery}
+          className={`absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/20 ${onOpenGallery ? 'cursor-pointer' : 'pointer-events-none'}`}
+        />
 
         {/* Top Right Quick Gallery Button */}
         {onOpenGallery && (
           <button
             type="button"
-            onClick={onOpenGallery}
+            onClick={(e) => {
+              e.stopPropagation();
+              onOpenGallery();
+            }}
             className="absolute top-4 right-4 sm:top-6 sm:right-6 z-10 inline-flex items-center gap-1.5 sm:gap-2 rounded-full bg-black/40 backdrop-blur-md px-3.5 py-1.5 sm:px-4 sm:py-2 text-xs font-semibold text-white border border-white/20 hover:bg-black/60 active:scale-95 transition-all cursor-pointer shadow-lg"
             aria-label="Open photo gallery"
           >
@@ -68,8 +80,8 @@ export function PropertyHero({
           className={`absolute ${
             isMobileView
               ? 'bottom-6 left-4 right-4'
-              : 'bottom-8 sm:bottom-12 left-5 right-5 sm:left-10 sm:right-10'
-          } z-10 text-white flex flex-col justify-end max-w-4xl`}
+              : 'bottom-6 left-4 right-4 md:bottom-12 lg:bottom-16 md:left-10 md:right-10 lg:left-16 lg:right-16'
+          } z-10 text-white flex flex-col justify-end max-w-5xl pointer-events-none`}
         >
           <div className="flex items-center gap-2 text-[11px] sm:text-xs font-semibold tracking-[0.25em] uppercase text-stone-300 mb-2 sm:mb-2.5">
             <MapPin className="h-3.5 w-3.5 text-stone-300" />
@@ -77,22 +89,33 @@ export function PropertyHero({
           </div>
 
           <h1
-            className={`font-serif font-normal text-2xl sm:text-4xl lg:text-6xl tracking-tight leading-[1.1] text-white drop-shadow-md`}
+            className={`font-serif font-normal ${
+              isMobileView
+                ? 'text-2xl sm:text-4xl'
+                : 'text-2xl sm:text-4xl md:text-5xl lg:text-7xl'
+            } tracking-tight leading-[1.08] text-white drop-shadow-md`}
           >
             {property.title}
           </h1>
 
           {property.tagline && (
-            <p className="mt-2 sm:mt-3 text-sm sm:text-xl font-serif italic text-stone-200/95 leading-snug max-w-2xl">
+            <p
+              className={`mt-2 sm:mt-3 ${
+                isMobileView ? 'text-sm sm:text-xl' : 'text-sm sm:text-xl md:text-2xl'
+              } font-serif italic text-stone-200/95 leading-snug max-w-2xl`}
+            >
               {property.tagline}
             </p>
           )}
 
           {/* Minimalist Action & Rate */}
-          <div className="mt-5 sm:mt-7 flex flex-wrap items-center gap-3 sm:gap-4">
+          <div className="mt-5 sm:mt-7 flex flex-wrap items-center gap-3 sm:gap-4 pointer-events-auto">
             <button
               type="button"
-              onClick={onScrollToCalendar}
+              onClick={(e) => {
+                e.stopPropagation();
+                onScrollToCalendar();
+              }}
               className="inline-flex items-center gap-2 rounded-xl px-5 py-3 sm:px-7 sm:py-3.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-xl hover:brightness-105 active:scale-95 transition-all cursor-pointer"
               style={{
                 backgroundColor: property.theme.accentColor || '#B45A42',
@@ -105,7 +128,10 @@ export function PropertyHero({
             {onOpenGallery && (
               <button
                 type="button"
-                onClick={onOpenGallery}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onOpenGallery();
+                }}
                 className="inline-flex items-center gap-2 rounded-xl bg-white/20 backdrop-blur-md px-4 py-3 sm:px-5 sm:py-3.5 text-xs sm:text-sm font-semibold text-white border border-white/25 hover:bg-white/30 active:scale-95 transition-all cursor-pointer shadow-md"
               >
                 <Images className="h-4 w-4" />

@@ -33,14 +33,18 @@ export function PropertyGalleryModal({
 
   useEffect(() => {
     if (isOpen) {
-      setActiveIndex(initialIndex);
+      const validIndex =
+        images && images.length > 0 && initialIndex >= 0 && initialIndex < images.length
+          ? initialIndex
+          : 0;
+      setActiveIndex(validIndex);
       const originalOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
       return () => {
         document.body.style.overflow = originalOverflow;
       };
     }
-  }, [isOpen, initialIndex]);
+  }, [isOpen, initialIndex, images]);
 
   // Gallery keyboard controls
   useEffect(() => {
@@ -77,13 +81,13 @@ export function PropertyGalleryModal({
     touchStartX.current = null;
   };
 
-  if (!isOpen) return null;
+  if (!isOpen || !images || images.length === 0) return null;
 
   const totalCount = images.length;
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-8 bg-black/75 backdrop-blur-md animate-in fade-in duration-200 select-none"
+      className="fixed inset-0 z-[60] flex items-center justify-center p-3 sm:p-6 md:p-8 bg-black/80 backdrop-blur-md animate-in fade-in duration-200 select-none"
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           onClose();

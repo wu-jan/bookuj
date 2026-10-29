@@ -21,6 +21,7 @@ interface BoutiqueAmenitiesProps {
   t: TranslationDictionary;
   locale?: Locale;
   isMobileView?: boolean;
+  onOpenGallery?: () => void;
 }
 
 export function BoutiqueAmenities({
@@ -30,6 +31,7 @@ export function BoutiqueAmenities({
   t,
   locale = 'pl',
   isMobileView = false,
+  onOpenGallery,
 }: BoutiqueAmenitiesProps) {
   // Icon selector based on amenity string keyword
   const getAmenityIcon = (name: string) => {
@@ -98,15 +100,26 @@ export function BoutiqueAmenities({
         <div className={`grid grid-cols-1 ${isMobileView ? '' : 'lg:grid-cols-12'} items-stretch`}>
           {/* Left Column: Photograph of Interior / Living Space (matches Zacny Lasek Screenshot 4) */}
           {image && (
-            <div className={`${isMobileView ? 'h-[280px]' : 'lg:col-span-5 min-h-[460px]'} relative bg-stone-900`}>
+            <div
+              onClick={onOpenGallery}
+              className={`${
+                isMobileView ? 'h-[280px]' : 'lg:col-span-5 min-h-[460px]'
+              } relative bg-stone-900 ${onOpenGallery ? 'cursor-pointer group' : ''}`}
+              title={locale === 'pl' ? 'Kliknij, aby otworzyć galerię zdjęć' : 'Click to view photo gallery'}
+            >
               <Image
                 src={image}
                 alt="Property interior and comfort"
                 fill
-                className="object-cover"
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
                 sizes="(max-width: 1024px) 100vw, 42vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+              {onOpenGallery && (
+                <div className="absolute bottom-3 right-3 z-10 inline-flex items-center gap-1.5 rounded-full bg-black/50 backdrop-blur-md px-3 py-1.5 text-[11px] font-semibold text-white border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span>{locale === 'pl' ? 'Powiększ' : 'Expand'}</span>
+                </div>
+              )}
             </div>
           )}
 
