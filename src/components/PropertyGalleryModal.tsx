@@ -7,7 +7,6 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { TranslationDictionary } from '@/lib/translations';
 
@@ -123,23 +122,23 @@ export function PropertyGalleryModal({
         </div>
 
         {/* Main Active Image Display */}
-        <div className="relative flex-1 min-h-[300px] sm:min-h-[440px] md:min-h-[500px] max-h-[66vh] w-full bg-black/40 flex items-center justify-center p-2 sm:p-4">
-          <div className="relative w-full h-full rounded-2xl overflow-hidden">
-            <Image
-              src={images[activeIndex]}
-              alt={`${title} photo ${activeIndex + 1}`}
-              fill
-              priority
-              className="object-contain animate-in fade-in duration-200"
-              sizes="(max-width: 1280px) 100vw, 1200px"
-            />
-          </div>
+        <div className="relative w-full h-[52vh] sm:h-[62vh] md:h-[68vh] min-h-[320px] max-h-[720px] bg-black/60 flex items-center justify-center p-3 sm:p-6 overflow-hidden">
+          <img
+            key={activeIndex}
+            src={images[activeIndex]}
+            alt={`${title} photo ${activeIndex + 1}`}
+            className="max-h-full max-w-full object-contain rounded-xl select-none shadow-2xl transition-opacity duration-150"
+            loading="eager"
+          />
 
           {/* Previous Button */}
           <button
             type="button"
-            onClick={() => setActiveIndex((activeIndex - 1 + totalCount) % totalCount)}
-            className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 rounded-full bg-black/60 hover:bg-black/90 text-white p-2.5 sm:p-3 backdrop-blur-md border border-white/20 shadow-xl transition-all cursor-pointer active:scale-95"
+            onClick={(e) => {
+              e.stopPropagation();
+              setActiveIndex((activeIndex - 1 + totalCount) % totalCount);
+            }}
+            className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 rounded-full bg-black/70 hover:bg-black/90 text-white p-2.5 sm:p-3.5 backdrop-blur-md border border-white/20 shadow-xl transition-all cursor-pointer active:scale-95 z-20"
             aria-label="Previous photo"
           >
             <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -148,8 +147,11 @@ export function PropertyGalleryModal({
           {/* Next Button */}
           <button
             type="button"
-            onClick={() => setActiveIndex((activeIndex + 1) % totalCount)}
-            className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 rounded-full bg-black/60 hover:bg-black/90 text-white p-2.5 sm:p-3 backdrop-blur-md border border-white/20 shadow-xl transition-all cursor-pointer active:scale-95"
+            onClick={(e) => {
+              e.stopPropagation();
+              setActiveIndex((activeIndex + 1) % totalCount);
+            }}
+            className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 rounded-full bg-black/70 hover:bg-black/90 text-white p-2.5 sm:p-3.5 backdrop-blur-md border border-white/20 shadow-xl transition-all cursor-pointer active:scale-95 z-20"
             aria-label="Next photo"
           >
             <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -157,7 +159,7 @@ export function PropertyGalleryModal({
         </div>
 
         {/* Bottom Thumbnails Strip */}
-        <div className="relative z-10 flex justify-center gap-2 px-4 py-3 sm:py-4 overflow-x-auto bg-zinc-900/60 border-t border-white/10 shrink-0 no-scrollbar">
+        <div className="relative z-10 flex justify-center gap-2 px-4 py-3 sm:py-4 overflow-x-auto bg-zinc-900/80 border-t border-white/10 shrink-0 no-scrollbar">
           {images.map((thumb, idx) => (
             <button
               key={idx}
@@ -165,16 +167,15 @@ export function PropertyGalleryModal({
               onClick={() => setActiveIndex(idx)}
               className={`relative h-12 w-16 sm:h-14 sm:w-20 rounded-xl overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${
                 activeIndex === idx
-                  ? 'border-white scale-105 shadow-lg opacity-100'
+                  ? 'border-white scale-105 shadow-lg opacity-100 ring-2 ring-white/40'
                   : 'border-transparent opacity-50 hover:opacity-100'
               }`}
             >
-              <Image
+              <img
                 src={thumb}
                 alt={`Thumbnail ${idx + 1}`}
-                fill
-                className="object-cover"
-                sizes="80px"
+                className="w-full h-full object-cover"
+                loading="lazy"
               />
             </button>
           ))}
