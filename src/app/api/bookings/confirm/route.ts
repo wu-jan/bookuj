@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
         const propertyName = property?.title || 'Obiekt Bookuj';
         const resend = new Resend(resendApiKey);
         const fromAddress =
-          process.env.HOST_NOTIFICATION_FROM || 'Bookuj Reservations <noreply@bookuj.pl>';
+          process.env.HOST_NOTIFICATION_FROM || 'Bookuj Reservations <onboarding@resend.dev>';
 
         await resend.emails.send({
           from: fromAddress,
