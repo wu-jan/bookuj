@@ -16,10 +16,11 @@
   /* react-day-picker custom variables integration */
   --rdp-accent-color: var(--color-accent);
   --rdp-accent-background-color: color-mix(in srgb, var(--color-accent) 18%, transparent);
-  --rdp-day-height: 40px;
-  --rdp-day-width: 40px;
-  --rdp-day_button-height: 38px;
-  --rdp-day_button-width: 38px;
+  --rdp-day-height: 34px;
+  --rdp-day-width: 34px;
+  --rdp-day_button-height: 32px;
+  --rdp-day_button-width: 32px;
+  --rdp-months-gap: 2rem;
 }
 
 html,
@@ -35,8 +36,12 @@ body {
 }
 
 .rdp-months {
-  max-width: 100% !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: var(--rdp-months-gap, 1.5rem) !important;
   justify-content: center !important;
+  max-width: 100% !important;
 }
 
 .rdp-month {
@@ -50,15 +55,15 @@ body {
 .rdp-month_caption {
   color: #09090b !important;
   font-weight: 700 !important;
-  font-size: 0.95rem !important;
+  font-size: 0.875rem !important;
 }
 
 .rdp-weekday {
   color: #71717a !important;
   font-weight: 600 !important;
-  font-size: 0.75rem !important;
+  font-size: 0.7rem !important;
   text-transform: uppercase !important;
-  padding: 0.25rem 0 !important;
+  padding: 0.15rem 0 !important;
 }
 
 .rdp-day {

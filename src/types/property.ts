@@ -10,6 +10,7 @@ export interface HostInfo {
   name: string;
   avatar: string;
   phone: string;
+  email?: string;          // Direct host email address for reservation notifications
   blikPhone?: string;      // Polish BLIK phone number for instant direct settlement
   iban?: string;           // Direct bank wire account number (IBAN format)
   whatsappNumber?: string; // Direct WhatsApp contact phone with country code (e.g. +48...)
@@ -88,5 +89,8 @@ export interface Property {
   hostBio?: string;         // 1-2 sentence personal story shown in boutique host section
   icalUrl?: string;         // External calendar .ics URL (Airbnb, Google Calendar)
   softHoldHours?: number;   // Hours a pending booking holds dates before auto-expiry (default: 2)
+  paymentMethods?: ('blik' | 'iban' | 'p2p' | 'arrival')[]; // Host-configured accepted payment methods (max 3 displayed)
+  allowPayOnArrival?: boolean; // When true, permits paying 100% on arrival even if deposit is configured
+  directContactEnabled?: boolean; // When true (active subscription), displays direct host contact (phone & WhatsApp) in header
 }
 

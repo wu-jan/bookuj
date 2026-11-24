@@ -14,6 +14,7 @@ interface BookingCalendarProps {
   accentColor?: string;
   isMobileView?: boolean;
   minimumStay?: number;
+  icalUrl?: string;
   t: TranslationDictionary;
   locale?: Locale;
 }
@@ -25,6 +26,7 @@ export function BookingCalendar({
   accentColor = 'var(--color-accent, #10B981)',
   isMobileView = false,
   minimumStay = 1,
+  icalUrl,
   t,
   locale = 'en',
 }: BookingCalendarProps) {
@@ -147,45 +149,20 @@ export function BookingCalendar({
             </span>
           )}
         </div>
+
+        {icalUrl && (
+          <div className="mt-2.5 pt-2 border-t border-zinc-100 flex items-center gap-1.5 text-[10px] text-zinc-500 font-medium">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 inline-block" />
+            <span>{t.syncedBadge}</span>
+          </div>
+        )}
       </div>
 
       {/* ─────────────────────────────────────────────────────────────
           2. DESKTOP VIEW: Full Side-by-Side 2-Month Calendar Grid
           ───────────────────────────────────────────────────────────── */}
-      <div className={`${isMobileView ? 'hidden' : 'hidden sm:block'} w-full rounded-3xl border border-black/5 bg-white p-6 shadow-sm overflow-hidden`}>
-          <div className="flex items-center justify-between gap-2 mb-6 pb-4 border-b border-zinc-100">
-            <div>
-              <h3 className="text-xl font-bold tracking-tight text-zinc-900 flex items-center gap-2">
-                <CalendarIcon className="h-5 w-5 text-zinc-600" />
-                <span>{t.selectDatesTitle}</span>
-              </h3>
-              <p className="text-xs text-zinc-500 mt-1">
-                {selectedRange?.from ? (
-                  selectedRange.to ? (
-                    <span className="font-medium text-emerald-700">
-                      {format(selectedRange.from, dateFormatPattern, { locale: dateFnsLocale })} – {format(selectedRange.to, dateFormatPattern, { locale: dateFnsLocale })} ({t.nightCount(totalNights)})
-                    </span>
-                  ) : (
-                    <span>{t.checkIn}: <strong className="text-zinc-800">{format(selectedRange.from, dateFormatPattern, { locale: dateFnsLocale })}</strong></span>
-                  )
-                ) : (
-                  <span>{t.selectDatesSubtitle}</span>
-                )}
-              </p>
-            </div>
-
-            {selectedRange?.from && (
-              <button
-                type="button"
-                onClick={() => onSelectRange(undefined)}
-                className="text-xs font-medium text-zinc-500 hover:text-zinc-900 underline underline-offset-4 transition-colors cursor-pointer"
-              >
-                {t.clearDates}
-              </button>
-            )}
-          </div>
-
-          <div className="flex justify-center w-full py-1">
+      <div className={`${isMobileView ? 'hidden' : 'hidden sm:block'} w-full`}>
+          <div className="flex justify-center w-full py-0.5">
             <DayPicker
               mode="range"
               selected={selectedRange}
@@ -193,44 +170,62 @@ export function BookingCalendar({
               disabled={isDateDisabled}
               numberOfMonths={2}
               locale={dateFnsLocale}
-              className="font-sans text-sm"
+              className="font-sans text-sm mx-auto"
             />
           </div>
 
           {/* Minimum stay notice & alert */}
           {selectedRange?.from && selectedRange?.to && totalNights < minimumStay && (
-            <div className="mt-4 rounded-xl bg-amber-50 border border-amber-200/80 p-3 text-xs text-amber-900 flex items-center justify-between">
+            <div className="mt-3 rounded-xl bg-amber-50 border border-amber-200/80 p-2.5 text-xs text-amber-900 flex items-center justify-between">
               <span className="font-medium">
                 ⚠️ {t.minStayAlert(minimumStay, totalNights)}
               </span>
             </div>
           )}
 
-          {/* Calendar Legend */}
-          <div className="mt-6 pt-4 border-t border-zinc-100 flex flex-wrap items-center justify-between text-xs text-zinc-500 gap-4">
-            <div className="flex items-center gap-4">
+          {/* Calendar Legend & Sync Badge */}
+          <div className="mt-4 pt-3 border-t border-zinc-100 flex flex-wrap items-center justify-between text-xs text-zinc-500 gap-3">
+            <div className="flex items-center gap-4 text-[11px] sm:text-xs">
               <div className="flex items-center gap-1.5">
-                <span className="h-3 w-3 rounded-full border border-zinc-300 bg-white" />
+                <span className="w-5 h-5 rounded-md flex items-center justify-center font-bold text-zinc-900 bg-zinc-100 text-[11px]">
+                  15
+                </span>
                 <span>{t.available}</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <span
-                  className="h-3 w-3 rounded-full"
+                  className="w-5 h-5 rounded-full flex items-center justify-center font-bold text-white text-[11px] shadow-2xs"
                   style={{ backgroundColor: accentColor }}
-                />
+                >
+                  15
+                </span>
                 <span>{t.selected}</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="h-3 w-3 rounded-full bg-zinc-200 line-through" />
+                <span className="w-5 h-5 flex items-center justify-center font-normal text-zinc-400 line-through text-[11px]">
+                  15
+                </span>
                 <span>{t.occupied}</span>
               </div>
             </div>
 
-            {minimumStay > 1 && (
-              <div className="text-xs text-zinc-500 font-medium bg-zinc-100 px-2.5 py-1 rounded-full">
-                {t.minStayNotice(minimumStay)}
-              </div>
-            )}
+            <div className="flex items-center gap-4">
+              {minimumStay > 1 && (
+                <div className="text-[11px] text-zinc-500 font-medium bg-zinc-100 px-2.5 py-0.5 rounded-full">
+                  {t.minStayNotice(minimumStay)}
+                </div>
+              )}
+
+              {icalUrl && (
+                <div className="flex items-center gap-1.5 text-xs text-zinc-500">
+                  <span className="flex h-2 w-2 relative">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  </span>
+                  <span className="font-medium text-zinc-600">{t.syncedBadge}</span>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 

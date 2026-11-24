@@ -12,6 +12,7 @@ function shouldUseLocalData(): boolean {
 }
 
 export function mapDatabaseRowToProperty(row: any): Property {
+  const fallback = fallbackProperties.find((p) => p.slug === row.slug);
   return {
     id: row.id,
     slug: row.slug,
@@ -20,22 +21,28 @@ export function mapDatabaseRowToProperty(row: any): Property {
     description: row.description,
     pricePerNight: Number(row.price_per_night),
     currency: row.currency,
-    images: Array.isArray(row.images) ? row.images : [],
-    amenities: Array.isArray(row.amenities) ? row.amenities : [],
-    occupiedDates: Array.isArray(row.occupied_dates) ? row.occupied_dates : [],
-    hostInfo: row.host_info,
-    theme: row.theme,
-    coordinates: row.coordinates || undefined,
-    minimumStay: row.minimum_stay || undefined,
-    depositPercent: row.deposit_percent || undefined,
-    cancellationPolicy: row.cancellation_policy || undefined,
-    tagline: row.tagline || undefined,
-    faq: row.faq || undefined,
-    defaultLocale: row.default_locale || undefined,
-    translations: row.translations || undefined,
-    hostBio: row.host_bio || undefined,
-    icalUrl: row.ical_url || undefined,
-    softHoldHours: row.soft_hold_hours || undefined,
+    images: Array.isArray(row.images) && row.images.length > 0 ? row.images : (fallback?.images || []),
+    amenities: Array.isArray(row.amenities) ? row.amenities : (fallback?.amenities || []),
+    occupiedDates: Array.isArray(row.occupied_dates) ? row.occupied_dates : (fallback?.occupiedDates || []),
+    hostInfo: row.host_info || fallback?.hostInfo,
+    theme: row.theme || fallback?.theme,
+    coordinates: row.coordinates || fallback?.coordinates || undefined,
+    minimumStay: row.minimum_stay || fallback?.minimumStay || undefined,
+    depositPercent: row.deposit_percent || fallback?.depositPercent || undefined,
+    cancellationPolicy: row.cancellation_policy || fallback?.cancellationPolicy || undefined,
+    tagline: row.tagline || fallback?.tagline || undefined,
+    faq: row.faq || fallback?.faq || undefined,
+    defaultLocale: row.default_locale || fallback?.defaultLocale || undefined,
+    translations: row.translations || fallback?.translations || undefined,
+    hostBio: row.host_bio || fallback?.hostBio || undefined,
+    icalUrl: row.ical_url || fallback?.icalUrl || undefined,
+    softHoldHours: row.soft_hold_hours || fallback?.softHoldHours || undefined,
+    paymentMethods: Array.isArray(row.payment_methods) ? row.payment_methods : fallback?.paymentMethods,
+    allowPayOnArrival: row.allow_pay_on_arrival ?? fallback?.allowPayOnArrival,
+    directContactEnabled:
+      row.direct_contact_enabled !== undefined && row.direct_contact_enabled !== null
+        ? Boolean(row.direct_contact_enabled)
+        : (fallback?.directContactEnabled ?? true),
   };
 }
 

@@ -28,7 +28,7 @@ export function BoutiqueHostStory({
 }: BoutiqueHostStoryProps) {
   return (
     <section id="about" className="scroll-mt-24 w-full">
-      <div className="rounded-3xl border border-stone-200/80 shadow-xs bg-white p-7 sm:p-12 lg:p-16 max-w-4xl mx-auto">
+      <div className="rounded-3xl border border-stone-200/80 shadow-xs bg-white p-7 sm:p-10 lg:p-12 w-full">
         {/* Eyebrow */}
         <div className="mb-4">
           <span

@@ -2,12 +2,13 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { getPropertyBySlug, getAllSlugs } from '@/lib/propertyData';
 import { PropertyPage } from '@/components/PropertyPage';
+import { fetchOccupiedDates } from '@/lib/icalSync';
 
 interface SlugPageProps {
   params: Promise<{ slug: string }>;
 }
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 export async function generateStaticParams() {
   const slugs = await getAllSlugs();
@@ -36,6 +37,19 @@ export default async function SlugPage({ params }: SlugPageProps) {
 
   if (!property) {
     notFound();
+  }
+
+  if (property.icalUrl) {
+    try {
+      const icalDates = await fetchOccupiedDates(property.icalUrl);
+      if (icalDates.length > 0) {
+        property.occupiedDates = Array.from(
+          new Set([...(property.occupiedDates || []), ...icalDates])
+        ).sort();
+      }
+    } catch (err) {
+      console.warn(`[SlugPage] Failed to sync iCal dates for ${slug}:`, err);
+    }
   }
 
   return (

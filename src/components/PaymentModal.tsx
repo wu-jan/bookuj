@@ -16,6 +16,7 @@ import {
   Info,
   Copy,
   Check,
+  MessageCircle,
 } from 'lucide-react';
 import { PropertyTheme, HostInfo } from '@/types/property';
 import { formatCurrency } from '@/lib/utils';
@@ -36,6 +37,7 @@ import { TranslationDictionary, Locale } from '@/lib/translations';
 interface PaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
+  propertySlug?: string;
   propertyTitle: string;
   pricePerNight: number;
   currency: string;
@@ -45,6 +47,8 @@ interface PaymentModalProps {
   depositPercent?: number;
   cancellationPolicy?: string;
   softHoldHours?: number;
+  paymentMethods?: ('blik' | 'iban' | 'p2p' | 'arrival')[];
+  allowPayOnArrival?: boolean;
   t: TranslationDictionary;
   locale?: Locale;
 }
@@ -59,6 +63,7 @@ export function PaymentModal(props: PaymentModalProps) {
 
 function PaymentModalContent({
   onClose,
+  propertySlug,
   propertyTitle,
   pricePerNight,
   currency,
@@ -68,14 +73,63 @@ function PaymentModalContent({
   depositPercent,
   cancellationPolicy,
   softHoldHours = 2,
+  paymentMethods,
+  allowPayOnArrival = false,
   t,
   locale = 'en',
 }: PaymentModalProps) {
   const [modalState, setModalState] = useState<ModalState>('summary_and_payment');
-  // Default to BLIK if host has BLIK phone number, otherwise IBAN
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(() =>
-    hostInfo?.blikPhone ? 'blik' : 'iban'
-  );
+
+  const nights =
+    selectedRange?.from && selectedRange?.to
+      ? differenceInCalendarDays(selectedRange.to, selectedRange.from)
+      : 1;
+
+  const grandTotal = nights * pricePerNight;
+  const hasDeposit = typeof depositPercent === 'number' && depositPercent > 0;
+  const advanceDeposit = hasDeposit ? Math.round(grandTotal * (depositPercent / 100)) : 0;
+  const remainingDue = grandTotal - advanceDeposit;
+
+  // Determine available payment methods (max 3 options configured by host)
+  const availableMethods = React.useMemo<PaymentMethod[]>(() => {
+    if (paymentMethods && paymentMethods.length > 0) {
+      return paymentMethods
+        .filter((m) => {
+          if (m === 'blik' && !hostInfo?.blikPhone) return false;
+          // Arrival is only allowed if no deposit is required OR host explicitly allows pay on arrival
+          if (m === 'arrival' && hasDeposit && !allowPayOnArrival) return false;
+          return true;
+        })
+        .slice(0, 3);
+    }
+
+    const list: PaymentMethod[] = [];
+    if (hostInfo?.blikPhone) {
+      list.push('blik');
+    }
+    list.push('iban');
+
+    // If host has deposit requirement and doesn't explicitly allow arrival, offer p2p
+    if (hasDeposit && !allowPayOnArrival) {
+      list.push('p2p');
+    } else {
+      list.push('arrival');
+    }
+
+    return list.slice(0, 3);
+  }, [paymentMethods, hostInfo?.blikPhone, hasDeposit, allowPayOnArrival]);
+
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(() => {
+    return availableMethods[0] || 'iban';
+  });
+
+  // Keep paymentMethod aligned if available methods change
+  useEffect(() => {
+    if (availableMethods.length > 0 && !availableMethods.includes(paymentMethod)) {
+      setPaymentMethod(availableMethods[0]);
+    }
+  }, [availableMethods, paymentMethod]);
+
   const [guestName, setGuestName] = useState('');
   const [guestEmail, setGuestEmail] = useState('');
   const [guestNotes, setGuestNotes] = useState('');
@@ -94,16 +148,6 @@ function PaymentModalContent({
   const dateFnsLocale = locale === 'pl' ? pl : enUS;
   const dateFormatPattern = locale === 'pl' ? 'd MMM yyyy' : 'MMM d, yyyy';
 
-  const nights =
-    selectedRange?.from && selectedRange?.to
-      ? differenceInCalendarDays(selectedRange.to, selectedRange.from)
-      : 1;
-
-  const grandTotal = nights * pricePerNight;
-  const hasDeposit = typeof depositPercent === 'number' && depositPercent > 0;
-  const advanceDeposit = hasDeposit ? Math.round(grandTotal * (depositPercent / 100)) : 0;
-  const remainingDue = grandTotal - advanceDeposit;
-
   const handleCopy = (text: string, fieldKey: string) => {
     navigator.clipboard.writeText(text);
     setCopiedField(fieldKey);
@@ -114,9 +158,39 @@ function PaymentModalContent({
     e.preventDefault();
     setModalState('processing');
 
-    // Simulate direct reservation registration
-    setTimeout(() => {
-      setModalState('confirmed');
+    const checkInStr = selectedRange?.from ? format(selectedRange.from, 'yyyy-MM-dd') : '';
+    const checkOutStr = selectedRange?.to ? format(selectedRange.to, 'yyyy-MM-dd') : '';
+
+    const payload = {
+      propertySlug,
+      propertyName: propertyTitle,
+      hostEmail: hostInfo?.email,
+      bookingRef,
+      guestName,
+      guestEmail,
+      checkIn: checkInStr,
+      checkOut: checkOutStr,
+      nights,
+      totalPrice: grandTotal,
+      depositAmount: hasDeposit ? advanceDeposit : 0,
+      currency,
+      paymentMethod,
+      specialRequests: guestNotes || undefined,
+    };
+
+    // Simulate direct reservation registration & notify host
+    setTimeout(async () => {
+      try {
+        await fetch('/api/bookings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+      } catch (err) {
+        console.warn('Booking API dispatch error (gracefully swallowed):', err);
+      } finally {
+        setModalState('confirmed');
+      }
     }, 1200);
   };
 
@@ -131,6 +205,19 @@ function PaymentModalContent({
   const mockBic = 'BPKOPLPW';
   const mockP2pHandle = `@${hostFirstName.toLowerCase()}-direct`;
   const hasBlik = Boolean(hostInfo?.blikPhone);
+
+  const rawContactPhone = hostInfo?.whatsappNumber || hostInfo?.phone || '';
+  const whatsappClean = rawContactPhone.replace(/[^0-9]/g, '');
+  const datesSummaryStr =
+    selectedRange?.from && selectedRange?.to
+      ? `${format(selectedRange.from, 'd.MM', { locale: dateFnsLocale })} – ${format(selectedRange.to, 'd.MM.yyyy', { locale: dateFnsLocale })}`
+      : '';
+  const whatsappMessage = encodeURIComponent(
+    locale === 'pl'
+      ? `Dzień dobry ${hostFirstName}! Przesyłam prośbę o rezerwację (${bookingRef}) dla obiektu ${propertyTitle}${datesSummaryStr ? ` na termin ${datesSummaryStr}` : ''}. Chętnie potwierdzę szczegóły pobytu!`
+      : `Hello ${hostFirstName}! I have submitted a direct reservation request (${bookingRef}) for ${propertyTitle}${datesSummaryStr ? ` for ${datesSummaryStr}` : ''}. Looking forward to confirming details with you!`
+  );
+  const whatsappUrl = `https://wa.me/${whatsappClean}?text=${whatsappMessage}`;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
@@ -255,14 +342,14 @@ function PaymentModalContent({
                 />
               </div>
 
-              {/* Direct Payment Method Selector */}
+              {/* Direct Payment Method Selector (Host-configured, max 3 options) */}
               <div>
                 <label className="block text-[11px] font-semibold uppercase tracking-wider text-zinc-500 mb-2">
                   {t.paymentMethodHeading}
                 </label>
-                <div className={`grid ${hasBlik ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-3'} gap-2`}>
+                <div className={`grid ${availableMethods.length === 1 ? 'grid-cols-1' : availableMethods.length === 2 ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3'} gap-2`}>
                   {/* BLIK option (Poland / blikPhone only) */}
-                  {hasBlik && (
+                  {availableMethods.includes('blik') && (
                     <button
                       type="button"
                       onClick={() => setPaymentMethod('blik')}
@@ -273,56 +360,65 @@ function PaymentModalContent({
                       }`}
                     >
                       <Smartphone className="h-5 w-5 mb-1 text-rose-500" />
-                      <span className="text-[11px] font-semibold">BLIK P2P</span>
+                      <span className="text-[11px] font-semibold">{t.methodBlikLabel}</span>
                       <span className="text-[9px] opacity-75 truncate max-w-full">
                         {hostInfo?.blikPhone}
                       </span>
                     </button>
                   )}
 
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod('iban')}
-                    className={`flex flex-col items-center justify-center p-3 rounded-2xl border text-center transition-all cursor-pointer ${
-                      paymentMethod === 'iban'
-                        ? 'border-zinc-900 bg-zinc-900 text-white shadow-xs'
-                        : 'border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300'
-                    }`}
-                  >
-                    <Building2 className="h-5 w-5 mb-1" />
-                    <span className="text-[11px] font-semibold">Bank Wire / IBAN</span>
-                    <span className="text-[9px] opacity-70">
-                      {hostInfo?.iban ? 'Host IBAN' : 'Direct SEPA'}
-                    </span>
-                  </button>
+                  {/* Direct IBAN Bank Wire */}
+                  {availableMethods.includes('iban') && (
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMethod('iban')}
+                      className={`flex flex-col items-center justify-center p-3 rounded-2xl border text-center transition-all cursor-pointer ${
+                        paymentMethod === 'iban'
+                          ? 'border-zinc-900 bg-zinc-900 text-white shadow-xs'
+                          : 'border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300'
+                      }`}
+                    >
+                      <Building2 className="h-5 w-5 mb-1 text-emerald-600" />
+                      <span className="text-[11px] font-semibold">{t.methodIbanLabel}</span>
+                      <span className="text-[9px] opacity-70">
+                        {t.methodIbanSub}
+                      </span>
+                    </button>
+                  )}
 
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod('p2p')}
-                    className={`flex flex-col items-center justify-center p-3 rounded-2xl border text-center transition-all cursor-pointer ${
-                      paymentMethod === 'p2p'
-                        ? 'border-zinc-900 bg-zinc-900 text-white shadow-xs'
-                        : 'border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300'
-                    }`}
-                  >
-                    <Smartphone className="h-5 w-5 mb-1" />
-                    <span className="text-[11px] font-semibold">Revolut / PayPal</span>
-                    <span className="text-[9px] opacity-70">Instant P2P</span>
-                  </button>
+                  {/* Revolut / P2P */}
+                  {availableMethods.includes('p2p') && (
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMethod('p2p')}
+                      className={`flex flex-col items-center justify-center p-3 rounded-2xl border text-center transition-all cursor-pointer ${
+                        paymentMethod === 'p2p'
+                          ? 'border-zinc-900 bg-zinc-900 text-white shadow-xs'
+                          : 'border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300'
+                      }`}
+                    >
+                      <Smartphone className="h-5 w-5 mb-1 text-sky-500" />
+                      <span className="text-[11px] font-semibold">{t.methodP2pLabel}</span>
+                      <span className="text-[9px] opacity-70">{t.methodP2pSub}</span>
+                    </button>
+                  )}
 
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod('arrival')}
-                    className={`flex flex-col items-center justify-center p-3 rounded-2xl border text-center transition-all cursor-pointer ${
-                      paymentMethod === 'arrival'
-                        ? 'border-zinc-900 bg-zinc-900 text-white shadow-xs'
-                        : 'border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300'
-                    }`}
-                  >
-                    <Banknote className="h-5 w-5 mb-1" />
-                    <span className="text-[11px] font-semibold">On Arrival</span>
-                    <span className="text-[9px] opacity-70">Card / Cash</span>
-                  </button>
+                  {/* Pay on Arrival (Only shown when allowed / no mandatory advance deposit) */}
+                  {availableMethods.includes('arrival') && (
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMethod('arrival')}
+                      className={`flex flex-col items-center justify-center p-3 rounded-2xl border text-center transition-all cursor-pointer ${
+                        paymentMethod === 'arrival'
+                          ? 'border-zinc-900 bg-zinc-900 text-white shadow-xs'
+                          : 'border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300'
+                      }`}
+                    >
+                      <Banknote className="h-5 w-5 mb-1 text-amber-500" />
+                      <span className="text-[11px] font-semibold">{t.methodArrivalLabel}</span>
+                      <span className="text-[9px] opacity-70">{t.methodArrivalSub}</span>
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -501,6 +597,24 @@ function PaymentModalContent({
                   <a href={`tel:${hostInfo.phone}`} className="font-semibold text-emerald-800 hover:underline">
                     {hostInfo.phone}
                   </a>
+                </div>
+              )}
+
+              {/* WhatsApp direct action button */}
+              {whatsappClean && (
+                <div className="pt-2.5 border-t border-emerald-100">
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 w-full py-2.5 px-3 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] active:scale-[0.98] transition-all text-white text-xs font-bold shadow-xs cursor-pointer"
+                  >
+                    <MessageCircle className="h-4 w-4 fill-white text-white" />
+                    <span>{t.messageOnWhatsappNow}</span>
+                  </a>
+                  <p className="text-[10px] text-zinc-500 mt-1.5 text-center leading-tight">
+                    {t.whatsappDirectEncourage}
+                  </p>
                 </div>
               )}
             </div>

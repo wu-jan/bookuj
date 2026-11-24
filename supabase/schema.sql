@@ -48,3 +48,40 @@ create policy "Allow service role full access to properties"
   for all
   using (auth.role() = 'service_role' or auth.role() = 'authenticated');
 
+
+
+-- ─── Bookuj Supabase Schema: Bookings Table ─────────────────────────────────
+
+create table if not exists public.bookings (
+  id uuid primary key default gen_random_uuid(),
+  booking_ref text unique not null,
+  property_slug text not null references public.properties (slug) on delete cascade,
+  guest_name text not null,
+  guest_email text not null,
+  guest_phone text,
+  check_in text not null,
+  check_out text not null,
+  nights integer not null default 1,
+  total_price numeric,
+  deposit_amount numeric,
+  payment_method text not null default 'direct',
+  special_requests text,
+  status text not null default 'pending_deposit',
+  confirmed_at timestamptz,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+-- Index for fast lookup by booking reference and property
+create index if not exists idx_bookings_ref on public.bookings (booking_ref);
+create index if not exists idx_bookings_property_slug on public.bookings (property_slug);
+
+-- Enable Row Level Security (RLS)
+alter table public.bookings enable row level security;
+
+-- Policy: Allow service role and authenticated full access
+drop policy if exists "Allow service role full access to bookings" on public.bookings;
+create policy "Allow service role full access to bookings"
+  on public.bookings
+  for all
+  using (auth.role() = 'service_role' or auth.role() = 'authenticated');

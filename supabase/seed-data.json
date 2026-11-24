@@ -486,7 +486,7 @@
       "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80",
       "phone": "+48 601 234 567",
       "blikPhone": "+48 601 234 567",
-      "iban": "PL24 1020 2892 0000 7102 0184 9201",
+      "iban": "PL61109010140000071219812874",
       "whatsappNumber": "+48601234567"
     },
     "theme": {
@@ -559,7 +559,8 @@
     },
     "hostBio": "Od urodzenia związany z Podhalem, z pasją dzielę się tradycją i spokojem tatrzańskiej natury z naszymi gośćmi.",
     "softHoldHours": 2,
-    "icalUrl": "https://cal.bookuj.pl/mock/zakopane-gorna-chata.ics"
+    "directContactEnabled": true,
+    "icalUrl": "/api/mock-ical"
   },
   {
     "id": "prop-12",
@@ -595,7 +596,7 @@
       "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80",
       "phone": "+48 502 345 678",
       "blikPhone": "+48 502 345 678",
-      "iban": "PL68 1050 1445 1000 0023 5891 4322",
+      "iban": "PL27114020040000300201355387",
       "whatsappNumber": "+48502345678"
     },
     "theme": {
@@ -704,7 +705,7 @@
       "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80",
       "phone": "+48 58 620 91 82",
       "blikPhone": "+48 692 817 263",
-      "iban": "PL91 1240 1268 1111 0010 9821 7364",
+      "iban": "PL52109010140000071219812001",
       "whatsappNumber": "+48692817263"
     },
     "theme": {
@@ -809,7 +810,7 @@
       "avatar": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=300&q=80",
       "phone": "+48 13 461 88 20",
       "blikPhone": "+48 730 456 789",
-      "iban": "PL45 8642 1142 2002 0031 9284 0001",
+      "iban": "PL83109010140000071219812002",
       "whatsappNumber": "+48730456789"
     },
     "theme": {
@@ -914,7 +915,7 @@
       "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
       "phone": "+48 12 422 19 80",
       "blikPhone": "+48 518 901 234",
-      "iban": "PL12 1090 1665 0000 0001 4289 9012",
+      "iban": "PL19109010140000071219812003",
       "whatsappNumber": "+48518901234"
     },
     "theme": {

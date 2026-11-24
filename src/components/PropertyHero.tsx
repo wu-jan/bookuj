@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { Sparkles, Compass, MapPin, Images } from 'lucide-react';
+import { Sparkles, Compass, MapPin, Images, ShieldCheck } from 'lucide-react';
 import { Property } from '@/types/property';
 import { formatCurrency } from '@/lib/utils';
 import { TranslationDictionary, Locale } from '@/lib/translations';
@@ -125,26 +125,20 @@ export function PropertyHero({
               <span className="text-base font-normal">→</span>
             </button>
 
-            {onOpenGallery && (
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onOpenGallery();
-                }}
-                className="inline-flex items-center gap-2 rounded-xl bg-white/20 backdrop-blur-md px-4 py-3 sm:px-5 sm:py-3.5 text-xs sm:text-sm font-semibold text-white border border-white/25 hover:bg-white/30 active:scale-95 transition-all cursor-pointer shadow-md"
-              >
-                <Images className="h-4 w-4" />
-                <span>{locale === 'pl' ? 'Zobacz zdjęcia' : 'View photos'} ({property.images.length})</span>
-              </button>
-            )}
-
-            <div className="text-xs sm:text-sm text-stone-200/90 font-medium ml-1">
-              <span>{t.directRate}: </span>
-              <strong className="text-white font-bold">
-                {formatCurrency(property.pricePerNight, property.currency)}
-              </strong>{' '}
-              <span className="text-stone-300">{t.perNight}</span>
+            <div className="flex flex-col justify-center text-left ml-1 sm:ml-2">
+              <span className="text-xs sm:text-sm text-stone-100 font-medium">
+                {locale === 'pl'
+                  ? `Cena za noc: od ${formatCurrency(property.pricePerNight, property.currency)}, bezpośrednio u gospodarza`
+                  : `Nightly rate: from ${formatCurrency(property.pricePerNight, property.currency)}, directly with host`}
+              </span>
+              <div className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs text-emerald-300 font-medium mt-0.5">
+                <ShieldCheck className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
+                <span>
+                  {locale === 'pl'
+                    ? 'Bez pośredników, bez ukrytych kosztów'
+                    : 'Zero middleman commissions, no hidden fees'}
+                </span>
+              </div>
             </div>
           </div>
         </div>

@@ -28,6 +28,7 @@ import { BoutiqueLocation } from '@/components/BoutiqueLocation';
 import { PropertyGallery } from '@/components/PropertyGallery';
 import { BookingSuite } from '@/components/BookingSuite';
 import { MobileBottomCTA } from '@/components/MobileBottomCTA';
+import { ShieldCheck } from 'lucide-react';
 import { MobileDeviceFrame } from '@/components/MobileDeviceFrame';
 import { PaymentModal } from '@/components/PaymentModal';
 import { PropertyMap } from '@/components/PropertyMap';
@@ -135,12 +136,13 @@ export function PropertyPage({
             locale={currentLocale}
             onToggleLocale={toggleLocale}
             hasTranslations={hasTranslations}
-            hostPhone={effectiveProperty.hostInfo.phone}
-            hostWhatsapp={effectiveProperty.hostInfo.whatsappNumber}
-            hostName={effectiveProperty.hostInfo.name}
-            hostAvatar={effectiveProperty.hostInfo.avatar}
+            hostPhone={effectiveProperty.hostInfo?.phone}
+            hostWhatsapp={effectiveProperty.hostInfo?.whatsappNumber || effectiveProperty.hostInfo?.phone}
+            hostName={effectiveProperty.hostInfo?.name}
+            hostAvatar={effectiveProperty.hostInfo?.avatar}
             pricePerNight={effectiveProperty.pricePerNight}
             currency={effectiveProperty.currency}
+            directContactEnabled={effectiveProperty.directContactEnabled !== false}
             onCheckAvailability={scrollToCalendar}
             onOpenGallery={() => handleOpenGallery(0)}
             isMobileView={isMobileView}
@@ -169,8 +171,8 @@ export function PropertyPage({
               <div
                 className={`w-full max-w-6xl mx-auto ${
                   isMobileView
-                    ? 'px-3 py-6 space-y-8 pb-20'
-                    : 'px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-12 sm:space-y-16 pb-24 md:pb-16'
+                    ? 'px-3 py-4 space-y-5 pb-6'
+                    : 'px-4 sm:px-6 lg:px-8 py-8 sm:py-10 space-y-6 sm:space-y-8 pb-6 sm:pb-8'
                 }`}
               >
                 {/* 1. Host Story & Authentic Philosophy */}
@@ -219,34 +221,17 @@ export function PropertyPage({
                 )}
 
                 {/* 5. Dedicated Luxury Reservation Area */}
-                <div id="reserve" ref={calendarRef} className="scroll-mt-24 w-full">
-                  <div className="bg-stone-900 border border-stone-800 text-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-8 md:p-12 shadow-2xl">
-                    <div className="max-w-2xl mb-5 sm:mb-8">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                        <span className="text-xs uppercase tracking-[0.2em] font-semibold text-emerald-400">
-                          {t.directPrivilege}
-                        </span>
-                      </div>
-                      <h3 className="font-serif text-2xl sm:text-4xl font-normal text-white tracking-tight">
-                        {t.reserveBoutiqueTitle}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-stone-300 mt-2 leading-relaxed">
-                        {t.reserveBoutiqueSubtitle}
-                      </p>
-                    </div>
-
-                    <BookingSuite
-                      property={effectiveProperty}
-                      selectedRange={selectedRange}
-                      onSelectRange={setSelectedRange}
-                      isMobileView={isMobileView}
-                      onOpenModal={() => setIsModalOpen(true)}
-                      t={t}
-                      locale={currentLocale}
-                    />
-                  </div>
-                </div>
+                <section id="reserve" ref={calendarRef} className="scroll-mt-24 w-full">
+                  <BookingSuite
+                    property={effectiveProperty}
+                    selectedRange={selectedRange}
+                    onSelectRange={setSelectedRange}
+                    isMobileView={isMobileView}
+                    onOpenModal={() => setIsModalOpen(true)}
+                    t={t}
+                    locale={currentLocale}
+                  />
+                </section>
               </div>
             </main>
           ) : (
@@ -368,6 +353,7 @@ export function PropertyPage({
         <PaymentModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
+          propertySlug={effectiveProperty.slug}
           propertyTitle={effectiveProperty.title}
           pricePerNight={effectiveProperty.pricePerNight}
           currency={effectiveProperty.currency}
@@ -377,6 +363,8 @@ export function PropertyPage({
           depositPercent={effectiveProperty.depositPercent}
           cancellationPolicy={effectiveProperty.cancellationPolicy}
           softHoldHours={effectiveProperty.softHoldHours}
+          paymentMethods={effectiveProperty.paymentMethods}
+          allowPayOnArrival={effectiveProperty.allowPayOnArrival}
           t={t}
           locale={currentLocale}
         />

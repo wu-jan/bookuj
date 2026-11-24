@@ -19,6 +19,7 @@ export interface TranslationDictionary {
   directGuestPortal: string;
   directPortal: string;
   contactHost: string;
+  contactButton: string;
   checkAvailability: string;
   callHost: string;
   whatsappHost: string;
@@ -109,6 +110,7 @@ export interface TranslationDictionary {
   available: string;
   selected: string;
   occupied: string;
+  syncedBadge: string;
   clearDates: string;
   saveAndClose: string;
   confirmDatesWithCount: (count: number) => string;
@@ -170,6 +172,15 @@ export interface TranslationDictionary {
   methodIbanDesc: string;
   methodArrival: string;
   methodArrivalDesc: string;
+  methodBlikLabel: string;
+  methodIbanLabel: string;
+  methodIbanSub: string;
+  methodP2pLabel: string;
+  methodP2pSub: string;
+  methodArrivalLabel: string;
+  methodArrivalSub: string;
+  messageOnWhatsappNow: string;
+  whatsappDirectEncourage: string;
 
   // Switcher / Lang
   switchLanguage: string;
@@ -215,6 +226,7 @@ export const dictionaries: Record<Locale, TranslationDictionary> = {
     directGuestPortal: 'Rezerwacja Bezpośrednia • 0% Prowizji',
     directPortal: 'Rezerwacja Bezpośrednia',
     contactHost: 'Skontaktuj się z gospodarzem',
+    contactButton: 'Kontakt',
     checkAvailability: 'Sprawdź dostępność',
     callHost: 'Zadzwoń do gospodarza',
     whatsappHost: 'Napisz na WhatsApp',
@@ -276,14 +288,14 @@ export const dictionaries: Record<Locale, TranslationDictionary> = {
       `Brak pytań pasujących do „${query}”. Masz inne pytanie? Skontaktuj się z ${name} bezpośrednio przez WhatsApp lub telefon.`,
 
     directReservation: 'Rezerwacja Bezpośrednia',
-    selectDatesTitle: 'Wybierz termin i zarezerwuj bezpośrednio',
+    selectDatesTitle: 'Wybierz termin i zarezerwuj',
     selectDatesSubtitle: 'Przejrzyste stawki bezpośrednie • 0 zł prowizji • Bezpośredni kontakt z gospodarzem',
     staySummary: 'Podsumowanie pobytu',
     staySummarySubtitle: 'Cena bezpośrednia bez ukrytych kosztów',
     dates: 'Termin',
     nightCount: (count) => `${count} ${count === 1 ? 'noc' : count < 5 ? 'noce' : 'nocy'}`,
     cleaningAndLinens: 'Sprzątanie i pościel',
-    includedFree: 'W cenie (0 zł)',
+    includedFree: 'w cenie (0 zł)',
     totalStayCost: 'Całkowity koszt pobytu',
     advanceDeposit: (percent, amount) => `Zaliczka rezerwacyjna ${percent}%: ${amount}`,
     depositBalanceNote: 'Pozostała kwota płatna bezpośrednio u gospodarza przy zameldowaniu.',
@@ -302,6 +314,7 @@ export const dictionaries: Record<Locale, TranslationDictionary> = {
     available: 'Dostępny',
     selected: 'Wybrany',
     occupied: 'Zajęty',
+    syncedBadge: 'Dostępność zsynchronizowana z Booking & Airbnb',
     clearDates: 'Wyczyść',
     saveAndClose: 'Zapisz i zamknij',
     confirmDatesWithCount: (count) => `Zatwierdź termin (${count} ${count === 1 ? 'noc' : count < 5 ? 'noce' : 'nocy'})`,
@@ -341,7 +354,7 @@ export const dictionaries: Record<Locale, TranslationDictionary> = {
     enterDetailsPrompt: 'Wypełnij imię i nazwisko oraz e-mail',
     processingRequest: 'Przesyłanie rezerwacji do gospodarza...',
     reservationConfirmedTitle: 'Prośba o rezerwację została wysłana!',
-    reservationConfirmedSubtitle: 'Gospodarz otrzymał Twoje zgłoszenie. Aby zablokować termin, wpłać zadatek:',
+    reservationConfirmedSubtitle: 'Gospodarz otrzymał Twoje zgłoszenie, potwierdzenie zostało wysłane na Twój adres email. Aby potwierdzić rezerwację, wpłać zadatek:',
     bookingRef: 'Numer zgłoszenia',
     howToPay: 'Jak opłacić zadatek:',
     settleDepositPrompt: 'Przelej zadatek bezpośrednio na dane gospodarza:',
@@ -361,6 +374,15 @@ export const dictionaries: Record<Locale, TranslationDictionary> = {
     methodIbanDesc: 'Przelew bezpośrednio na polskie konto bankowe gospodarza.',
     methodArrival: 'Płatność na miejscu / Gotówka',
     methodArrivalDesc: 'Rozliczenie całości bezpośrednio przy odbiorze kluczy.',
+    methodBlikLabel: 'BLIK',
+    methodIbanLabel: 'Przelew bankowy',
+    methodIbanSub: 'Tradycyjny IBAN',
+    methodP2pLabel: 'Revolut / P2P',
+    methodP2pSub: 'Szybki przelew',
+    methodArrivalLabel: 'Płatność na miejscu',
+    methodArrivalSub: 'Zapłać całość na miejscu',
+    messageOnWhatsappNow: 'Napisz już teraz na WhatsApp',
+    whatsappDirectEncourage: 'Masz dodatkowe pytania? W każdej chwili możesz napisać bezpośrednio do gospodarza na WhatsApp.',
 
     switchLanguage: 'Język / Language',
 
@@ -401,6 +423,7 @@ export const dictionaries: Record<Locale, TranslationDictionary> = {
     directGuestPortal: 'Direct Guest Portal • 0% Markup',
     directPortal: 'Direct Guest Portal',
     contactHost: 'Contact Host',
+    contactButton: 'Contact',
     checkAvailability: 'Check Availability',
     callHost: 'Call Host',
     whatsappHost: 'Message on WhatsApp',
@@ -462,14 +485,14 @@ export const dictionaries: Record<Locale, TranslationDictionary> = {
       `No questions match “${query}”. Have a question? Reach out to ${name} directly via WhatsApp or phone.`,
 
     directReservation: 'Direct Reservation',
-    selectDatesTitle: 'Select Dates & Reserve Directly',
+    selectDatesTitle: 'Select Dates & Reserve',
     selectDatesSubtitle: 'Transparent direct rates • Zero platform fee • Contactless host handoff',
     staySummary: 'Stay Summary',
     staySummarySubtitle: 'Direct rate with zero hidden costs',
     dates: 'Dates',
     nightCount: (count) => `${count} ${count === 1 ? 'night' : 'nights'} stay`,
     cleaningAndLinens: 'Cleaning & Linens',
-    includedFree: 'Included ($0)',
+    includedFree: 'included ($0)',
     totalStayCost: 'Total Stay Cost',
     advanceDeposit: (percent, amount) => `${percent}% Advance Deposit: ${amount}`,
     depositBalanceNote: 'Balance settled directly upon arrival.',
@@ -488,6 +511,7 @@ export const dictionaries: Record<Locale, TranslationDictionary> = {
     available: 'Available',
     selected: 'Selected',
     occupied: 'Occupied',
+    syncedBadge: 'Availability synced with Booking & Airbnb',
     clearDates: 'Clear dates',
     saveAndClose: 'Save & Close',
     confirmDatesWithCount: (count) => `Confirm Dates (${count} ${count === 1 ? 'night' : 'nights'})`,
@@ -527,7 +551,8 @@ export const dictionaries: Record<Locale, TranslationDictionary> = {
     enterDetailsPrompt: 'Please enter your name and email to proceed',
     processingRequest: 'Submitting request to host...',
     reservationConfirmedTitle: 'Reservation Request Sent!',
-    reservationConfirmedSubtitle: 'Your direct booking request has been dispatched to the host.',
+    reservationConfirmedSubtitle:
+      'The host received your request and confirmation has been sent to your email. To confirm your reservation, please send the deposit:',
     bookingRef: 'Reference',
     howToPay: 'How to settle your advance deposit:',
     settleDepositPrompt: 'Send your deposit directly to the host credentials below:',
@@ -547,6 +572,15 @@ export const dictionaries: Record<Locale, TranslationDictionary> = {
     methodIbanDesc: 'Transfer directly to verified host bank credentials.',
     methodArrival: 'Pay on Arrival / Cash',
     methodArrivalDesc: 'Settle the entire stay balance upon check-in directly with host.',
+    methodBlikLabel: 'BLIK',
+    methodIbanLabel: 'Bank Transfer',
+    methodIbanSub: 'Direct IBAN',
+    methodP2pLabel: 'Revolut / P2P',
+    methodP2pSub: 'Instant P2P',
+    methodArrivalLabel: 'Pay on Arrival',
+    methodArrivalSub: 'Pay full amount on arrival',
+    messageOnWhatsappNow: 'Message Host on WhatsApp Now',
+    whatsappDirectEncourage: 'Have questions? You can reach out directly to the host on WhatsApp anytime.',
 
     switchLanguage: 'Language',
 
