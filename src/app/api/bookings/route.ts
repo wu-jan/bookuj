@@ -100,9 +100,10 @@ export async function POST(req: NextRequest) {
     let propertyName = payload.propertyName || payload.property_name;
     let hostEmail = payload.hostEmail || payload.host_email;
 
+    let property: any = null;
     if ((!propertyName || !hostEmail) && propertySlug !== 'unknown') {
       try {
-        const property = await getPropertyBySlug(propertySlug);
+        property = await getPropertyBySlug(propertySlug);
         if (property) {
           if (!propertyName) propertyName = property.title;
           if (!hostEmail) hostEmail = property.hostInfo?.email;
@@ -110,6 +111,10 @@ export async function POST(req: NextRequest) {
       } catch (err) {
         console.warn('[API /api/bookings] Could not fetch property info for email notification:', err);
       }
+    }
+
+    if (!hostEmail) {
+      hostEmail = property?.hostInfo?.email || process.env.DEMO_HOST_EMAIL || 'wolszczak.jan@gmail.com';
     }
 
     propertyName = propertyName || 'Obiekt Bookuj';
@@ -120,7 +125,7 @@ export async function POST(req: NextRequest) {
       try {
         const resend = new Resend(resendApiKey);
         const fromAddress =
-          process.env.HOST_NOTIFICATION_FROM || 'Bookuj Reservations <noreply@bookuj.pl>';
+          process.env.HOST_NOTIFICATION_FROM || 'Bookuj Reservations <onboarding@resend.dev>';
 
         const origin =
           process.env.NEXT_PUBLIC_SITE_URL ||
