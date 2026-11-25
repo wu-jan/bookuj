@@ -10,7 +10,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 # Project Guidelines & Agent Workflows (nestay.co)
 
-These guidelines apply project-wide across all Antigravity pairs and subagents working in the `bookuj` repository.
+These guidelines apply project-wide across all Antigravity pairs and subagents working in the `nestay` repository.
 
 ## 1. Notion MCP Guidelines
 - **Project Database ID:** `3fd09c9f-c86e-816b-924e-d48547c279a9` (All tasks, specs, and roadmap tracking reside here).
