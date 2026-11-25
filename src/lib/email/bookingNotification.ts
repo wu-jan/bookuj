@@ -166,7 +166,7 @@ export function buildBookingEmail(data: BookingEmailData): string {
 
     <!-- Footer -->
     <div style="background-color: #f8fafc; padding: 18px 24px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #94a3b8; text-align: center;">
-      Wiadomość wygenerowana automatycznie przez Bookuj.pl dla obiektu ${propertyName}.
+      Wiadomość wygenerowana automatycznie przez Nestay.co dla obiektu ${propertyName}.
     </div>
   </div>
 </body>

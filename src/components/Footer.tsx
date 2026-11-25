@@ -37,7 +37,7 @@ export function Footer({ title, isMobileView = false, locale = 'en', t }: Footer
                 <>
                   Podoba Ci się nasze rozwiązanie? Skontaktuj się z nami{' '}
                   <a
-                    href="mailto:kontakt@bookuj.pl"
+                    href="mailto:kontakt@nestay.co"
                     className="text-stone-800 font-medium underline hover:text-stone-950 transition-colors"
                   >
                     tutaj
@@ -47,7 +47,7 @@ export function Footer({ title, isMobileView = false, locale = 'en', t }: Footer
                 <>
                   Like our solution? Contact us{' '}
                   <a
-                    href="mailto:contact@bookuj.pl"
+                    href="mailto:contact@nestay.co"
                     className="text-stone-800 font-medium underline hover:text-stone-950 transition-colors"
                   >
                     here

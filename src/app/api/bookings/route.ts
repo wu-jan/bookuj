@@ -117,7 +117,7 @@ export async function POST(req: NextRequest) {
       hostEmail = property?.hostInfo?.email || process.env.DEMO_HOST_EMAIL || 'wolszczak.jan@gmail.com';
     }
 
-    propertyName = propertyName || 'Obiekt Bookuj';
+    propertyName = propertyName || 'Obiekt Nestay';
 
     // 3. Send email to host via Resend
     const resendApiKey = process.env.RESEND_API_KEY;
@@ -125,11 +125,11 @@ export async function POST(req: NextRequest) {
       try {
         const resend = new Resend(resendApiKey);
         const fromAddress =
-          process.env.HOST_NOTIFICATION_FROM || 'Bookuj Reservations <onboarding@resend.dev>';
+          process.env.HOST_NOTIFICATION_FROM || 'Nestay Reservations <onboarding@resend.dev>';
 
         const origin =
           process.env.NEXT_PUBLIC_SITE_URL ||
-          (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://bookuj.pl');
+          (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://nestay.co');
         const confirmUrl = `${origin}/bookings/confirm?ref=${bookingRef}`;
 
         await resend.emails.send({

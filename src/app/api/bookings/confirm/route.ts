@@ -61,10 +61,10 @@ export async function POST(req: NextRequest) {
     if (resendApiKey && updatedBooking.guest_email) {
       try {
         const property = await getPropertyBySlug(updatedBooking.property_slug);
-        const propertyName = property?.title || 'Obiekt Bookuj';
+        const propertyName = property?.title || 'Obiekt Nestay';
         const resend = new Resend(resendApiKey);
         const fromAddress =
-          process.env.HOST_NOTIFICATION_FROM || 'Bookuj Reservations <onboarding@resend.dev>';
+          process.env.HOST_NOTIFICATION_FROM || 'Nestay Reservations <onboarding@resend.dev>';
 
         await resend.emails.send({
           from: fromAddress,

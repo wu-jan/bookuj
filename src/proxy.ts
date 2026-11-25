@@ -10,11 +10,11 @@ const SUBDOMAIN_ALIASES: Record<string, string> = {
 };
 
 const MAIN_DOMAINS = new Set([
-  'bookuj.pl',
-  'www.bookuj.pl',
+  'nestay.co',
+  'www.nestay.co',
   'localhost',
   '127.0.0.1',
-  'bookuj.vercel.app',
+  'nestay.co',
 ]);
 
 export function proxy(req: NextRequest) {
@@ -39,10 +39,10 @@ export function proxy(req: NextRequest) {
   // Detect subdomain
   let subdomain: string | null = null;
 
-  if (host.endsWith('.bookuj.pl')) {
-    subdomain = host.replace('.bookuj.pl', '');
-  } else if (host.endsWith('.bookuj.vercel.app')) {
-    subdomain = host.replace('.bookuj.vercel.app', '');
+  if (host.endsWith('.nestay.co')) {
+    subdomain = host.replace('.nestay.co', '');
+  } else if (host.endsWith('.nestay.co')) {
+    subdomain = host.replace('.nestay.co', '');
   } else if (host.endsWith('.localhost')) {
     subdomain = host.replace('.localhost', '');
   }
@@ -51,12 +51,12 @@ export function proxy(req: NextRequest) {
     // Resolve alias or use direct slug
     const resolvedSlug = SUBDOMAIN_ALIASES[subdomain] || subdomain;
 
-    // Subdomain root (e.g. https://gorna-chata.bookuj.pl/) -> rewrite to /[slug]
+    // Subdomain root (e.g. https://gorna-chata.nestay.co/) -> rewrite to /[slug]
     if (url.pathname === '/' || url.pathname === '') {
       return NextResponse.rewrite(new URL(`/${resolvedSlug}`, req.url));
     }
 
-    // Subdomain calendar export (e.g. https://gorna-chata.bookuj.pl/calendar.ics)
+    // Subdomain calendar export (e.g. https://gorna-chata.nestay.co/calendar.ics)
     if (url.pathname === '/calendar.ics') {
       return NextResponse.rewrite(new URL(`/api/ical/${resolvedSlug}`, req.url));
     }

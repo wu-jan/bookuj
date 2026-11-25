@@ -1,4 +1,4 @@
-# Bookuj Architecture & Engineering Guide (`docs/ARCHITECTURE.md`)
+# Nestay Architecture & Engineering Guide (`docs/ARCHITECTURE.md`)
 
 > **Status:** Living Document  
 > **Last Updated:** 2026-10-29  
@@ -8,7 +8,7 @@
 
 ## 1. System Overview
 
-Bookuj (`bookuj.pl`) is a specialized, white-label direct booking platform engineered for independent vacation rentals, alpine chalets, boutique retreats, and private lofts. It removes OTA marketplace commissions (0% fee to guest and host) while providing an Airbnb-grade, branded direct guest reservation portal.
+Nestay (`nestay.co`) is a specialized, white-label direct booking platform engineered for independent vacation rentals, alpine chalets, boutique retreats, and private lofts. It removes OTA marketplace commissions (0% fee to guest and host) while providing an Airbnb-grade, branded direct guest reservation portal.
 
 ### Core Architecture Pillars
 1. **Dedicated Property Routing (`/[slug]`):** Each property has its own distinct canonical URL (e.g. `/zakopane-gorna-chata`).
@@ -44,7 +44,7 @@ flowchart TD
   - Zero demo switcher contamination. 100% clean white-label host page.
   - Emits `notFound()` if the slug does not exist in Supabase or fallback JSON.
 - `src/app/page.tsx`:
-  - Root route. Renders an informational error page ("Nie określono obiektu") explaining that Bookuj runs dedicated per-host portals and invites testing via the Zakopane demo link.
+  - Root route. Renders an informational error page ("Nie określono obiektu") explaining that Nestay runs dedicated per-host portals and invites testing via the Zakopane demo link.
 - `src/app/demo/[slug]/page.tsx`:
   - Dedicated sales preview and concierge demonstration route.
   - Fetches `allProperties` and renders `PropertyPage` with the interactive `DemoPropertySwitcher` active.
@@ -74,7 +74,7 @@ export function mapDatabaseRowToProperty(row: any): Property
 
 ## 4. Bilingual Localization Architecture
 
-Bookuj maintains a clean separation between **UI Microcopy** and **Property Content Translations**:
+Nestay maintains a clean separation between **UI Microcopy** and **Property Content Translations**:
 
 ```mermaid
 flowchart LR

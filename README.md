@@ -1,6 +1,6 @@
-# Bookuj — Bespoke Direct Booking Platform (`bookuj.pl`)
+# Nestay — Bespoke Direct Booking Platform (`nestay.co`)
 
-Bookuj is a high-conversion, white-label direct booking showcase and reservation engine for boutique vacation rentals, alpine chalets, and luxury hospitality hosts. It eliminates platform middleman commissions (0% fees) while delivering an Airbnb-grade, branded guest experience.
+Nestay is a high-conversion, white-label direct booking showcase and reservation engine for boutique vacation rentals, alpine chalets, and luxury hospitality hosts. It eliminates platform middleman commissions (0% fees) while delivering an Airbnb-grade, branded guest experience.
 
 ---
 

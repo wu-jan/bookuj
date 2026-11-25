@@ -1,7 +1,7 @@
-# Product Requirements Document (PRD) – Direct Booking Platform (bookuj.pl)
+# Product Requirements Document (PRD) – Direct Booking Platform (nestay.co)
 
 ## 1. Business Goal and Context
-Bookuj is a high-converting, white-label direct booking showcase and reservation engine designed for independent vacation rentals, boutique cabins, and bespoke hospitality hosts. It empowers property owners to capture direct, commission-free reservations (0% middleman fees) while providing guests with a luxury, transparent booking experience.
+Nestay is a high-converting, white-label direct booking showcase and reservation engine designed for independent vacation rentals, boutique cabins, and bespoke hospitality hosts. It empowers property owners to capture direct, commission-free reservations (0% middleman fees) while providing guests with a luxury, transparent booking experience.
 
 The initial rollout targets **Polish hosts** (BLIK, IBAN, PLN pricing) while maintaining a market-agnostic, bilingual architecture (default Polish or English with runtime language toggling).
 
@@ -9,7 +9,7 @@ The initial rollout targets **Polish hosts** (BLIK, IBAN, PLN pricing) while mai
 
 ### Routing & Property Identity
 - **Dedicated Property URLs (`/[slug]`):** Each property has its own clean, branded page (e.g., `/zakopane-gorna-chata`).
-- **Informational Root (`/`):** Informational page guiding visitors to specify an authorized property path (`bookuj.pl/twoj-obiekt`).
+- **Informational Root (`/`):** Informational page guiding visitors to specify an authorized property path (`nestay.co/twoj-obiekt`).
 - **Legacy Route Compatibility (`/demo/[slug]`):** Automatically renders dedicated property showcase pages for backwards compatibility.
 
 ### Visual Presentation & Theme Engine

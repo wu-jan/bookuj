@@ -25,7 +25,7 @@ function toIcalDateTimeUtc(date: Date = new Date()): string {
 
 /**
  * Generates an RFC 5545 compliant VCALENDAR (.ics) string for a property slug,
- * blocking dates reserved directly via Bookuj so Booking.com and Airbnb can import them.
+ * blocking dates reserved directly via Nestay so Booking.com and Airbnb can import them.
  */
 export async function generatePropertyIcs(slug: string): Promise<string> {
   const property = await getPropertyBySlug(slug);
@@ -41,8 +41,8 @@ export async function generatePropertyIcs(slug: string): Promise<string> {
       property_slug: slug,
       check_in: '2026-11-28',
       check_out: '2026-12-02',
-      guest_name: 'Gość Bookuj',
-      guest_email: 'gosc@bookuj.pl',
+      guest_name: 'Gość Nestay',
+      guest_email: 'gosc@nestay.co',
       nights: 4,
       status: 'confirmed',
     });
@@ -51,10 +51,10 @@ export async function generatePropertyIcs(slug: string): Promise<string> {
   const lines: string[] = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//Bookuj.pl//Property Calendar Sync 1.0//PL',
+    'PRODID:-//Nestay.co//Property Calendar Sync 1.0//PL',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
-    `X-WR-CALNAME:${propertyTitle.replace(/[,;]/g, '')} (Bookuj Direct)`,
+    `X-WR-CALNAME:${propertyTitle.replace(/[,;]/g, '')} (Nestay Direct)`,
     'X-WR-TIMEZONE:Europe/Warsaw',
   ];
 
@@ -63,9 +63,9 @@ export async function generatePropertyIcs(slug: string): Promise<string> {
 
     const startDate = toIcalDateString(b.check_in);
     const endDate = toIcalDateString(b.check_out);
-    const uid = `${b.booking_ref || b.id || Math.random().toString(36).substring(7)}@bookuj.pl`;
-    const summary = `Bookuj Direct: ${b.booking_ref || 'Rezerwacja'}`;
-    const description = `Rezerwacja bezpośrednia przez Bookuj.pl\\nStatus: ${b.status || 'confirmed'}`;
+    const uid = `${b.booking_ref || b.id || Math.random().toString(36).substring(7)}@nestay.co`;
+    const summary = `Nestay Direct: ${b.booking_ref || 'Rezerwacja'}`;
+    const description = `Rezerwacja bezpośrednia przez Nestay.co\\nStatus: ${b.status || 'confirmed'}`;
 
     lines.push('BEGIN:VEVENT');
     lines.push(`UID:${uid}`);

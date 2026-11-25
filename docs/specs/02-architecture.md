@@ -1,12 +1,12 @@
 # Technical Architecture & System Design
 
 ## 1. Overview
-Bookuj is built on **Next.js 16 (App Router)**, **React 19**, **TypeScript**, and **Tailwind CSS**. It operates as a white-label direct booking engine where each property is served on a dedicated route (`/[slug]`), powered by a dynamic theme engine and a Supabase-backed data layer with an offline JSON fallback.
+Nestay is built on **Next.js 16 (App Router)**, **React 19**, **TypeScript**, and **Tailwind CSS**. It operates as a white-label direct booking engine where each property is served on a dedicated route (`/[slug]`), powered by a dynamic theme engine and a Supabase-backed data layer with an offline JSON fallback.
 
 ## 2. Directory Structure
 
 ```
-bookuj/
+nestay/
 ├── AGENTS.md                        # Master guidelines for AI agents & contributors
 ├── CLAUDE.md                        # Quick developer & AI cheat sheet
 ├── README.md                        # Developer onboarding & deployment guide

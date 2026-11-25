@@ -115,7 +115,7 @@ export function buildGuestConfirmationEmail(data: GuestConfirmationEmailData): s
 
     <!-- Footer -->
     <div style="background-color: #f8fafc; padding: 18px 24px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #94a3b8; text-align: center;">
-      Wiadomość wysłana z platformy Bookuj.pl dla obiektu ${propertyName}.
+      Wiadomość wysłana z platformy Nestay.co dla obiektu ${propertyName}.
     </div>
   </div>
 </body>

@@ -124,7 +124,7 @@ function ConfirmBookingContent() {
         <div className="bg-stone-900 p-6 text-white sm:p-8">
           <div className="flex items-center justify-between">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-amber-300">
-              Panel Gospodarza Bookuj
+              Panel Gospodarza Nestay
             </span>
             <span className="font-mono text-xs tracking-wider text-stone-400">
               {booking.booking_ref}

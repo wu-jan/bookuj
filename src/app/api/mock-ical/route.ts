@@ -15,10 +15,10 @@ export function generateMockIcs(baseDate = new Date()): string {
   const r4End = addDays(baseDate, 53);
 
   const ranges = [
-    { uid: 'airbnb-mock-001@bookuj.pl', start: r1Start, end: r1End, summary: 'Reserved (Airbnb)' },
-    { uid: 'booking-mock-002@bookuj.pl', start: r2Start, end: r2End, summary: 'Reserved (Booking.com)' },
-    { uid: 'airbnb-mock-003@bookuj.pl', start: r3Start, end: r3End, summary: 'Reserved (Airbnb)' },
-    { uid: 'booking-mock-004@bookuj.pl', start: r4Start, end: r4End, summary: 'Reserved (Booking.com)' },
+    { uid: 'airbnb-mock-001@nestay.co', start: r1Start, end: r1End, summary: 'Reserved (Airbnb)' },
+    { uid: 'booking-mock-002@nestay.co', start: r2Start, end: r2End, summary: 'Reserved (Booking.com)' },
+    { uid: 'airbnb-mock-003@nestay.co', start: r3Start, end: r3End, summary: 'Reserved (Airbnb)' },
+    { uid: 'booking-mock-004@nestay.co', start: r4Start, end: r4End, summary: 'Reserved (Booking.com)' },
   ];
 
   const nowStamp = format(baseDate, "yyyyMMdd'T'HHmmss'Z'");
@@ -38,7 +38,7 @@ END:VEVENT`
 
   return `BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//Bookuj//Mock Airbnb and Booking Calendar Sync//EN
+PRODID:-//Nestay//Mock Airbnb and Booking Calendar Sync//EN
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
 X-WR-CALNAME:Booking & Airbnb Zakopane Górna Chata

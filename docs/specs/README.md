@@ -1,6 +1,6 @@
 # Project Specifications (`docs/specs/`)
 
-Technical specifications, product requirements, data models, and system architecture for the Bookuj Direct Booking platform (`bookuj.pl`), organized by reading order:
+Technical specifications, product requirements, data models, and system architecture for the Nestay Direct Booking platform (`nestay.co`), organized by reading order:
 
 1. [`01-prd.md`](./01-prd.md): Product Requirements Document & current platform scope.
 2. [`02-architecture.md`](./02-architecture.md): Component hierarchy, data access layers, and system architecture.

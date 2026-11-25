@@ -217,7 +217,7 @@
     },
     "hostBio": "Miłośniczka żeglarstwa i mazurskich zachodów słońca, stworzyłam to miejsce jako azyl z dala od miejskiego zgiełku.",
     "softHoldHours": 2,
-    "icalUrl": "https://cal.bookuj.pl/mock/mazury-domek-nad-jeziorem.ics"
+    "icalUrl": "https://cal.nestay.co/mock/mazury-domek-nad-jeziorem.ics"
   },
   {
     "id": "prop-13",
@@ -322,7 +322,7 @@
     },
     "hostBio": "Architekt i rodowity sopocianin, dbam o to, by każdy pobyt łączył nadmorski klimat z najwyższym komfortem.",
     "softHoldHours": 2,
-    "icalUrl": "https://cal.bookuj.pl/mock/trojmiejski-apartament.ics"
+    "icalUrl": "https://cal.nestay.co/mock/trojmiejski-apartament.ics"
   },
   {
     "id": "prop-14",
@@ -427,7 +427,7 @@
     },
     "hostBio": "Przewodnik bieszczadzki i pasjonat dzikiej przyrody, zapraszam na odpoczynek pod najciemniejszym niebem w Polsce.",
     "softHoldHours": 2,
-    "icalUrl": "https://cal.bookuj.pl/mock/bieszczadzka-ostoja.ics"
+    "icalUrl": "https://cal.nestay.co/mock/bieszczadzka-ostoja.ics"
   },
   {
     "id": "prop-15",
@@ -532,6 +532,6 @@
     },
     "hostBio": "Historyk sztuki i krakowska przewodniczka, odrestaurowałam tę kamienicę z myślą o miłośnikach klimatu dawnego Kazimierza.",
     "softHoldHours": 2,
-    "icalUrl": "https://cal.bookuj.pl/mock/krakow-kazimierz-loft.ics"
+    "icalUrl": "https://cal.nestay.co/mock/krakow-kazimierz-loft.ics"
   }
 ]

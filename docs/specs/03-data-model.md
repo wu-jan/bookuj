@@ -74,7 +74,7 @@ export interface Property {
 
 ## 2. Bilingual Architecture & Localization Standards
 
-Bookuj uses a dual-layer localization engine:
+Nestay uses a dual-layer localization engine:
 
 1. **UI Microcopy Dictionary (`src/lib/translations.ts`):**
    - Pre-translated interface labels, form placeholders, badges, and button text in `pl` (Polish) and `en` (English).

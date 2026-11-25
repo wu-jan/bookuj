@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ShieldCheck, AlertCircle, Compass } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Nie określono obiektu — bookuj.pl',
+  title: 'Nie określono obiektu — nestay.co',
   description: 'Dedykowana platforma bezpośrednich rezerwacji dla niezależnych gospodarzy.',
 };
 
@@ -24,7 +24,7 @@ export default function HomePage() {
 
         {/* Message */}
         <p className="text-stone-600 text-sm leading-relaxed mb-6">
-          bookuj.pl obsługuje dedykowane, niezależne strony rezerwacji. Aby wyświetlić wizytówkę i kalendarz obiektu, skorzystaj z bezpośredniego adresu przekazanego przez gospodarza.
+          nestay.co obsługuje dedykowane, niezależne strony rezerwacji. Aby wyświetlić wizytówkę i kalendarz obiektu, skorzystaj z bezpośredniego adresu przekazanego przez gospodarza.
         </p>
 
         {/* Explanation Box */}
@@ -33,7 +33,7 @@ export default function HomePage() {
             <Compass className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
             <div>
               <span className="font-medium text-stone-800 block">Wymagany format adresu:</span>
-              <code className="text-emerald-700 font-mono font-semibold">bookuj.vercel.app/twoj-obiekt</code>
+              <code className="text-emerald-700 font-mono font-semibold">nestay.co/twoj-obiekt</code>
             </div>
           </div>
           <div className="flex items-start gap-2.5">
@@ -54,7 +54,7 @@ export default function HomePage() {
       </div>
 
       <p className="text-xs text-stone-400 mt-8 tracking-wide">
-        bookuj.pl • System Bezpośrednich Rezerwacji
+        nestay.co • System Bezpośrednich Rezerwacji
       </p>
     </main>
   );

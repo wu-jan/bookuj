@@ -31,7 +31,7 @@ export default function NotFound() {
       </div>
 
       <p className="text-xs text-stone-400 mt-8 tracking-wide">
-        bookuj.pl • System Bezpośrednich Rezerwacji
+        nestay.co • System Bezpośrednich Rezerwacji
       </p>
     </main>
   );

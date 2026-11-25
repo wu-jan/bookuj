@@ -17,7 +17,7 @@
 
 ## 🟢 Live State (as of 2026-10-17)
 
-The app is deployed at **https://bookuj.vercel.app**
+The app is deployed at **https://nestay.co**
 
 | Area | Status | Notes |
 |---|---|---|
@@ -35,7 +35,7 @@ The app is deployed at **https://bookuj.vercel.app**
 | DemoPropertySwitcher hidden in production | ✅ Done | `NEXT_PUBLIC_SHOW_DEMO_SWITCHER` guard |
 | `NEXT_PUBLIC_FEATURED_SLUG` on root `/` | ✅ Done | Per-deployment featured property |
 | `.env.example` documenting env vars | ✅ Done | |
-| Deployed on Vercel | ✅ Live | https://bookuj.vercel.app |
+| Deployed on Vercel | ✅ Live | https://nestay.co |
 
 ### Current onboarding workflow (manual, no backend)
 
@@ -43,10 +43,10 @@ The app is deployed at **https://bookuj.vercel.app**
 1. Collect host data (name, photos, BLIK, IBAN, WhatsApp, theme prefs)
 2. Add JSON entry to sample-properties.json → push to GitHub
 3. Vercel auto-deploys in ~2 min
-4. Share link: bookuj.vercel.app/{their-slug}
+4. Share link: nestay.co/{their-slug}
 ```
 
-Each host is reachable at `bookuj.vercel.app/{slug}` — one deployment, all hosts, no extra steps.
+Each host is reachable at `nestay.co/{slug}` — one deployment, all hosts, no extra steps.
 
 ---
 
@@ -62,11 +62,11 @@ the next milestone (sharing with hosts → removing manual steps → full SaaS).
 
 - [ ] **A.6 — Subdomain routing middleware** *(deferred — needs custom domain first)*
   - Implement `src/middleware.ts` that reads the hostname, extracts the subdomain, and
-    rewrites `zakopane.bookuj.pl/` → `/zakopane-gorna-chata` internally.
-  - **Prerequisite:** Buy a custom domain (e.g. `bookuj.pl`) and configure wildcard DNS
+    rewrites `zakopane.nestay.co/` → `/zakopane-gorna-chata` internally.
+  - **Prerequisite:** Buy a custom domain (e.g. `nestay.co`) and configure wildcard DNS
     (`CNAME * → cname.vercel-dns.com`). Add each host subdomain individually in Vercel
     project settings (free tier supports this — no wildcard license needed).
-  - Until then: path-based URLs (`bookuj.vercel.app/{slug}`) work fine for MVP sharing.
+  - Until then: path-based URLs (`nestay.co/{slug}`) work fine for MVP sharing.
 
 - [x] **A.7 — FAQ section on property pages** ✅
   - Add a searchable FAQ accordion section to `PropertyPage.tsx`, above the booking suite.
@@ -144,8 +144,8 @@ the next milestone (sharing with hosts → removing manual steps → full SaaS).
 
 - [ ] **D.3 — Per-host subdomain (with custom domain)**
   - Prerequisite: Phase A.6 middleware + custom domain configured.
-  - Each host gets `{slug}.bookuj.pl` — added individually in Vercel project settings.
-  - Hosts can also CNAME their own domain (`chata.kowalski.pl → bookuj.pl`).
+  - Each host gets `{slug}.nestay.co` — added individually in Vercel project settings.
+  - Hosts can also CNAME their own domain (`chata.kowalski.pl → nestay.co`).
 
 - [ ] **D.4 — Subscription gate**
   - Stripe Billing integration (~49–99 PLN/month per business docs).
@@ -188,7 +188,7 @@ the next milestone (sharing with hosts → removing manual steps → full SaaS).
 
 ### Immediate next step
 
-> The app is live. **Start sharing `bookuj.vercel.app/{slug}` with first prospective hosts.**
+> The app is live. **Start sharing `nestay.co/{slug}` with first prospective hosts.**
 > Collect feedback. Prioritise backlog items based on what hosts actually ask for.
 > The next code sprint should be **A.8** (tagline in hero) and **A.9** (min stay enforcement)
 > — both are small, self-contained, and make the Polish pages feel more complete.

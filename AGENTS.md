@@ -8,7 +8,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
-# Project Guidelines & Agent Workflows (bookuj.pl)
+# Project Guidelines & Agent Workflows (nestay.co)
 
 These guidelines apply project-wide across all Antigravity pairs and subagents working in the `bookuj` repository.
 

@@ -1,6 +1,6 @@
 /**
  * @file property.ts
- * @description Core domain contracts for Bookuj property listings, themes, and localization.
+ * @description Core domain contracts for Nestay property listings, themes, and localization.
  */
 
 /**
@@ -29,7 +29,7 @@ export interface PropertyTheme {
 }
 
 /**
- * Currencies supported by Bookuj.
+ * Currencies supported by Nestay.
  */
 export type SupportedCurrency = 'USD' | 'EUR' | 'GBP' | 'PLN';
 

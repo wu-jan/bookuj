@@ -32,7 +32,7 @@ export async function fetchOccupiedDates(icalUrl: string): Promise<string[]> {
       const response = await fetch(resolvedUrl, {
         next: { revalidate: 3600 },
         headers: {
-          'User-Agent': 'Bookuj-CalendarSync/1.0',
+          'User-Agent': 'Nestay-CalendarSync/1.0',
         },
       });
 

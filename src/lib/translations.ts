@@ -1,6 +1,6 @@
 /**
  * @file translations.ts
- * @description Internationalization dictionary and content localization utilities for Bookuj.
+ * @description Internationalization dictionary and content localization utilities for Nestay.
  *
  * Architecture:
  * - Direct booking portals are bilingual (defaultLocale e.g. 'pl', with instant toggle to 'en').

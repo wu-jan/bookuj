@@ -22,14 +22,14 @@ export interface BookingRecord {
 
 // In-memory fallback cache attached to globalThis to persist across dev hot reloads
 const globalStore = globalThis as unknown as {
-  __bookuj_bookings_cache?: Map<string, BookingRecord>;
+  __nestay_bookings_cache?: Map<string, BookingRecord>;
 };
 
-if (!globalStore.__bookuj_bookings_cache) {
-  globalStore.__bookuj_bookings_cache = new Map<string, BookingRecord>();
+if (!globalStore.__nestay_bookings_cache) {
+  globalStore.__nestay_bookings_cache = new Map<string, BookingRecord>();
 }
 
-const memoryCache = globalStore.__bookuj_bookings_cache;
+const memoryCache = globalStore.__nestay_bookings_cache;
 
 function getServiceRoleSupabaseClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;

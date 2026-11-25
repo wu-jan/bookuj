@@ -106,7 +106,7 @@ Provide guests with local geographic context and nearby landmarks without exposi
 ## 5. 💡 Brand Identity & Global Naming Exploration
 
 ### Context
-"Bookuj" is an initial working title. For long-term international expansion, the brand should convey exclusivity, independence from OTA fees, and premium host hospitality.
+"Nestay" is an initial working title. For long-term international expansion, the brand should convey exclusivity, independence from OTA fees, and premium host hospitality.
 
 ### Key Naming Directions
 1. **Direct Hospitality:** *DirectHost*, *StayDirect*, *Folio Stay*, *Directay*
